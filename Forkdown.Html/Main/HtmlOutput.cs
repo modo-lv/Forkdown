@@ -6,9 +6,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Forkdown.Html.Main {
   public class HtmlOutput {
+    /// <summary>
+    /// Location of the HTML output.
+    /// </summary>
     public readonly DirectoryInfo Root;
+    
+    /// <summary>
+    /// Forkdown project to build from.
+    /// </summary>
     public readonly Project Project;
 
+    
     private readonly ILogger<HtmlOutput> _logger;
     public HtmlOutput(Project project, ILogger<HtmlOutput> logger) {
       this.Project = project;
@@ -18,10 +26,11 @@ namespace Forkdown.Html.Main {
     }
 
 
+    
     public HtmlOutput Build() {
-      this.Project.Build();
+      this.Project.Load();
       
-      this._logger.LogInformation("Building {output} in {root}...", "web", this.Root);
+      this._logger.LogInformation("Building {output} in {root}...", "HTML", this.Root);
       
       return this;
     }

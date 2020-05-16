@@ -18,6 +18,7 @@ namespace Forkdown.Html {
         .Config(HtmlDependencies.Config)
         .AddLogging(Logging.Config)
         .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true });
+      Core.Program.Services = services;
 
       Console.WriteLine();
 

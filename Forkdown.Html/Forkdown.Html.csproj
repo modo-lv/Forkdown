@@ -23,8 +23,4 @@
       </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Wiring\Dependencies" />
-    </ItemGroup>
-
 </Project>

@@ -1,21 +1,19 @@
 ﻿using System;
 using System.IO;
+using Forkdown.Core.Internal;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
+using Simpler.Net;
 
 namespace Forkdown.Core.Main {
   public class Project {
     /// <summary>
     /// Directory containing the project files.
     /// </summary>
-    public readonly DirectoryInfo Root;
+    public readonly DirectoryInfo? Root;
 
-    /// <summary>
-    /// Pretty name for the project, taken from project config. 
-    /// </summary>
-    public String? Title;
+    public ProjectConfig Config = new ProjectConfig(); 
 
-    
     private readonly ILogger<Project> _logger;
     public Project(ILogger<Project> logger, AppArguments args) {
       this._logger = logger;
@@ -23,13 +21,16 @@ namespace Forkdown.Core.Main {
     }
 
     
-    public Project Build() {
+    public Project Load() {
       if (!this.Root?.Exists ?? false)
         throw new DirectoryNotFoundException($"Project location not found: `{this.Root}`");
+      
+      this._logger.LogInformation("Loading project from {dir}...", this.Root);
 
-      this.Title = this.Root?.Name;
-
-      this._logger.LogInformation("Loading \"{title}\" from {dir}...", this.Title, this.Root);
+      this.Config = ProjectConfig.FromYaml(this.Root!.File("forkdown.core.yaml"));
+      this.Config.Name = this.Config.Name.NonBlank() ?? this.Root!.Name;
+      
+      this._logger.LogInformation("Project \"{name}\" loaded.", this.Config.Name);
 
       return this;
     }

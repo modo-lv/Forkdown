@@ -27,7 +27,7 @@
             <e p="ForkdownObject.cs" t="Include" />
           </e>
           <e p="Project.cs" t="Include" />
-          <e p="ProjectDir.cs" t="Include" />
+          <e p="ProjectConfig.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -42,8 +42,8 @@
           <e p="Dependencies" t="Include">
             <e p="CoreDependencies.cs" t="Include" />
             <e p="Extensions.cs" t="Include" />
-            <e p="IDependencyConfig.cs" t="Include" />
           </e>
+          <e p="FileSystemExtensions.cs" t="Include" />
         </e>
       </e>
       <e p="Forkdown.Core.Tests" t="IncludeRecursive">
@@ -79,7 +79,6 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Wiring" t="Include">
-          <e p="Dependencies" t="Include" />
           <e p="HtmlDependencies.cs" t="Include" />
           <e p="Logging.cs" t="Include" />
         </e>
