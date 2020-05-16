@@ -6,17 +6,20 @@ using Forkdown.Core.Main.Elements;
 using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using Path = Fluent.IO.Path;
 
 namespace Forkdown.Core.Main.Parsing {
   public static class ForkdownObject {
-    public static Document ToDocument(FileInfo file) {
-      using var reader = file.OpenText();
-      return ForkdownObject.ToDocument(reader.ReadToEnd());
+    public static Document ToDocument(Path path, String? fileName = null) {
+      using var reader = new FileInfo(path.FullPath).OpenText();
+      return ForkdownObject.ToDocument(reader.ReadToEnd(), fileName ?? path.ToString());
     }
     
-    public static Document ToDocument(String markdown) {
+    public static Document ToDocument(String markdown, String fileName = "") {
       MarkdownDocument mDoc = Markdown.Parse(markdown);
-      return (Document) ForkdownObject.ToElement(mDoc);
+      var result = (Document) ForkdownObject.ToElement(mDoc);
+      result.FileName = fileName;
+      return result;
     }
 
     public static Element ToElement(MarkdownObject node) {

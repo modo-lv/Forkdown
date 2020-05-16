@@ -1,6 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Forkdown.Core.Main;
 using Microsoft.Extensions.Logging;
+using Scriban;
+using Path = Fluent.IO.Path;
 
 #pragma warning disable 1591
 
@@ -9,13 +13,14 @@ namespace Forkdown.Html.Main {
     /// <summary>
     /// Location of the HTML output.
     /// </summary>
-    public DirectoryInfo Root { get; protected set; }
+    public Path Root { get; protected set; }
     
     /// <summary>
     /// Forkdown project to build from.
     /// </summary>
     public readonly Project Project;
 
+    
     
     private readonly ILogger<HtmlOutput> _logger;
     public HtmlOutput(Project project, ILogger<HtmlOutput> logger) {
@@ -27,10 +32,10 @@ namespace Forkdown.Html.Main {
     
     public HtmlOutput Build() {
       this.Project.Load();
-      this.Root = this.Project.Root!.CreateSubdirectory("out-net");
+      this.Root = this.Project.Root!.CreateSubDirectory("out-net");
       
-      this._logger.LogInformation("Building {output} in {root}...", "HTML", this.Root);
-      
+      this._logger.LogInformation("Building {output} in {root}...", "HTML", this.Root!.ToString());
+
       return this;
     }
   }

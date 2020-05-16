@@ -6,7 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentPath" Version="2.0.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.4" />
+      <PackageReference Include="Scriban" Version="2.1.2" />
       <PackageReference Include="Serilog.Extensions.Hosting" Version="3.0.0" />
       <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
       <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
@@ -21,6 +23,25 @@
       <None Update="appsettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Remove="Publish\**" />
+      <None Update="Resources\Output\Liquid\page.liquid">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Output\Default\Liquid\page.liquid">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Publish\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Publish\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Resources\Output\Default" />
     </ItemGroup>
 
 </Project>

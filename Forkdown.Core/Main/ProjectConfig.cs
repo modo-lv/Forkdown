@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.CompilerServices;
-using Forkdown.Core.Internal;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
+using Simpler.NetCore.Text;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+using Path = Fluent.IO.Path;
 
 namespace Forkdown.Core.Main {
   // ReSharper disable once ClassNeverInstantiated.Global
@@ -23,7 +23,7 @@ namespace Forkdown.Core.Main {
 
     private static ILogger<ProjectConfig> _Logger = Program.Logger<ProjectConfig>();
 
-    public static ProjectConfig FromYaml(DirectoryInfo projectRoot) {
+    public static ProjectConfig FromYaml(Path projectRoot) {
       var file = projectRoot.File(ProjectConfig.FileName);
       ProjectConfig result;
       if (!file.Exists)
@@ -48,7 +48,7 @@ namespace Forkdown.Core.Main {
 
       if (result.Name.IsBlank())
       {
-        result.Name = projectRoot.Name;
+        result.Name = projectRoot.FileName;
         _Logger.LogWarning("Project name not found in settings, using unreliable folder name \"{name}\"!", result.Name);
       }
 
