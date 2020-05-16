@@ -11,7 +11,11 @@ namespace Forkdown.Core.Internal {
     }
 
     public static String? NonBlank(this String? str) {
-      return String.IsNullOrWhiteSpace(str) ? null : str;
+      return str.IsBlank() ? null : str;
+    }
+
+    public static Boolean IsBlank(this String? str) {
+      return String.IsNullOrWhiteSpace(str);
     }
   }
 }

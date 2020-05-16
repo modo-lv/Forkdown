@@ -9,7 +9,7 @@ namespace Forkdown.Html.Main {
     /// <summary>
     /// Location of the HTML output.
     /// </summary>
-    public readonly DirectoryInfo Root;
+    public DirectoryInfo Root { get; protected set; }
     
     /// <summary>
     /// Forkdown project to build from.
@@ -21,14 +21,13 @@ namespace Forkdown.Html.Main {
     public HtmlOutput(Project project, ILogger<HtmlOutput> logger) {
       this.Project = project;
       this._logger = logger;
-      
-      this.Root = project.Root.CreateSubdirectory("out-net");
     }
 
 
     
     public HtmlOutput Build() {
       this.Project.Load();
+      this.Root = this.Project.Root!.CreateSubdirectory("out-net");
       
       this._logger.LogInformation("Building {output} in {root}...", "HTML", this.Root);
       

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Forkdown.Core.Internal;
+using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -8,6 +10,8 @@ using YamlDotNet.Serialization.NamingConventions;
 namespace Forkdown.Core.Main {
   // ReSharper disable once ClassNeverInstantiated.Global
   public class ProjectConfig {
+    public const String FileName = "forkdown.core.yaml";
+
     private String _name = "";
 
     public String Name
@@ -19,24 +23,36 @@ namespace Forkdown.Core.Main {
 
     private static ILogger<ProjectConfig> _Logger = Program.Logger<ProjectConfig>();
 
-    public static ProjectConfig FromYaml(FileInfo file) {
+    public static ProjectConfig FromYaml(DirectoryInfo projectRoot) {
+      var file = projectRoot.File(ProjectConfig.FileName);
+      ProjectConfig result;
       if (!file.Exists)
       {
-        _Logger.LogInformation("Project settings file {file} not found, using defaults.", file.Name);
-        return new ProjectConfig();
+        _Logger.LogWarning("Settings file {file} not found!", file.Name);
+        result = new ProjectConfig();
       }
-      
-      _Logger.LogInformation("Loading project settings from {file}...", file.Name);
-      
-      using var stream = file.OpenRead();
-      using var reader = new StreamReader(stream);
+      else
+      {
+        _Logger.LogInformation("Loading settings from {file}...", file.Name);
 
-      var parser = new DeserializerBuilder()
-        .WithNamingConvention(new UnderscoredNamingConvention())
-        .IgnoreUnmatchedProperties()
-        .Build();
+        using var stream = file.OpenRead();
+        using var reader = new StreamReader(stream);
 
-      return parser.Deserialize<ProjectConfig>(reader);
+        var parser = new DeserializerBuilder()
+          .WithNamingConvention(new UnderscoredNamingConvention())
+          .IgnoreUnmatchedProperties()
+          .Build();
+
+        result = parser.Deserialize<ProjectConfig>(reader);
+      }
+
+      if (result.Name.IsBlank())
+      {
+        result.Name = projectRoot.Name;
+        _Logger.LogWarning("Project name not found in settings, using unreliable folder name \"{name}\"!", result.Name);
+      }
+
+      return result;
     }
   }
 }
