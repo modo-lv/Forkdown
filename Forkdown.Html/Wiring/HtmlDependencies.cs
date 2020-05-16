@@ -1,10 +1,13 @@
 ﻿using System;
+using Forkdown.Html.Main;
 using Microsoft.Extensions.DependencyInjection;
+
 #pragma warning disable 1591
 
-namespace Forkdown.Html.Wiring.Dependencies {
-  public class HtmlDependencies {
+namespace Forkdown.Html.Wiring {
+  public static class HtmlDependencies {
     public static readonly Action<IServiceCollection> Config = svc => {
+      svc.AddScoped<HtmlOutput>();
     };
   }
 }

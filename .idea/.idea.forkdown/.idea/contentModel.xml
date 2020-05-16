@@ -27,6 +27,7 @@
             <e p="ForkdownObject.cs" t="Include" />
           </e>
           <e p="Project.cs" t="Include" />
+          <e p="ProjectDir.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -37,6 +38,7 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Wiring" t="Include">
+          <e p="AppArguments.cs" t="Include" />
           <e p="Dependencies" t="Include">
             <e p="CoreDependencies.cs" t="Include" />
             <e p="Extensions.cs" t="Include" />
@@ -64,6 +66,9 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Forkdown.Html.csproj" t="IncludeRecursive" />
+        <e p="Main" t="Include">
+          <e p="HtmlOutput.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
@@ -74,9 +79,8 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Wiring" t="Include">
-          <e p="Dependencies" t="Include">
-            <e p="HtmlDependencies.cs" t="Include" />
-          </e>
+          <e p="Dependencies" t="Include" />
+          <e p="HtmlDependencies.cs" t="Include" />
           <e p="Logging.cs" t="Include" />
         </e>
       </e>

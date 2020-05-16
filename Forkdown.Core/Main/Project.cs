@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 
 namespace Forkdown.Core.Main {
@@ -7,7 +8,7 @@ namespace Forkdown.Core.Main {
     /// <summary>
     /// Directory containing the project files.
     /// </summary>
-    public DirectoryInfo? Dir;
+    public readonly DirectoryInfo Root;
 
     /// <summary>
     /// Pretty name for the project, taken from project config. 
@@ -16,16 +17,19 @@ namespace Forkdown.Core.Main {
 
     
     private readonly ILogger<Project> _logger;
-    public Project(ILogger<Project> logger) { this._logger = logger; }
+    public Project(ILogger<Project> logger, AppArguments args) {
+      this._logger = logger;
+      this.Root = new DirectoryInfo(args.ProjectRoot);
+    }
 
     
     public Project Build() {
-      if (!this.Dir?.Exists ?? false)
-        throw new DirectoryNotFoundException($"Project directory not found: `{this.Dir}`");
+      if (!this.Root?.Exists ?? false)
+        throw new DirectoryNotFoundException($"Project location not found: `{this.Root}`");
 
-      this.Title = this.Dir?.Name;
+      this.Title = this.Root?.Name;
 
-      this._logger.LogInformation("Building \"{title}\" in {dir}...", this.Title, this.Dir);
+      this._logger.LogInformation("Loading \"{title}\" from {dir}...", this.Title, this.Root);
 
       return this;
     }
