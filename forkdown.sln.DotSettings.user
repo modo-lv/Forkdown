@@ -1,0 +1,13 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Martin\.nuget\packages\simpler.net\0.2.1\lib\netstandard1.0\Simpler.Net.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Martin\.nuget\packages\simpler.net.text\0.4.2\lib\netstandard1.3\Simpler.Net.Text.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c41ca873_002D144f_002D4823_002Da1be_002Db66bb8d025ec/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::CA25B994-8CA1-4346-920E-B8F6F2713F04::.NETCoreApp,Version=v3.1::Forkdown.Core.Tests.ElementTitleTests.WithoutLineBreak&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Forkdown/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

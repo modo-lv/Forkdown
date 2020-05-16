@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Markdig" Version="0.20.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0-preview.3.20215.2" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.4" />
+      <PackageReference Include="Simpler.Net" Version="0.2.1" />
+      <PackageReference Include="Simpler.Net.FileSystem" Version="0.5.0-alpha" />
+    </ItemGroup>
+
+</Project>

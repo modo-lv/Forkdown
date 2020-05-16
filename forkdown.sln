@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Core", "Forkdown.Core\Forkdown.Core.csproj", "{01627B89-26A5-436D-9C2A-A793BBA5BC42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Core.Tests", "Forkdown.Core.Tests\Forkdown.Core.Tests.csproj", "{CA25B994-8CA1-4346-920E-B8F6F2713F04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Html", "Forkdown.Html\Forkdown.Html.csproj", "{344FBAD9-F987-48A3-9F18-6AB02B8703B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01627B89-26A5-436D-9C2A-A793BBA5BC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01627B89-26A5-436D-9C2A-A793BBA5BC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01627B89-26A5-436D-9C2A-A793BBA5BC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01627B89-26A5-436D-9C2A-A793BBA5BC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA25B994-8CA1-4346-920E-B8F6F2713F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA25B994-8CA1-4346-920E-B8F6F2713F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA25B994-8CA1-4346-920E-B8F6F2713F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA25B994-8CA1-4346-920E-B8F6F2713F04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{344FBAD9-F987-48A3-9F18-6AB02B8703B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{344FBAD9-F987-48A3-9F18-6AB02B8703B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{344FBAD9-F987-48A3-9F18-6AB02B8703B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{344FBAD9-F987-48A3-9F18-6AB02B8703B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
