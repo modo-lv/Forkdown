@@ -1,0 +1,12 @@
+{{$el = $1 
+
+if $el.IsStrong
+  $tag = "strong"
+else
+  $tag = "em"
+end
+
+"<" + $tag + ">"
+subs $el
+"</" + $tag + ">"
+-}}

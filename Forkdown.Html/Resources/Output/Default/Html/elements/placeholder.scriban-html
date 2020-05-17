@@ -1,0 +1,4 @@
+<span class="placeholder">{{ 
+  $1.Name
+  subs $1
+}}</span>

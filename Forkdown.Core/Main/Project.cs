@@ -56,7 +56,7 @@ namespace Forkdown.Core.Main {
         })
         .ToHashSet();
 
-      this._logger.LogInformation("Project \"{name}\" loaded.", this.Config.Name);
+      this._logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;
     }
 

@@ -1,0 +1,10 @@
+﻿{{ include 'functions' -}}
+<!DOCTYPE html>
+<html>
+{{ include 'head' }}
+<body>
+{{ include 'header' }}
+{{ element Document }}
+{{ include 'footer' }}
+</body>
+</html>

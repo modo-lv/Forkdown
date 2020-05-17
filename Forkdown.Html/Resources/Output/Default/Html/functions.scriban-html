@@ -1,0 +1,28 @@
+{{func element
+
+  case $0.Type
+    when "Document"
+      include 'elements/document' $0
+    when "Heading"
+      include 'elements/heading' $0
+    when 'Paragraph'
+      include 'elements/paragraph' $0
+    when 'Emphasis'
+      include 'elements/emphasis' $0
+    when 'Code'
+      include 'elements/code' $0
+    when "Text"
+      $0.Content
+    else
+      include 'elements/placeholder' $0
+  end
+
+end -}}
+
+{{func subs
+
+  for sub in $0.Subs
+    element sub
+  end
+
+end -}}

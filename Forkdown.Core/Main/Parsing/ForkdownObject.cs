@@ -27,14 +27,17 @@ namespace Forkdown.Core.Main.Parsing {
       {
         MarkdownDocument d => new Document(d),
         HeadingBlock h => new Heading(h),
+        ParagraphBlock p => new Paragraph(p),
+        EmphasisInline e => new Emphasis(e),
+        CodeInline c => new Code(c),
         LiteralInline t => new Text(t),
         _ => new Placeholder(node),
       };
 
       IEnumerable<MarkdownObject> subs = node switch
       {
-        LeafBlock b => b.Inline?.AsEnumerable() ?? Enumerable.Empty<MarkdownObject>(),
-        ContainerBlock b => b.AsEnumerable(),
+        LeafBlock b => b.Inline ?? Enumerable.Empty<MarkdownObject>(),
+        IEnumerable<MarkdownObject> e => e,
         _ => Enumerable.Empty<MarkdownObject>()
       };
 

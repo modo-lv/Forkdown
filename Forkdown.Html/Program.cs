@@ -26,7 +26,13 @@ namespace Forkdown.Html {
 
       try
       {
-        services.GetRequiredService<HtmlOutput>().Build();
+        using var scope = services.CreateScope();
+        
+        var project = scope.ServiceProvider.GetRequiredService<Project>();
+        var html = scope.ServiceProvider.GetRequiredService<HtmlOutput>();
+
+        project.Load();
+        html.Build();
       }
       catch (Exception ex)
       {
