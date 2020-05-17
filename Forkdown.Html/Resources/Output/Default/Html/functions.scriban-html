@@ -1,4 +1,4 @@
-{{func element
+{{- func element
 
   case $0.Type
     when "Document"
@@ -11,6 +11,8 @@
       include 'elements/emphasis' $0
     when 'Code'
       include 'elements/code' $0
+    when 'Link'
+      include 'elements/link' $0
     when "Text"
       include 'elements/text' $0
     else
@@ -19,7 +21,8 @@
 
 end -}}
 
-{{func subs
+
+{{- func subs
 
   for sub in $0.Subs
     element sub
@@ -27,15 +30,17 @@ end -}}
 
 end -}}
 
-{{func attrs
+
+{{- func attrs
 
   $attrs = $0.Attributes
 
   if $attrs.Id
-}} id = "{{ $attrs.Id}}" {{
+    }} id = "{{ $attrs.Id}}" {{
   end
-  if $attrs.ClassesString
-}} class="{{ $attrs.ClassesString }}" {{
+  if $attrs.ClassesString != ""
+    }} class="{{ $attrs.ClassesString }}" {{
   end
   $attrs.PropertiesString
-end}}
+
+end -}}

@@ -11,11 +11,12 @@ namespace Forkdown.Core.Tests.Markdown {
   public class ShorthandLinkTests {
     [Fact]
     void BasicCase() {
-      const String input = @"[x]";
+      const String input = @"[x], y and z";
       MarkdownDocument result = Main.Parsing.MarkdownParse.ToDocument(input);
-      var link = result.First().As<ParagraphBlock>().Inline.First();
-      link.Should().BeOfType<LinkInline>();
-      link.As<LinkInline>().Url.Should().Be("x");
+      var link = result.First().As<ParagraphBlock>().Inline.First().As<LinkInline>();
+      link.Url.Should().Be("x");
+      var text = link.Single().As<LiteralInline>();
+      text.Content.Text.Should().Be("x");
     }
 
     [Fact]

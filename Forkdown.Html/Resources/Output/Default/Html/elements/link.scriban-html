@@ -1,0 +1,4 @@
+<a {{ if $1.Target != "" -}} 
+href="{{ $1.Target }}"
+{{ end
+attrs $1 }}>{{ subs $1 }}</a>

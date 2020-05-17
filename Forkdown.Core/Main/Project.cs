@@ -16,7 +16,7 @@ namespace Forkdown.Core.Main {
     /// </summary>
     public readonly Path? Root;
 
-    public ProjectConfig Config = new ProjectConfig();
+    public ProjectConfig.ProjectConfig Config = new ProjectConfig.ProjectConfig();
 
     public ISet<Document> Pages = new HashSet<Document>();
 
@@ -41,7 +41,7 @@ namespace Forkdown.Core.Main {
       this._logger.LogInformation("Loading project from {dir}...", this.Root!.ToString());
 
       // Settings
-      this.Config = ProjectConfig.FromYaml(this.Root!);
+      this.Config = ProjectConfig.ProjectConfig.FromYaml(this.Root!);
       this.Config.Name = this.Config.Name.NonBlank() ?? this.Root!.FileName;
 
       // Pages

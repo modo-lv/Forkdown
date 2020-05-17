@@ -8,17 +8,7 @@ namespace Forkdown.Core.Main.Elements {
   public class ElementAttributes {
     public String Id;
 
-    private ISet<String> _classes = new HashSet<String>();
-
-    public ISet<String> Classes
-    {
-      get => this._classes;
-      set
-      {
-        this._classes = value;
-        this.ClassesString = value.StringJoin(" ") ?? "";
-      }
-    }
+    public ISet<String> Classes;
 
     private IDictionary<String, String> _properties = new Dictionary<String, String>();
     public IDictionary<String, String> Properties
@@ -31,7 +21,7 @@ namespace Forkdown.Core.Main.Elements {
       }
     }
 
-    public String ClassesString { get; protected set; } = "";
+    public String ClassesString => this.Classes.StringJoin(" ") ?? "";
     public String PropertiesString { get; protected set; } = "";
 
     public ElementAttributes(HtmlAttributes attrs) {

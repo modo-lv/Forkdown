@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Markdig.Helpers;
 using Markdig.Parsers;
 using Markdig.Syntax;
@@ -10,6 +11,7 @@ namespace Forkdown.Core.Main.Parsing.MarkdigExtensions {
     public ShorthandLinkParser() { this.OpeningCharacters = new[] { '[' }; }
 
     public override Boolean Match(InlineProcessor processor, ref StringSlice slice) {
+      var startPosition = processor.GetSourcePosition(slice.Start, out int line, out int column);
       var last = slice.PeekCharExtra(-1);
       var current = slice.CurrentChar;
 
@@ -26,8 +28,18 @@ namespace Forkdown.Core.Main.Parsing.MarkdigExtensions {
         return false;
 
       // Shorthand
-      processor.Inline = new LinkInline(label, label);
-      processor.Inline.Span.End = processor.Inline.Span.Start + label.Length;
+      processor.Inline = new LinkInline(label, "")
+      {
+        LabelSpan = processor.GetSourcePositionFromLocalSpan(labelSpan),
+        IsImage = false,
+        Span = new SourceSpan(
+          startPosition,
+          processor.GetSourcePosition(slice.Start - 1)),
+        Line = line,
+        Column = column,
+        IsClosed = true,
+      }.AppendChild(new LiteralInline(label));
+
       return true;
     }
   }

@@ -7,22 +7,26 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using Path = Fluent.IO.Path;
 
-namespace Forkdown.Core.Main {
+namespace Forkdown.Core.Main.ProjectConfig {
   // ReSharper disable once ClassNeverInstantiated.Global
-  public class ProjectConfig {
+  public partial class ProjectConfig {
     public const String FileName = "forkdown.core.yaml";
 
     private String _name = "";
-
     public String Name
     {
       get => this._name;
       set => this._name = value ?? "";
     }
 
+    public String Prefix = "FD_";
+    
+    public ExternalLinks ExternalLinks { get; set; } = new ExternalLinks();
+    
 
+    
     private static ILogger<ProjectConfig> _Logger = Program.Logger<ProjectConfig>();
-
+    
     public static ProjectConfig FromYaml(Path projectRoot) {
       var file = projectRoot.File(ProjectConfig.FileName);
       ProjectConfig result;

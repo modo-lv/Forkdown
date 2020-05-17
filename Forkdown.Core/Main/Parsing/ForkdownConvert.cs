@@ -29,6 +29,7 @@ namespace Forkdown.Core.Main.Parsing {
         ParagraphBlock p => new Paragraph(p),
         EmphasisInline e => new Emphasis(e),
         CodeInline c => new Code(c),
+        LinkInline l => new Link(l),
         LiteralInline t => new Text(t),
         _ => new Placeholder(node),
       };
