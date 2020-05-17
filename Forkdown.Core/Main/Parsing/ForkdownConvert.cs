@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Forkdown.Core.Main.Elements;
-using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Path = Fluent.IO.Path;

@@ -26,3 +26,16 @@ end -}}
   end
 
 end -}}
+
+{{func attrs
+
+  $attrs = $0.Attributes
+
+  if $attrs.Id
+}} id = "{{ $attrs.Id}}" {{
+  end
+  if $attrs.ClassesString
+}} class="{{ $attrs.ClassesString }}" {{
+  end
+  $attrs.PropertiesString
+end}}

@@ -4,9 +4,10 @@ using FluentAssertions;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Xunit;
+
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.MarkdownParse {
+namespace Forkdown.Core.Tests.Markdown {
   public class ShorthandLinkTests {
     [Fact]
     void BasicCase() {
@@ -21,8 +22,8 @@ namespace Forkdown.Core.Tests.MarkdownParse {
     void PlainText() {
       const String input = @"\[x]";
       MarkdownDocument result = Main.Parsing.MarkdownParse.ToDocument(input);
-      Inline link = result.First().As<ParagraphBlock>().Inline.First();
-      link.Should().NotBeOfType<LinkInline>();
+      Inline text = result.First().As<ParagraphBlock>().Inline.First();
+      text.Should().NotBeOfType<LinkInline>();
     }
 
     [Fact]

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Forkdown.Core.Internal;
 using Forkdown.Core.Main.Elements;
 using Forkdown.Core.Main.Parsing;
 using Forkdown.Core.Wiring;

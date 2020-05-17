@@ -1,11 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using Forkdown.Core.Main;
 using Forkdown.Core.Main.Elements;
 using Microsoft.Extensions.Logging;
 using Scriban;
-using Scriban.Parsing;
 using Scriban.Runtime;
 using Path = Fluent.IO.Path;
 

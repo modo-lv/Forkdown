@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Forkdown.Core.Main.Parsing;
 using Xunit;

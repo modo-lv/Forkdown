@@ -1,5 +1,3 @@
-{{
-  "<h" + $1.Level + ">"
-    subs $1
-  "</h" + $1.Level + ">"
-}}
+<h {{- $1.Level}} {{ attrs $1 }}>
+{{ subs $1 }}
+</h {{- $1.Level -}} >

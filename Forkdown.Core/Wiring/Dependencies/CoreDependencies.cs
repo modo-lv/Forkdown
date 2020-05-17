@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Forkdown.Core.Main;
 using Microsoft.Extensions.DependencyInjection;
 
