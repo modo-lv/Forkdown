@@ -13,7 +13,7 @@ namespace Forkdown.Core.Tests {
 # Heading
 with line break
 ";
-      var result = ForkdownObject.ToDocument(markdown);
+      var result = ForkdownConvert.ToDocument(markdown);
       result
         .Subs.First().As<Heading>()
         .Title.Should().Be("Heading");

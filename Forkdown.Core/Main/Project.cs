@@ -52,7 +52,7 @@ namespace Forkdown.Core.Main {
         .Select(doc => {
           var relative = doc.MakeRelativeTo(this.Root!).ToString().Replace(@"\", "/");
           _Logger.LogDebug("Loading {doc}...", relative);
-          return ForkdownObject.ToDocument(doc, relative);
+          return ForkdownConvert.ToDocument(doc, relative);
         })
         .ToHashSet();
 

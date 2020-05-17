@@ -12,7 +12,7 @@
     when 'Code'
       include 'elements/code' $0
     when "Text"
-      $0.Content
+      include 'elements/text' $0
     else
       include 'elements/placeholder' $0
   end

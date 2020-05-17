@@ -9,15 +9,15 @@ using Markdig.Syntax.Inlines;
 using Path = Fluent.IO.Path;
 
 namespace Forkdown.Core.Main.Parsing {
-  public static class ForkdownObject {
+  public static class ForkdownConvert {
     public static Document ToDocument(Path path, String? fileName = null) {
       using var reader = new FileInfo(path.FullPath).OpenText();
-      return ForkdownObject.ToDocument(reader.ReadToEnd(), fileName ?? path.ToString());
+      return ForkdownConvert.ToDocument(reader.ReadToEnd(), fileName ?? path.ToString());
     }
-    
+
     public static Document ToDocument(String markdown, String fileName = "") {
-      MarkdownDocument mDoc = Markdown.Parse(markdown);
-      var result = (Document) ForkdownObject.ToElement(mDoc);
+      MarkdownDocument mDoc = MarkdownParse.ToDocument(markdown);
+      var result = (Document) ForkdownConvert.ToElement(mDoc);
       result.FileName = fileName;
       return result;
     }
@@ -41,7 +41,7 @@ namespace Forkdown.Core.Main.Parsing {
         _ => Enumerable.Empty<MarkdownObject>()
       };
 
-      result.Subs = subs.Select(ForkdownObject.ToElement).ToList();
+      result.Subs = subs.Select(ForkdownConvert.ToElement).ToList();
 
       return result;
     }

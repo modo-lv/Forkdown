@@ -15,8 +15,4 @@
       <ProjectReference Include="..\Forkdown.Core\Forkdown.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Resources\TestProject" />
-    </ItemGroup>
-
 </Project>
