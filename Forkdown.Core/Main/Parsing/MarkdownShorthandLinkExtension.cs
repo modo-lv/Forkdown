@@ -40,18 +40,7 @@ namespace Forkdown.Core.Main.Parsing {
         if (slice.CurrentChar.IsOneOf('[', '('))
           return false;
 
-        /*
-        current = slice.NextChar();
-
-        while (current != ']' || last == '\\')
-        {
-          keyword += current;
-
-          last = current;
-          current = slice.NextChar();
-        }
-        */
-
+        // Shorthand
         processor.Inline = new LinkInline(label, label);
         processor.Inline.Span.End = processor.Inline.Span.Start + label.Length;
         return true;

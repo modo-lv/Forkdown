@@ -50,9 +50,12 @@ namespace Forkdown.Core.Main {
       this.Pages = this.Root!.Combine("pages")
         .Files("*.md", true)
         .Select(doc => {
-          var relative = doc.MakeRelativeTo(this.Root!).ToString().Replace(@"\", "/");
-          _Logger.LogDebug("Loading {doc}...", relative);
-          return ForkdownConvert.ToDocument(doc, relative);
+          var relative = doc.MakeRelativeTo(this.Root!);
+          _Logger.LogDebug("Loading {doc}...", relative.ToString());
+          return ForkdownConvert.ToDocument(
+            doc,
+            relative.ToString().TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
+          );
         })
         .ToHashSet();
 

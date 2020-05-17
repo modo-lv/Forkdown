@@ -8,10 +8,10 @@ using Path = Fluent.IO.Path;
 #pragma warning disable 1591
 
 namespace Forkdown.Html.Main {
-  public class TemplateLoader : ITemplateLoader {
+  public class ScribanTemplateLoader : ITemplateLoader {
     private readonly Path _dir;
 
-    public TemplateLoader(Path dir) {
+    public ScribanTemplateLoader(Path dir) {
       this._dir = dir;
     }
 
