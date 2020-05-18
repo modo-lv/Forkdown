@@ -1,14 +1,12 @@
 ﻿using System;
-using Forkdown.Core.Internal;
-using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using Inline = Forkdown.Core.Main.Elements.Inline;
 
-namespace Forkdown.Core.Main.Elements {
+namespace Forkdown.Core.Elements {
   public class Text : Inline {
     public String Content;
-    
-    public Text(MarkdownObject node) : base(node) {
-      this.Content = node.As<LiteralInline>().Content.ToString();
-    }
+
+    public Text(LiteralInline text) : base(text) =>
+      this.Content = text.Content.ToString();
   }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Forkdown.Core.Main;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Forkdown.Core.Wiring.Dependencies {

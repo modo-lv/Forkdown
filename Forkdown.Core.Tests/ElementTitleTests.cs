@@ -1,8 +1,7 @@
 using System.Linq;
-using Forkdown.Core.Main.Parsing;
 using Xunit;
 using FluentAssertions;
-using Forkdown.Core.Main.Elements;
+using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Tests {
   public class ElementTitleTests {
@@ -12,7 +11,7 @@ namespace Forkdown.Core.Tests {
 # Heading
 with line break
 ";
-      var result = ForkdownConvert.ToDocument(markdown);
+      var result = Parsing.Forkdown.FromMarkdown(markdown);
       result
         .Subs.First().As<Heading>()
         .Title.Should().Be("Heading");

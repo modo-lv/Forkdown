@@ -1,37 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using Forkdown.Core.Main.Elements;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace Forkdown.Core.Main.Elements {
+namespace Forkdown.Core.Elements {
   public class Link : Container {
-    private String _target;
+    public String Target;
 
-    public String Target
-    {
-      get => this._target;
-      set
-      {
-        this._target = value;
-        if (this.IsExternal)
-        {
-          this.Attributes.Classes.Remove("FD_internal");
-          this.Attributes.Classes.Add("FD_external");
-        }
-        else
-        {
-          this.Attributes.Classes.Remove("FD_external");
-          this.Attributes.Classes.Add("FD_internal");
-        }
-      }
-    }
+    public Boolean IsInternal => this.Target.StartsWith("./");
+    public Boolean IsExternal => !this.IsInternal;
 
-    public Boolean IsExternal => this.Target.Contains("//");
-
-    public Link(MarkdownObject node) : base(node) {
-      var link = (LinkInline) node;
+    public Link(LinkInline link) : base(link) =>
       this.Target = link.Url;
-    }
   }
 }

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Forkdown.Core.Main.Elements;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Simpler.NetCore.Collections;
 
-namespace Forkdown.Core.Main.Elements {
+namespace Forkdown.Core.Elements {
   public abstract class Element {
-    public IList<Element> Subs = new List<Element>();
+    public IList<Element> Subs = Nil.L<Element>();
     
     public String Title => Element.TitleOf(this);
 
@@ -16,9 +17,9 @@ namespace Forkdown.Core.Main.Elements {
     public ElementAttributes Attributes;
 
 
-    protected Element(IMarkdownObject node) {
+    protected Element(IMarkdownObject mdo) {
       this.Type = this.GetType().Name;
-      this.Attributes = new ElementAttributes(node.GetAttributes());
+      this.Attributes = new ElementAttributes(mdo.GetAttributes());
     }
 
 

@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using Forkdown.Core.Main;
-using Forkdown.Core.Main.Elements;
+using Forkdown.Core;
+using Forkdown.Core.Elements;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;

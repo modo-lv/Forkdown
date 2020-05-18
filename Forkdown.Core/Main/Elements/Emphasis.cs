@@ -1,14 +1,14 @@
 ﻿using System;
-using Forkdown.Core.Internal;
-using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using Inline = Forkdown.Core.Main.Elements.Inline;
 
-namespace Forkdown.Core.Main.Elements {
+// ReSharper disable NotAccessedField.Global
+
+namespace Forkdown.Core.Elements {
   public class Emphasis : Inline {
     public Boolean IsStrong = false;
 
-    public Emphasis(MarkdownObject node) : base(node) {
-      this.IsStrong = node.As<EmphasisInline>().DelimiterCount == 2;
-    }
+    public Emphasis(EmphasisInline emphasis) : base(emphasis) =>
+      this.IsStrong = emphasis.DelimiterCount > 1;
   }
 }

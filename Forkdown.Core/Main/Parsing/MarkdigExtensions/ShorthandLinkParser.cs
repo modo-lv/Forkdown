@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Markdig.Helpers;
 using Markdig.Parsers;
 using Markdig.Syntax;

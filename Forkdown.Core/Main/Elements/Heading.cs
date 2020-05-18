@@ -1,13 +1,13 @@
 ﻿using System;
-using Forkdown.Core.Internal;
+using Forkdown.Core.Main.Elements;
 using Markdig.Syntax;
 
-namespace Forkdown.Core.Main.Elements {
+namespace Forkdown.Core.Elements {
   public class Heading : Container {
     public Int32 Level;
 
-    public Heading(MarkdownObject node) : base(node) {
-      this.Level = node.As<HeadingBlock>().Level;
+    public Heading(HeadingBlock mHeading) : base(mHeading) {
+      this.Level = mHeading.Level;
     }
   }
 }

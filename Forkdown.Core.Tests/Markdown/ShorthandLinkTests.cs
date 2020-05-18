@@ -12,7 +12,7 @@ namespace Forkdown.Core.Tests.Markdown {
     [Fact]
     void BasicCase() {
       const String input = @"[x], y and z";
-      MarkdownDocument result = Main.Parsing.MarkdownParse.ToDocument(input);
+      MarkdownDocument result = Parsing.Markdown.ToDocument(input);
       var link = result.First().As<ParagraphBlock>().Inline.First().As<LinkInline>();
       link.Url.Should().Be("x");
       var text = link.Single().As<LiteralInline>();
@@ -22,7 +22,7 @@ namespace Forkdown.Core.Tests.Markdown {
     [Fact]
     void PlainText() {
       const String input = @"\[x]";
-      MarkdownDocument result = Main.Parsing.MarkdownParse.ToDocument(input);
+      MarkdownDocument result = Parsing.Markdown.ToDocument(input);
       Inline text = result.First().As<ParagraphBlock>().Inline.First();
       text.Should().NotBeOfType<LinkInline>();
     }
@@ -30,7 +30,7 @@ namespace Forkdown.Core.Tests.Markdown {
     [Fact]
     void ExplicitLink() {
       const String input = @"[x](y)";
-      MarkdownDocument result = Main.Parsing.MarkdownParse.ToDocument(input);
+      MarkdownDocument result = Parsing.Markdown.ToDocument(input);
       Inline link = result.First().As<ParagraphBlock>().Inline.First();
       link.Should().BeOfType<LinkInline>();
       link.As<LinkInline>().Url.Should().Be("y");
@@ -41,7 +41,7 @@ namespace Forkdown.Core.Tests.Markdown {
       const String input = @"[x]
 
 [x]: y";
-      MarkdownDocument result = Main.Parsing.MarkdownParse.ToDocument(input);
+      MarkdownDocument result = Parsing.Markdown.ToDocument(input);
       Inline link = result.First().As<ParagraphBlock>().Inline.First();
       link.Should().BeOfType<LinkInline>();
       link.As<LinkInline>().Url.Should().Be("y");

@@ -2,56 +2,65 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Forkdown.Core.Main.Elements;
-using Forkdown.Core.Main.Parsing;
+using Forkdown.Core.Config;
+using Forkdown.Core.Elements;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
+using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 using Path = Fluent.IO.Path;
 
-namespace Forkdown.Core.Main {
+namespace Forkdown.Core {
   public class Project {
     /// <summary>
-    /// Directory containing the project files.
+    /// Main project location.
     /// </summary>
-    public readonly Path? Root;
+    public readonly Path Root;
 
-    public ProjectConfig.ProjectConfig Config = new ProjectConfig.ProjectConfig();
+    /// <inheritdoc cref="MainConfig"/>
+    public MainConfig Config = new MainConfig();
 
-    public ISet<Document> Pages = new HashSet<Document>();
+    /// <summary>
+    /// Project's Forkdown documents, parsed and processed.
+    /// </summary>
+    public ISet<Document> Pages = Nil.S<Document>();
 
-    public String Name
-    {
-      get => this.Config.Name;
-      set => this.Config.Name = value;
-    }
+    /// <inheritdoc cref="MainConfig.Name"/>
+    public String Name => this.Config.Name;
 
 
+    
     private readonly ILogger<Project> _logger;
 
     public Project(ILogger<Project> logger, AppArguments args) {
       this._logger = logger;
+
       this.Root = Path.Get(args.ProjectRoot);
     }
 
-
+    
+    /// <summary>
+    /// Load the project, including processing all the Forkdown pages. 
+    /// </summary>
+    /// <exception cref="DirectoryNotFoundException">If <see cref="Root"/> is not an existing directory.</exception>
     public Project Load() {
-      if (!this.Root?.Exists ?? false)
+      if (!this.Root.Exists)
         throw new DirectoryNotFoundException($"Project location not found: `{this.Root}`");
-      this._logger.LogInformation("Loading project from {dir}...", this.Root!.ToString());
+
+      this._logger.LogInformation("Loading project from {dir}...", this.Root.ToString());
 
       // Settings
-      this.Config = ProjectConfig.ProjectConfig.FromYaml(this.Root!);
-      this.Config.Name = this.Config.Name.NonBlank() ?? this.Root!.FileName;
+      this.Config = MainConfig.FromYaml(this.Root!);
+      this.Config.Name = this.Config.Name.NonBlank() ?? this.Root.FileName;
 
       // Pages
       this._logger.LogInformation("Loading pages...");
-      this.Pages = this.Root!.Combine("pages")
+      this.Pages = this.Root.Combine("pages")
         .Files("*.md", true)
         .Select(doc => {
-          var relative = doc.MakeRelativeTo(this.Root!);
-          _Logger.LogDebug("Loading {doc}...", relative.ToString());
-          return ForkdownConvert.ToDocument(
+          var relative = doc.MakeRelativeTo(this.Root);
+          this._logger.LogDebug("Loading {doc}...", relative.ToString());
+          return Parsing.Forkdown.FromMarkdown(
             doc,
             relative.ToString().TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
           );
@@ -61,8 +70,5 @@ namespace Forkdown.Core.Main {
       this._logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;
     }
-
-
-    private static ILogger _Logger = Program.Logger<Project>();
   }
 }

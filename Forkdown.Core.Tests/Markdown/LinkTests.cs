@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using Forkdown.Core.Main.Parsing;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Xunit;
@@ -13,7 +12,7 @@ namespace Forkdown.Core.Tests.Markdown {
     void ExplicitExternalShorthand() {
       const String input = @"[x](@)";
 
-      MarkdownDocument result = MarkdownParse.ToDocument(input);
+      MarkdownDocument result = Parsing.Markdown.ToDocument(input);
       var link = result.Single().As<ParagraphBlock>().Inline.Single().As<LinkInline>();
 
       link.Url.Should().Be("@");

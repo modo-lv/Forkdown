@@ -1,7 +1,8 @@
-﻿using Markdig.Syntax;
+﻿using Forkdown.Core.Main.Elements;
+using Markdig.Syntax;
 
-namespace Forkdown.Core.Main.Elements {
+namespace Forkdown.Core.Elements {
   public class Paragraph : Container {
-    public Paragraph(MarkdownObject node) : base(node) { }
+    public Paragraph(ParagraphBlock paragraph) : base(paragraph) { }
   }
 }
