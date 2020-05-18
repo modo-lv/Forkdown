@@ -11,12 +11,10 @@ using Simpler.NetCore.Text;
 using Path = Fluent.IO.Path;
 
 namespace Forkdown.Core {
+  /// <summary>
+  /// Main Forkdown project class.
+  /// </summary>
   public class Project {
-    /// <summary>
-    /// Main project location.
-    /// </summary>
-    public readonly Path Root;
-
     /// <inheritdoc cref="MainConfig"/>
     public MainConfig Config = new MainConfig();
 
@@ -29,37 +27,41 @@ namespace Forkdown.Core {
     public String Name => this.Config.Name;
 
 
-    
+    /// Constructor
     private readonly ILogger<Project> _logger;
-
-    public Project(ILogger<Project> logger, AppArguments args) {
-      this._logger = logger;
-
-      this.Root = Path.Get(args.ProjectRoot);
+    private readonly BuildArguments _args;
+    public Project(ILogger<Project> logger, BuildArguments args) {
+      _logger = logger;
+      _args = args;
     }
 
-    
+
     /// <summary>
     /// Load the project, including processing all the Forkdown pages. 
     /// </summary>
-    /// <exception cref="DirectoryNotFoundException">If <see cref="Root"/> is not an existing directory.</exception>
+    /// <exception cref="DirectoryNotFoundException">
+    /// If the project directory doesn't exist or isn't a directory.
+    /// </exception>
     public Project Load() {
-      if (!this.Root.Exists)
-        throw new DirectoryNotFoundException($"Project location not found: `{this.Root}`");
+      var root = _args.ProjectRoot;
 
-      this._logger.LogInformation("Loading project from {dir}...", this.Root.ToString());
+      if (!root.Exists)
+        throw new DirectoryNotFoundException($"Project location not found: {root}");
+      if (!root.IsDirectory)
+        throw new DirectoryNotFoundException($"Project location is not a directory: {root}");
+      _logger.LogInformation("Loading project from {dir}...", root.ToString());
 
       // Settings
-      this.Config = MainConfig.FromYaml(this.Root!);
-      this.Config.Name = this.Config.Name.NonBlank() ?? this.Root.FileName;
+      this.Config = MainConfig.FromYaml(_args.MainConfigFile);
+      this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
 
       // Pages
-      this._logger.LogInformation("Loading pages...");
-      this.Pages = this.Root.Combine("pages")
+      _logger.LogInformation("Finding and loading pages...");
+      this.Pages = root.Combine("pages")
         .Files("*.md", true)
         .Select(doc => {
-          var relative = doc.MakeRelativeTo(this.Root);
-          this._logger.LogDebug("Loading {doc}...", relative.ToString());
+          var relative = doc.MakeRelativeTo(root);
+          _logger.LogDebug("Loading {doc}...", relative.ToString());
           return Parsing.Forkdown.FromMarkdown(
             doc,
             relative.ToString().TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
@@ -67,7 +69,7 @@ namespace Forkdown.Core {
         })
         .ToHashSet();
 
-      this._logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
+      _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;
     }
   }

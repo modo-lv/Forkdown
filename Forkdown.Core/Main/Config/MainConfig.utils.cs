@@ -9,22 +9,15 @@ using Path = Fluent.IO.Path;
 
 namespace Forkdown.Core.Config {
   public partial class MainConfig {
-    /// <summary>
-    /// Full name of the file that contains main project settings.
-    /// </summary>
-    public const String FileName = "forkdown.core.yaml";
-
-
     private static readonly ILogger<MainConfig> _logger = Program.Logger<MainConfig>();
 
-    
+
     /// <summary>
     /// Load a project's main settings file.
     /// </summary>
-    /// <param name="projectRoot">Project location.</param>
+    /// <param name="file">File to read settings from.</param>
     /// <returns>Default project settings selectively overridden by values from the file.</returns>
-    public static MainConfig FromYaml(Path projectRoot) {
-      var file = projectRoot.File(MainConfig.FileName);
+    public static MainConfig FromYaml(FileInfo file) {
       MainConfig result;
       if (!file.Exists)
       {
@@ -48,7 +41,7 @@ namespace Forkdown.Core.Config {
 
       if (result.Name.IsBlank())
       {
-        result.Name = projectRoot.FileName;
+        result.Name = file.DirectoryName;
         _logger.LogWarning(
           "Project name not found in settings; using unreliable folder name \"{name}\"!", result.Name);
       }

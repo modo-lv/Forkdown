@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Main.Elements;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Simpler.NetCore.Collections;

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
+using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;
@@ -22,15 +23,18 @@ namespace Forkdown.Html.Main {
 
 
     private readonly ILogger<HtmlOutput> _logger;
-
-    public HtmlOutput(Project project, ILogger<HtmlOutput> logger) {
+    private readonly BuildArguments _args;
+    public HtmlOutput(Project project, ILogger<HtmlOutput> logger, BuildArguments args) {
       this.Project = project;
       this._logger = logger;
+      this._args = args;
     }
 
 
-    public HtmlOutput Build() {
-      this.OutRoot = this.Project.Root!.CreateSubDirectory("out-net");
+    public HtmlOutput BuildHtml() {
+      this.Project.Load();
+      
+      this.OutRoot = this._args.ProjectRoot.CreateSubDirectory("out-net");
 
       this._logger.LogInformation("Building {output} in {root}...", "HTML", this.OutRoot!.ToString());
 
