@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
+using Forkdown.Core.Parsing;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
+using YamlDotNet.Core.Tokens;
 using Path = Fluent.IO.Path;
+// ReSharper disable UnusedMember.Global
 
 namespace Forkdown.Core {
   /// <summary>
@@ -18,14 +21,19 @@ namespace Forkdown.Core {
     /// <inheritdoc cref="MainConfig"/>
     public MainConfig Config = new MainConfig();
 
+    /// <inheritdoc cref="MainConfig.Name"/>
+    public String Name => this.Config.Name;
+
     /// <summary>
     /// Project's Forkdown documents, parsed and processed.
     /// </summary>
     public ISet<Document> Pages = Nil.S<Document>();
 
-    /// <inheritdoc cref="MainConfig.Name"/>
-    public String Name => this.Config.Name;
-
+    /// <summary>
+    /// Index mapping anchors to the pages they are in. 
+    /// </summary>
+    public IDictionary<String, Document> Anchors = Nil.DStr<Document>(); 
+    
 
     /// Constructor
     private readonly ILogger<Project> _logger;
@@ -62,12 +70,15 @@ namespace Forkdown.Core {
         .Select(doc => {
           var relative = doc.MakeRelativeTo(root);
           _logger.LogDebug("Loading {doc}...", relative.ToString());
-          return Parsing.Forkdown.FromMarkdown(
+          return Parsing.BuildForkdown.From(
             doc,
             relative.ToString().TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
           );
         })
         .ToHashSet();
+      
+      // Achors
+      this.Anchors = AnchorIndex.BuildFrom(this.Pages);
 
       _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Markdig.Renderers.Html;
 using Simpler.NetCore.Collections;
+using Simpler.NetCore.Text;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
@@ -12,7 +13,7 @@ namespace Forkdown.Core.Elements {
 
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
     public ISet<String> Classes;
-
+    
     private IDictionary<String, String> _properties = Nil.DStr<String>();
     public IDictionary<String, String> Properties
     {
@@ -28,7 +29,7 @@ namespace Forkdown.Core.Elements {
     public String PropertiesString { get; protected set; } = "";
 
     public ElementAttributes(HtmlAttributes attrs) {
-      this.Id = attrs.Id;
+      this.Id = attrs.Id.Text();
       this.Classes = attrs.Classes?.ToHashSet() ?? Nil.SStr;
       this.Properties =
         attrs.Properties?.ToDictionary(_ => _.Key, _ => _.Value) ?? Nil.DStr<String>();

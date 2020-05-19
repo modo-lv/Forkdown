@@ -12,16 +12,16 @@ namespace Forkdown.Core.Parsing {
   /// <summary>
   /// Main class for converting Markdown to Forkdown.
   /// </summary>
-  public static class Forkdown {
+  public static class BuildForkdown {
 
     /// <summary>
-    /// An overload for <see cref="FromMarkdown(String,String)"/>, for parsing Markdown directly from a file.
+    /// An overload for <see cref="From(string,string)"/>, for parsing Markdown directly from a file.
     /// </summary>
     /// <param name="file">File to parse.</param>
     /// <param name="fileName">File name to set <see cref="Document.FileName"/> to.</param>
-    public static Document FromMarkdown(Path file, String? fileName = null) {
+    public static Document From(Path file, String? fileName = null) {
       using var reader = new FileInfo(file.FullPath).OpenText();
-      return Forkdown.FromMarkdown(reader.ReadToEnd(), fileName ?? file.ToString());
+      return BuildForkdown.From(reader.ReadToEnd(), fileName ?? file.ToString());
     }
 
     /// <summary>
@@ -29,9 +29,9 @@ namespace Forkdown.Core.Parsing {
     /// </summary>
     /// <param name="markdown">Markdown text to parse.</param>
     /// <param name="fileName">File name to set <see cref="Document.FileName"/> to.</param>
-    public static Document FromMarkdown(String markdown, String fileName = "") {
-      MarkdownDocument mDoc = Markdown.ToDocument(markdown);
-      var result = (Document) Forkdown.FromMarkdown(mDoc);
+    public static Document From(String markdown, String fileName = "") {
+      MarkdownDocument mDoc = BuildMarkdown.From(markdown);
+      var result = (Document) BuildForkdown.From(mDoc);
       result.FileName = fileName;
       return result;
     }
@@ -41,7 +41,7 @@ namespace Forkdown.Core.Parsing {
     /// </summary>
     /// <param name="mdo"></param>
     /// <returns></returns>
-    public static Element FromMarkdown(MarkdownObject mdo) {
+    public static Element From(MarkdownObject mdo) {
       Element result = mdo switch
       {
         MarkdownDocument d => new Document(d),
@@ -61,7 +61,7 @@ namespace Forkdown.Core.Parsing {
         _ => null
       } ?? Nil.E<MarkdownObject>();
 
-      result.Subs = subs.Select(Forkdown.FromMarkdown).ToList();
+      result.Subs = subs.Select(BuildForkdown.From).ToList();
 
       return result;
     }

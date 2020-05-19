@@ -5,6 +5,7 @@ using Forkdown.Core.Main.Elements;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Simpler.NetCore.Collections;
+// ReSharper disable NotAccessedField.Global
 
 namespace Forkdown.Core.Elements {
   public abstract class Element {
@@ -14,7 +15,12 @@ namespace Forkdown.Core.Elements {
 
     public readonly String Type;
 
-    public ElementAttributes Attributes;
+    public readonly ElementAttributes Attributes;
+
+    /// <summary>
+    /// Keyword(s) that 
+    /// </summary>
+    public String Anchor = "";
 
 
     protected Element(IMarkdownObject mdo) {

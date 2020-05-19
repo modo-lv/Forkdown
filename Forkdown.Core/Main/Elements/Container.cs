@@ -1,8 +1,7 @@
-﻿using Forkdown.Core.Elements;
-using Markdig.Syntax;
+﻿using Markdig.Syntax;
 
-namespace Forkdown.Core.Main.Elements {
+namespace Forkdown.Core.Elements {
   public abstract class Container : Element {
-    protected Container(MarkdownObject mdo) : base(mdo) { }
+    protected Container(MarkdownObject mdo) : base(mdo) {}
   }
 }

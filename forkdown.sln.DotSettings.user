@@ -5,6 +5,7 @@
   &lt;Assembly Path="C:\Users\Martin\.nuget\packages\markdig\0.20.0\lib\netcoreapp3.1\Markdig.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c57623df_002Dcc52_002D48a0_002Da182_002D1046c6e9bc18/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>

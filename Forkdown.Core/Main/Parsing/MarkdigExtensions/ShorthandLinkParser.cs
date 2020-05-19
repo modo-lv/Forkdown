@@ -5,7 +5,7 @@ using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Simpler.NetCore.Collections;
 
-namespace Forkdown.Core.Main.Parsing.MarkdigExtensions {
+namespace Forkdown.Core.Parsing.MarkdigExtensions {
   public class ShorthandLinkParser : InlineParser {
     public ShorthandLinkParser() { this.OpeningCharacters = new[] { '[' }; }
 
