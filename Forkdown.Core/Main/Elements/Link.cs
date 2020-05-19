@@ -9,8 +9,8 @@ namespace Forkdown.Core.Elements {
   public class Link : Container {
     public String Target;
 
-    public Boolean IsInternal => this.Target.StartsWith("./");
-    public Boolean IsExternal => !this.IsInternal;
+    public Boolean IsInternal => !this.IsExternal;
+    public Boolean IsExternal => this.Target.Contains("//");
 
     public Link(LinkInline link) : base(link) =>
       this.Target = link.Url;

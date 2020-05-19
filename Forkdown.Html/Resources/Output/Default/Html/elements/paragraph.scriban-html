@@ -1,1 +1,2 @@
-<p>{{ subs $1 }}</p>
+
+{{depth}}<p {{- attrs $1 -}}>{{ subs $1 }}</p>

@@ -1,10 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
+using Forkdown.Core.Parsing;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;
+using Simpler.NetCore.Collections;
+using Simpler.NetCore.Text;
 using Path = Fluent.IO.Path;
 
 #pragma warning disable 1591
@@ -28,13 +33,14 @@ namespace Forkdown.Html.Main {
       this.Project = project;
       this._logger = logger;
       this._args = args;
+
+      this.OutRoot = this._args.ProjectRoot.Combine("out-net");
     }
 
 
     public HtmlOutput BuildHtml() {
       this.Project.Load();
-      
-      this.OutRoot = this._args.ProjectRoot.CreateSubDirectory("out-net");
+      this.OutRoot.CreateDirectories();
 
       this._logger.LogInformation("Building {output} in {root}...", "HTML", this.OutRoot!.ToString());
 
@@ -54,17 +60,36 @@ namespace Forkdown.Html.Main {
 
       foreach (Document doc in this.Project.Pages)
       {
+        // Anchors
+        this.AnchorLinks(doc);
+
         var outFile = doc.FileName + ".html";
         Path outPath = this.OutRoot.Combine(outFile);
         outPath.Parent().CreateDirectories();
         this._logger.LogDebug("Rendering {page}...", outFile);
-        
+
         model.Add("Document", doc);
         var html = template.Render(templateContext);
         File.WriteAllText(outPath.ToString(), html);
       }
 
       return this;
+    }
+
+
+    public void AnchorLinks(Element el, Document? doc = null) {
+      doc ??= (Document) el;
+      var index = this.Project.Anchors;
+      if (el is Link link)
+      {
+        var target = AnchorIndex.Anchor(link.Target);
+        if (link.IsInternal && index.ContainsKey(target))
+          link.Target = $"{"../".Repeat(doc.Depth)}{index[target].FileName}.html#{target}";
+      }
+      else
+      {
+        el.Subs.ForEach(_ => this.AnchorLinks(_, doc));
+      }
     }
   }
 }

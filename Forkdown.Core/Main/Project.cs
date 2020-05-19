@@ -79,6 +79,7 @@ namespace Forkdown.Core {
       
       // Achors
       this.Anchors = AnchorIndex.BuildFrom(this.Pages);
+      
 
       _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;

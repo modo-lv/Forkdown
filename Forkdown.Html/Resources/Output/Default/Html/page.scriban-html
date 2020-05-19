@@ -1,4 +1,7 @@
-﻿{{ include 'functions' -}}
+﻿{{ 
+  depth = "  "
+  include 'functions' 
+-}}
 <!DOCTYPE html>
 <html>
 {{ include 'head' }}

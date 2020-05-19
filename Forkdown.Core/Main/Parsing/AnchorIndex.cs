@@ -7,6 +7,9 @@ using Simpler.NetCore.Text;
 using YamlDotNet.Core.Tokens;
 
 namespace Forkdown.Core.Parsing {
+  /// <summary>
+  /// A reference collection for tracking which anchor is defined in which document.
+  /// </summary>
   public partial class AnchorIndex : IDictionary<String, Document> {
 
     private readonly IDictionary<String, Document> _ = Nil.DStr<Document>();

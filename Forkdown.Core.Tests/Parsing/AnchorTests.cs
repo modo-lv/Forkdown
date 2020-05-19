@@ -9,6 +9,16 @@ using Forkdown.Core.Parsing;
 namespace Forkdown.Core.Tests.Parsing {
   public class AnchorTests {
     [Fact]
+    void IgnoreRegularId() {
+      const String input = @"## Normal ID {#id}";
+      var doc = BuildForkdown.From(input);
+      var anchors = AnchorIndex.BuildFrom(new[] { doc });
+
+      anchors.Count.Should().Be(0);
+      doc.Subs[0].Attributes.Id.Should().Be("id");
+    }
+    
+    [Fact]
     void ImplicitAnchors() {
       const String input = @"
 ## Class Anchor {.#~}

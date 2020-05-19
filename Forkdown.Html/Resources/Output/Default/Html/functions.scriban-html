@@ -24,23 +24,27 @@ end -}}
 
 {{- func subs
 
+  $depth = depth
+  depth = depth + "  "
   for sub in $0.Subs
     element sub
   end
+  depth = $depth
 
 end -}}
 
 
-{{- func attrs
-
+{{ func attrs
   $attrs = $0.Attributes
 
-  if $attrs.Id
-    }} id = "{{ $attrs.Id}}" {{
+  if $attrs.Id != ""
+    }} id="{{ $attrs.Id}}" {{-
   end
   if $attrs.ClassesString != ""
-    }} class="{{ $attrs.ClassesString }}" {{
+    }} class="{{ $attrs.ClassesString }}" {{-
   end
-  $attrs.PropertiesString
+  if $attrs.PropertiesString != ""
+    " " $attrs.PropertiesString
+  end
 
-end -}}
+end }}

@@ -1,3 +1,9 @@
-<h {{- $1.Level}} {{ attrs $1 }}>
-{{ subs $1 }}
-</h {{- $1.Level -}} >
+
+{{depth}}<h {{- $1.Level -}}{{ attrs $1 -}}>
+{{- if $1.Anchor != "" -}}
+<a name="{{ $1.Anchor }}">{{ subs $1 }}</a>
+{{- else 
+    subs $1 
+   end
+-}}
+</h {{- $1.Level -}}>

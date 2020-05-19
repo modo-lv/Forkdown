@@ -18,14 +18,16 @@ namespace Forkdown.Core.Parsing {
       foreach (Document doc in docs) findAnchors(doc); void findAnchors(Element el, Document? doc = null) {
         doc ??= (Document) el;
 
-        var anchors = el.Attributes.Classes.Where(_ => _.StartsWith("#") || _ == "#~")
-          .Append(el.Attributes.Id)
+        var anchors = el.Attributes.Classes
+          .Prepend(el.Attributes.Id)
+          .Where(_ => _.StartsWith("#") || _ == "#~")
           .ToList();
 
         foreach (var anchor in anchors)
         {
           var a = Anchor(anchor == "#~" ? el.Title : anchor.Part(1));
           index.Add(a, doc);
+          el.Anchor = a;
 
           if (el.Attributes.Id.IsBlank() && a.NotBlank())
             el.Attributes.Id = a;
