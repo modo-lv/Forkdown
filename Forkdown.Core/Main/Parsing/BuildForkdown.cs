@@ -33,6 +33,14 @@ namespace Forkdown.Core.Parsing {
       MarkdownDocument mDoc = BuildMarkdown.From(markdown);
       var result = (Document) BuildForkdown.From(mDoc);
       result.FileName = fileName;
+      
+      // Special case: If the first element of a document is a completely empty paragraph,
+      // copy attributes from it to the document, because that means it originally contained attribute definitions.
+      if (result.Subs[0] is Paragraph p && !p.Subs.Any()) {
+        result.Attributes = result.Subs[0].Attributes;
+        result.Subs.RemoveAt(0);
+      }
+      
       return result;
     }
 

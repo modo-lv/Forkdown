@@ -71,8 +71,7 @@ namespace Forkdown.Core {
         .Select(doc => {
           var relative = doc.MakeRelativeTo(root);
           _logger.LogDebug("Loading {doc}...", relative.ToString());
-          return Parsing.BuildForkdown.From(
-            doc,
+          return BuildForkdown.From(doc,
             relative.ToString().TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
           );
         })

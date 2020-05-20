@@ -16,7 +16,7 @@ namespace Forkdown.Core.Elements {
 
     public readonly String Type;
 
-    public readonly ElementAttributes Attributes;
+    public ElementAttributes Attributes;
 
     /// <summary>
     /// Keyword(s) that 
