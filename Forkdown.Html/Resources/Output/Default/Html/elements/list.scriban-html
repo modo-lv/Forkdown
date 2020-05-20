@@ -1,0 +1,11 @@
+{{-
+if $1.IsOrdered
+  $tag = "ol"
+else
+  $tag = "ul"
+end
+-}}
+<{{ $tag
+attrs $1 }}>
+{{ subs $1 }}
+</{{ $tag}}>

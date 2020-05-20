@@ -46,6 +46,8 @@ namespace Forkdown.Core.Parsing {
       {
         MarkdownDocument d => new Document(d),
         HeadingBlock h => new Heading(h),
+        ListBlock l => new Listing(l),
+        ListItemBlock li => new ListItem(li),
         ParagraphBlock p => new Paragraph(p),
         EmphasisInline e => new Emphasis(e),
         CodeInline c => new Code(c),
