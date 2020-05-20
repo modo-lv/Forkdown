@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Parsing;
@@ -17,11 +15,6 @@ using Path = Fluent.IO.Path;
 namespace Forkdown.Html.Main {
   public class HtmlOutput {
     /// <summary>
-    /// Location of the HTML output.
-    /// </summary>
-    public Path OutRoot { get; protected set; }
-
-    /// <summary>
     /// Forkdown project to build from.
     /// </summary>
     public readonly Project Project;
@@ -33,16 +26,14 @@ namespace Forkdown.Html.Main {
       this.Project = project;
       this._logger = logger;
       this._args = args;
-
-      this.OutRoot = this._args.ProjectRoot.Combine("out-net");
     }
 
 
     public HtmlOutput BuildHtml() {
       this.Project.Load();
-      this.OutRoot.CreateDirectories();
+      var outRoot = this._args.ProjectRoot.Combine("out-net").CreateDirectories();
 
-      this._logger.LogInformation("Building {output} in {root}...", "HTML", this.OutRoot!.ToString());
+      this._logger.LogInformation("Building {output} in {root}...", "HTML", outRoot.ToString());
 
       var inRoot = Path.Get("Resources/Output/Default/Html");
       var inFile = inRoot.Combine("page.scriban-html").FullPath;
@@ -60,11 +51,10 @@ namespace Forkdown.Html.Main {
 
       foreach (Document doc in this.Project.Pages)
       {
-        // Anchors
-        this.AnchorLinks(doc);
+        this.ProcessLinks(doc);
 
         var outFile = doc.FileName + ".html";
-        Path outPath = this.OutRoot.Combine(outFile);
+        Path outPath = outRoot.Combine(outFile);
         outPath.Parent().CreateDirectories();
         this._logger.LogDebug("Rendering {page}...", outFile);
 
@@ -75,20 +65,23 @@ namespace Forkdown.Html.Main {
 
       return this;
     }
-
-
-    public void AnchorLinks(Element el, Document? doc = null) {
+    
+    public void ProcessLinks(Element el, Document? doc = null) {
       doc ??= (Document) el;
       var index = this.Project.Anchors;
-      if (el is Link link)
+      if (el is Link link && link.IsInternal)
       {
         var target = AnchorIndex.Anchor(link.Target);
-        if (link.IsInternal && index.ContainsKey(target))
+        if (index.ContainsKey(target))
           link.Target = $"{"../".Repeat(doc.Depth)}{index[target].FileName}.html#{target}";
+        else
+        {
+          link.Target = this.Project.Config.ExternalLinks.UrlTo(link.Target);
+        }
       }
       else
       {
-        el.Subs.ForEach(_ => this.AnchorLinks(_, doc));
+        el.Subs.ForEach(_ => this.ProcessLinks(_, doc));
       }
     }
   }
