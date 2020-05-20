@@ -21,7 +21,6 @@ namespace Forkdown.Core.Config {
         return new KeyValuePair<String, String>(key.ToString().Text(), value.ToString().Text());
       });
 
-
       return new ExternalLinkRewriteConfig(items);
     }
   }

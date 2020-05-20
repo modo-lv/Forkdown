@@ -76,7 +76,7 @@ namespace Forkdown.Html.Main {
           link.Target = $"{"../".Repeat(doc.Depth)}{index[target].FileName}.html#{target}";
         else
         {
-          link.Target = this.Project.Config.ExternalLinks.UrlTo(link.Target);
+          link.Target = this.Project.Config.ExternalLinks.UrlFor(link.Target);
         }
       }
       else

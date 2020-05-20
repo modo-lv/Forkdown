@@ -60,7 +60,7 @@ namespace Forkdown.Core {
       _logger.LogInformation("Loading project from {dir}...", root.ToString());
 
       // Settings
-      this.Config = MainConfig.FromYaml(_args.MainConfigFile);
+      this.Config = MainConfig.From(_args.MainConfigFile);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
 
       // Pages
