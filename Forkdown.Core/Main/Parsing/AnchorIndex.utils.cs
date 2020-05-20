@@ -29,7 +29,7 @@ namespace Forkdown.Core.Parsing {
           index.Add(a, doc);
           el.Anchor = a;
 
-          if (el.Attributes.Id.IsBlank() && a.NotBlank())
+          if ((el.Attributes.Id.IsBlank() || el.Attributes.Id == "#~") && a.NotBlank())
             el.Attributes.Id = a;
         }
 

@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Forkdown.Core.Config {
   public partial class ExternalLinkConfig {
 
-    public String UrlFor(String target) => 
-      this.DefaultUrl.Replace("%~", target);
+    public String UrlFor(String target) {
+      this.Rewrites.ForEach(_ =>
+        target = Regex.Replace(target, _.Key, _.Value)
+      );
+      return this.DefaultUrl.Replace("%~", target);
+    }
 
     private String _defaultUrl = "";
     /// <summary>

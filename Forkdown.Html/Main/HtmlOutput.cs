@@ -74,10 +74,6 @@ namespace Forkdown.Html.Main {
         var target = AnchorIndex.Anchor(link.Target);
         if (index.ContainsKey(target))
           link.Target = $"{"../".Repeat(doc.Depth)}{index[target].FileName}.html#{target}";
-        else
-        {
-          link.Target = this.Project.Config.ExternalLinks.UrlFor(link.Target);
-        }
       }
       else
       {

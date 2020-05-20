@@ -11,6 +11,7 @@ using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 using YamlDotNet.Core.Tokens;
 using Path = Fluent.IO.Path;
+
 // ReSharper disable UnusedMember.Global
 
 namespace Forkdown.Core {
@@ -32,8 +33,8 @@ namespace Forkdown.Core {
     /// <summary>
     /// Index mapping anchors to the pages they are in. 
     /// </summary>
-    public IDictionary<String, Document> Anchors = Nil.DStr<Document>(); 
-    
+    public IDictionary<String, Document> Anchors = Nil.DStr<Document>();
+
 
     /// Constructor
     private readonly ILogger<Project> _logger;
@@ -76,13 +77,27 @@ namespace Forkdown.Core {
           );
         })
         .ToHashSet();
-      
+
       // Achors
       this.Anchors = AnchorIndex.BuildFrom(this.Pages);
-      
+
+      // Links
+      this.Pages.ForEach(_ => this.ProcessLinks(_, _));
 
       _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;
     }
+
+    public void ProcessLinks(Element el, Document? doc = null) {
+      doc ??= (Document) el;
+      if (el is Link link && link.IsInternal && !this.Anchors.ContainsKey(link.Target)) {
+        if (link.Target.StartsWith("@")) 
+          link.Target = link.Target == "@" ? link.Title : link.Target.Part(1);
+        link.Target = this.Config.ExternalLinks.UrlFor(link.Target);
+      }
+      else
+        el.Subs.ForEach(_ => this.ProcessLinks(_, doc));
+    }
+
   }
 }

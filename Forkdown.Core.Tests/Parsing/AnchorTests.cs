@@ -21,8 +21,8 @@ namespace Forkdown.Core.Tests.Parsing {
     [Fact]
     void ImplicitAnchors() {
       const String input = @"
-## Class Anchor {.#~}
-## ID Anchor {##~}
+## [Class Anchor](xxx) {.#~}
+## **ID Anchor** {##~}
 ";
       var doc = BuildForkdown.From(input);
       doc.Subs.First().Attributes.Classes.Count.Should().Be(1);
@@ -32,6 +32,7 @@ namespace Forkdown.Core.Tests.Parsing {
       anchors.Count.Should().Be(2);
       anchors["class_anchor"].Should().Be(doc);
       anchors["id_anchor"].Should().Be(doc);
+      doc.Subs[1].Attributes.Id.Should().Be("id_anchor");
     }
 
     [Fact]

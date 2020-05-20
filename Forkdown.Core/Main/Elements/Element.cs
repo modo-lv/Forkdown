@@ -33,7 +33,7 @@ namespace Forkdown.Core.Elements {
       return el switch
       {
         Text t => t.Content,
-        _ => el.Subs.Where(sub => sub is Inline).Select(Element.TitleOf).StringJoin(),
+        _ => el.Subs.Select(Element.TitleOf).StringJoin(),
       };
     }
   }
