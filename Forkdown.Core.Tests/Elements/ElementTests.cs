@@ -13,5 +13,17 @@ namespace Forkdown.Core.Tests.Elements {
       var result = BuildForkdown.From(input);
       result.Subs[0].Title.Should().Be("Heading");
     }
+
+    [Fact]
+    void ListItemTitle() {
+      const String input = @"
+* **[Wicked](link)**
+  Continuation
+
+  Another paragraph
+";
+      var result = BuildForkdown.From(input);
+      result.Subs[0].Title.Should().Be("Wicked");
+    }
   }
 }

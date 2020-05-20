@@ -1,11 +1,11 @@
 ﻿using System;
-using Forkdown.Core.Main.Elements;
+using Forkdown.Core.Elements.Types;
 using Markdig.Syntax;
 
 // ReSharper disable NotAccessedField.Global
 
 namespace Forkdown.Core.Elements {
-  public class Placeholder : Inline {
+  public class Placeholder : Element, Inline {
     public String Name;
 
     public Placeholder(MarkdownObject mdo) : base(mdo) => 

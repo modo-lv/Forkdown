@@ -1,9 +1,9 @@
 ﻿using System;
-using Forkdown.Core.Main.Elements;
 using Markdig.Syntax;
+using Block = Forkdown.Core.Elements.Types.Block;
 
 namespace Forkdown.Core.Elements {
-  public class Heading : Container {
+  public class Heading : Element, Block {
     public Int32 Level;
 
     public Heading(HeadingBlock mHeading) : base(mHeading) {

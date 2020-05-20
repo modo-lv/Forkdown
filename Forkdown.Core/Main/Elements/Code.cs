@@ -1,11 +1,11 @@
 ﻿using System;
 using Markdig.Syntax.Inlines;
-using Inline = Forkdown.Core.Main.Elements.Inline;
+using Inline = Forkdown.Core.Elements.Types.Inline;
 
 // ReSharper disable NotAccessedField.Global
 
 namespace Forkdown.Core.Elements {
-  public class Code : Inline {
+  public class Code : Element, Inline {
     public readonly String Content;
 
     public Code(CodeInline code) : base(code) =>

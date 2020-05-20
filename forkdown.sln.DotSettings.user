@@ -4,7 +4,8 @@
   &lt;Assembly Path="C:\Users\Martin\.nuget\packages\simpler.net.text\0.4.2\lib\netstandard1.3\Simpler.Net.Text.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Martin\.nuget\packages\markdig\0.20.0\lib\netcoreapp3.1\Markdig.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7e11500a_002D8028_002D4233_002D8768_002D12411dfcd157/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e3fddb50_002D2925_002D43f7_002Da7a1_002D15264a019fe2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

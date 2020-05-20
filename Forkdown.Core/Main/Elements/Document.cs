@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Forkdown.Core.Main.Elements;
 using Markdig.Syntax;
 using Simpler.NetCore.Collections;
+using Block = Forkdown.Core.Elements.Types.Block;
 
 namespace Forkdown.Core.Elements {
-  public class Document : Container {
+  public class Document : Element, Block {
     private String _fileName = "";
     public String FileName
     {
