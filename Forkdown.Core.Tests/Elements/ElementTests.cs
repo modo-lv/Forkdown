@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Forkdown.Core.Parsing;
+using Forkdown.Core.Elements;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -10,7 +10,7 @@ namespace Forkdown.Core.Tests.Elements {
     [Fact]
     void HeadingWithLinkTitle() {
       const String input = @"# [Heading](link)";
-      var result = BuildForkdown.From(input);
+      var result = Document.From(input);
       result.Subs[0].Title.Should().Be("Heading");
     }
 
@@ -22,7 +22,7 @@ namespace Forkdown.Core.Tests.Elements {
 
   Another paragraph
 ";
-      var result = BuildForkdown.From(input);
+      var result = Document.From(input);
       result.Subs[0].Title.Should().Be("Wicked");
     }
   }

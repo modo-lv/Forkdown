@@ -1,13 +1,14 @@
 ﻿using System.IO;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing;
+using Forkdown.Core.Parsing.Forkdown;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
+using Document = Forkdown.Core.Elements.Document;
 using Path = Fluent.IO.Path;
 
 #pragma warning disable 1591
@@ -71,7 +72,7 @@ namespace Forkdown.Html.Main {
       var index = this.Project.Anchors;
       if (el is Link link && link.IsInternal)
       {
-        var target = AnchorIndex.Anchor(link.Target);
+        var target = GlobalId.From(link.Target);
         if (index.ContainsKey(target))
           link.Target = $"{"../".Repeat(doc.Depth)}{index[target].FileName}.html#{target}";
       }

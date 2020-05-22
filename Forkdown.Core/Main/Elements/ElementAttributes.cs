@@ -9,10 +9,10 @@ using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements {
   public class ElementAttributes {
-    public String Id;
+    public String Id = "";
 
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
-    public ISet<String> Classes;
+    public ISet<String> Classes = Nil.SStr;
     
     private IDictionary<String, String> _properties = Nil.DStr<String>();
     public IDictionary<String, String> Properties
@@ -27,6 +27,8 @@ namespace Forkdown.Core.Elements {
 
     public String ClassesString => this.Classes.StringJoin(" ") ?? "";
     public String PropertiesString { get; protected set; } = "";
+
+    public ElementAttributes() { }
 
     public ElementAttributes(HtmlAttributes attrs) {
       this.Id = attrs.Id.Text();

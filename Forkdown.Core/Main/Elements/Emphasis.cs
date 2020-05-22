@@ -1,6 +1,5 @@
 ﻿using System;
 using Markdig.Syntax.Inlines;
-using Inline = Forkdown.Core.Elements.Types.Inline;
 
 // ReSharper disable NotAccessedField.Global
 

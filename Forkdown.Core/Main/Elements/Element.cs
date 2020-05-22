@@ -1,48 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Forkdown.Core.Elements.Types;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Simpler.NetCore.Collections;
+using Simpler.NetCore.Text;
 
 // ReSharper disable NotAccessedField.Global
 
 namespace Forkdown.Core.Elements {
-  public abstract class Element {
+  public abstract partial class Element {
     public IList<Element> Subs = Nil.L<Element>();
 
     public String Title => Element.TitleOf(this);
 
-    public readonly String Type;
+    public readonly String Type = "";
 
-    public ElementAttributes Attributes;
+    public ElementAttributes Attributes = new ElementAttributes(new HtmlAttributes());
 
+    private String _globalId = "";
     /// <summary>
-    /// Keyword(s) that 
+    /// An identifier that is unique within the project. 
     /// </summary>
-    public String Anchor = "";
+    public String GlobalId {
+      get => this._globalId;
+      set {
+        this._globalId = value;
+        if (value.NotBlank())
+          this.Attributes.Id = value;
+      }
+    }
 
+    protected Element() { }
 
     protected Element(IMarkdownObject mdo) {
       this.Type = this.GetType().Name;
       this.Attributes = new ElementAttributes(mdo.GetAttributes());
-    }
-
-
-    private static String TitleOf(Element el, Boolean contentFound = false) {
-      if (el is Text t)
-        return t.Content;
-
-      if (contentFound) {
-        return el.Subs.Where(_ => _ is Text || _ is Inline)
-          .Select(_ => Element.TitleOf(_, contentFound))
-          .StringJoin();
-      }
-      
-      return el.Subs.Take(1)
-        .Select(_ => TitleOf(_, _ is Inline))
-        .FirstOrDefault() ?? "";
     }
   }
 }

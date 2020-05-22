@@ -1,5 +1,4 @@
 ﻿using System;
-using Forkdown.Core;
 using Forkdown.Core.Internal;
 using Forkdown.Core.Wiring;
 using Forkdown.Core.Wiring.Dependencies;

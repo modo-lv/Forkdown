@@ -8,8 +8,9 @@ namespace Forkdown.Core.Parsing {
     public static MarkdownDocument From(String markdown) {
       var pipeline = new MarkdownPipelineBuilder();
       pipeline.Extensions.AddIfNotAlready<ShorthandLinkExtension>();
+      pipeline.Extensions.AddIfNotAlready<CheckboxExtension>();
       pipeline.UseGenericAttributes();
-      return Markdig.Markdown.Parse(markdown, pipeline.Build());
+      return Markdown.Parse(markdown, pipeline.Build());
     }
   }
 }

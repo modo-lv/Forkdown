@@ -4,13 +4,11 @@ using System.IO;
 using System.Linq;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing;
+using Forkdown.Core.Parsing.Forkdown;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
-using YamlDotNet.Core.Tokens;
-using Path = Fluent.IO.Path;
 
 // ReSharper disable UnusedMember.Global
 
@@ -18,7 +16,7 @@ namespace Forkdown.Core {
   /// <summary>
   /// Main Forkdown project class.
   /// </summary>
-  public class Project {
+  public partial class Project {
     /// <inheritdoc cref="MainConfig"/>
     public MainConfig Config = new MainConfig();
 
@@ -39,9 +37,11 @@ namespace Forkdown.Core {
     /// Constructor
     private readonly ILogger<Project> _logger;
     private readonly BuildArguments _args;
-    public Project(ILogger<Project> logger, BuildArguments args) {
+    private readonly ForkdownBuilder _builder;
+    public Project(ILogger<Project> logger, BuildArguments args, ForkdownBuilder builder) {
       _logger = logger;
       _args = args;
+      _builder = builder;
     }
 
 
@@ -63,7 +63,8 @@ namespace Forkdown.Core {
       // Settings
       this.Config = MainConfig.From(_args.MainConfigFile);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
-
+      
+      // Builder
       // Pages
       _logger.LogInformation("Finding and loading pages...");
       this.Pages = root.Combine("pages")
@@ -71,24 +72,26 @@ namespace Forkdown.Core {
         .Select(doc => {
           var relative = doc.MakeRelativeTo(root);
           _logger.LogDebug("Loading {doc}...", relative.ToString());
-          return BuildForkdown.From(doc,
+          return _builder.Build(doc,
             relative.ToString().TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
           );
         })
         .ToHashSet();
+      
+      // Restructure
 
       // Achors
-      this.Anchors = AnchorIndex.BuildFrom(this.Pages);
-
+      this._logger.LogDebug("Processing anchors...");
+      this.Anchors = InternalLinks.From(this.Pages);
       // Links
+      this._logger.LogDebug("Processing internal links...");
       this.Pages.ForEach(_ => this.ProcessLinks(_, _));
 
       _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;
     }
 
-    public void ProcessLinks(Element el, Document? doc = null) {
-      doc ??= (Document) el;
+    public void ProcessLinks(Element el, Document doc) {
       if (el is Link link && link.IsInternal && !this.Anchors.ContainsKey(link.Target)) {
         if (link.Target.StartsWith("@")) 
           link.Target = link.Target == "@" ? link.Title : link.Target.Part(1);
@@ -97,6 +100,6 @@ namespace Forkdown.Core {
       else
         el.Subs.ForEach(_ => this.ProcessLinks(_, doc));
     }
-
+    
   }
 }

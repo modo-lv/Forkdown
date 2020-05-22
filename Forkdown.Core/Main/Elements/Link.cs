@@ -1,5 +1,4 @@
 ﻿using System;
-using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Inline = Forkdown.Core.Elements.Types.Inline;
 

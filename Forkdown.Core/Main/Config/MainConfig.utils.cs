@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
-using Forkdown.Core.Wiring;
+﻿using System.IO;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Text;
 using Yaml = YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using Path = Fluent.IO.Path;
 
 namespace Forkdown.Core.Config {
   public partial class MainConfig {

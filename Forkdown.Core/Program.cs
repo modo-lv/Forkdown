@@ -1,5 +1,4 @@
 ﻿using System;
-using Forkdown.Core.Wiring.Dependencies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
