@@ -15,5 +15,10 @@ namespace Forkdown.Core.Elements {
     /// How deep in the project file tree this document is.
     /// </summary>
     public Int32 Depth => this.FileName.Count(_ => _ == '/');
+    
+    /// <summary>
+    ///  
+    /// </summary>
+    public Document? MainMenu = null;
   }
 }

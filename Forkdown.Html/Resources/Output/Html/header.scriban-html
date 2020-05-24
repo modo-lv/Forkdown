@@ -1,2 +1,10 @@
 ﻿<header>
+  <h1>{{ Project.Name }}</h1>
+  <nav>
+{{ 
+if Document.MainMenu
+  element Document.MainMenu 
+end
+}}
+  </nav>
 </header>

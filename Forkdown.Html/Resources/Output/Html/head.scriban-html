@@ -3,9 +3,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="UTF-8" />
 
-  <link rel="stylesheet" href="{{ PathToRoot }}main.css" />
+  <link rel="stylesheet" href="{{ PathToRoot }}main.css?{{ Timestamp }}" />
 
   {{ for script in Scripts }}
-  <script src="{{ PathToRoot + script }}" defer></script>
+  <script src="{{ PathToRoot + script }}?{{ Timestamp }}" defer></script>
   {{ end }}
 </head>

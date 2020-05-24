@@ -7,7 +7,9 @@
 {{ include 'head' }}
 <body data-project-name="{{ Project.Name }}">
 {{ include 'header' }}
+<main>
 {{ element Document }}
+</main>
 {{ include 'footer' }}
 </body>
 </html>

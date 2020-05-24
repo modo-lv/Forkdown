@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Parsing.Forkdown;
@@ -46,14 +47,20 @@ namespace Forkdown.Html.Main {
       {
         { "Project", this._project },
         { "Scripts", _jsBuilder.ScriptPaths },
+        { "Timestamp", DateTime.Now.Ticks },
       };
       templateContext.PushGlobal(model);
       var template = Template.Parse(File.ReadAllText(inFile));
 
+      // pages
       foreach (Document doc in this._project.Pages)
       {
         this.ProcessLinks(doc);
         ProcessClasses(doc);
+        if (doc.MainMenu != null) {
+          this.ProcessLinks(doc.MainMenu);
+          ProcessClasses(doc.MainMenu);
+        }
 
         var outFile = doc.FileName + ".html";
         Path outPath = _outPath.Combine("pages", outFile);

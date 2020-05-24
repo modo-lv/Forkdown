@@ -84,9 +84,24 @@ namespace Forkdown.Core {
       // Achors
       this._logger.LogDebug("Processing anchors...");
       this.InteralLinks = InternalLinks.From(this.Pages);
+
       // Links
       this._logger.LogDebug("Processing internal links...");
       this.Pages.ForEach(_ => this.ProcessLinks(_, _));
+
+      { // Main menu
+        var mmFile = root.Combine("layout/main_menu.md");
+        if (mmFile.Exists) {
+          _logger.LogDebug("Processing main menu...");
+          var mainMenu = _builder.Build(mmFile, "");
+          this.ProcessLinks(mainMenu, mainMenu);
+          this.Pages.ForEach(doc => {
+            mainMenu.FileName = doc.FileName;
+            doc.MainMenu = mainMenu;
+          });
+        }
+      }
+
 
       _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;

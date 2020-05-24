@@ -5,7 +5,6 @@ using Forkdown.Core.Parsing;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Simpler.NetCore.Collections;
-using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements {
   /// <summary>
@@ -34,6 +33,7 @@ namespace Forkdown.Core.Elements {
           LinkInline l => new Link(l),
           LiteralInline t => new Text(t),
           LineBreakInline lb => new LineBreak(),
+          ThematicBreakBlock _ => new Separator(),
           _ => new Placeholder(mdo),
         };
 

@@ -10,7 +10,7 @@
     when 'Heading'
       include 'elements/heading' $0
     when 'LineBreak'
-      "<br />"
+      include 'elements/line_break' $0
     when 'Listing'
       include 'elements/list' $0
     when 'Section'
@@ -23,6 +23,8 @@
       include 'elements/emphasis' $0
     when 'Link'
       include 'elements/link' $0
+    when 'Separator'
+      include 'elements/separator' $0
     when "Text"
       include 'elements/text' $0
     else

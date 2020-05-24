@@ -54,6 +54,7 @@ namespace Forkdown.Html.Main {
         var inFile = _inPath.Combine(path);
         var outFile = _outPath.Combine(path);
         _logger.LogDebug("Copying {file}...", path);
+        
         outFile.Parent().CreateDirectories();
         File.Copy(inFile.ToString(), outFile.ToString(), true);
       });
