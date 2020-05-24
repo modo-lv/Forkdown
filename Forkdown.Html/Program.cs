@@ -20,7 +20,7 @@ namespace Forkdown.Html {
     public static Path InPath = 
       Path.Get(Assembly.GetExecutingAssembly().Location).Parent().Combine("Resources/Output");
 
-    public const String OutFolder = "out-net";
+    public const String OutFolder = "out-html";
     
     
 

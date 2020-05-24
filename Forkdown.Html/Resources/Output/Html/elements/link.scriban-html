@@ -1,4 +1,10 @@
+{{-
+  $target = $1.Target
+  if ($1.IsInternal && $target != "")
+    $target = PathToRoot + $target
+  end
+-}}
 <a {{ if $1.Target != "" -}} 
-href="{{ $1.Target }}"
+href="{{ $target }}"
 {{- end
 attrs $1 -}}>{{ subs $1 }}</a>

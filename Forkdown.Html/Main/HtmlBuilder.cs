@@ -40,7 +40,6 @@ namespace Forkdown.Html.Main {
       { // Main menu
         var mmFile = _args.ProjectRoot.Combine("layout/main_menu.md");
         if (mmFile.Exists) {
-          _logger.LogDebug("Processing main menu...");
           mainMenu = _project.LoadFile(mmFile.ToString());
           _project.ProcessLinks(mainMenu);
         }
@@ -63,15 +62,14 @@ namespace Forkdown.Html.Main {
 
       // pages
       _outPath.CreateDirectories();
+      if (mainMenu != null) {
+        this.ProcessLinks(mainMenu);
+        ProcessClasses(mainMenu);
+      }
       foreach (Document doc in this._project.Pages)
       {
         this.ProcessLinks(doc);
         ProcessClasses(doc);
-        
-        if (mainMenu != null) {
-          this.ProcessLinks(mainMenu, doc);
-          ProcessClasses(mainMenu);
-        }
 
         var outFile = doc.ProjectFilePath.TrimSuffix(".md") + ".html";
         Path outPath = _outPath.Combine(outFile);
@@ -95,7 +93,7 @@ namespace Forkdown.Html.Main {
       {
         var target = GlobalId.From(link.Target);
         if (index.ContainsKey(target))
-          link.Target = $"{"../".Repeat(doc.Depth)}{index[target].ProjectFilePath.TrimSuffix(".md")}.html#{target}";
+          link.Target = $"{index[target].ProjectFilePath.TrimSuffix(".md")}.html#{target}";
       }
       else
       {
