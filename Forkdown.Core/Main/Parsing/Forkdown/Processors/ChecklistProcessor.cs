@@ -44,11 +44,11 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     ) where T : Element {
       String id = "";
       if (el is Document dEl) {
-        id = dEl.FileName;
+        id = dEl.ProjectFileId;
         doc = dEl;
       }
       else if (el.GlobalId.NotBlank()) {
-        id = doc!.FileName.NotBlank() ? $"{doc!.FileName}{G}{el.GlobalId}" : el.GlobalId;
+        id = doc!.ProjectFileId.NotBlank() ? $"{doc!.ProjectFileId}{G}{el.GlobalId}" : el.GlobalId;
       }
       else if (el is Section sec) {
         id = sec.Title.Replace(' ', W);

@@ -19,11 +19,13 @@ namespace Forkdown.Html.Main {
     private readonly Project _project;
     private readonly JsBuilder _jsBuilder; 
     private readonly ILogger<HtmlBuilder> _logger;
+    private readonly BuildArguments _args;
     private readonly Path _inPath;
     private readonly Path _outPath;
     public HtmlBuilder(Project project, ILogger<HtmlBuilder> logger, BuildArguments args, JsBuilder jsBuilder) {
       _project = project;
       _logger = logger;
+      _args = args;
       _jsBuilder = jsBuilder;
       _inPath = Program.InPath.Combine("html");
       _outPath = args.ProjectRoot.Combine(Program.OutFolder);
@@ -32,10 +34,17 @@ namespace Forkdown.Html.Main {
 
     public HtmlBuilder Build() {
       _project.Load();
-
-      _outPath.CreateDirectories();
-
       this._logger.LogInformation("Building {output} in {root}...", "HTML", _outPath.ToString());
+      
+      Document? mainMenu = null;
+      { // Main menu
+        var mmFile = _args.ProjectRoot.Combine("layout/main_menu.md");
+        if (mmFile.Exists) {
+          _logger.LogDebug("Processing main menu...");
+          mainMenu = _project.LoadFile(mmFile.ToString());
+          _project.ProcessLinks(mainMenu);
+        }
+      }
 
       var inFile = _inPath.Combine("page.scriban-html").FullPath;
       var templateContext = new TemplateContext
@@ -53,22 +62,25 @@ namespace Forkdown.Html.Main {
       var template = Template.Parse(File.ReadAllText(inFile));
 
       // pages
+      _outPath.CreateDirectories();
       foreach (Document doc in this._project.Pages)
       {
         this.ProcessLinks(doc);
         ProcessClasses(doc);
-        if (doc.MainMenu != null) {
-          this.ProcessLinks(doc.MainMenu);
-          ProcessClasses(doc.MainMenu);
+        
+        if (mainMenu != null) {
+          this.ProcessLinks(mainMenu, doc);
+          ProcessClasses(mainMenu);
         }
 
-        var outFile = doc.FileName + ".html";
-        Path outPath = _outPath.Combine("pages", outFile);
+        var outFile = doc.ProjectFilePath.TrimSuffix(".md") + ".html";
+        Path outPath = _outPath.Combine(outFile);
         outPath.Parent().CreateDirectories();
         this._logger.LogDebug("Rendering {page}...", outFile);
 
         model.Add("Document", doc);
-        model.Add("PathToRoot", "../".Repeat(doc.Depth + 1));
+        model.Add("PathToRoot", "../".Repeat(doc.Depth));
+        model.Add("MainMenu", mainMenu);
         var html = template.Render(templateContext);
         File.WriteAllText(outPath.ToString(), html);
       }
@@ -83,7 +95,7 @@ namespace Forkdown.Html.Main {
       {
         var target = GlobalId.From(link.Target);
         if (index.ContainsKey(target))
-          link.Target = $"{"../".Repeat(doc.Depth)}{index[target].FileName}.html#{target}";
+          link.Target = $"{"../".Repeat(doc.Depth)}{index[target].ProjectFilePath.TrimSuffix(".md")}.html#{target}";
       }
       else
       {

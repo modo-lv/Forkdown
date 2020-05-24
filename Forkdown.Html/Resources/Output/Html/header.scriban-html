@@ -2,8 +2,8 @@
   <h1>{{ Project.Name }}</h1>
   <nav>
 {{ 
-if Document.MainMenu
-  element Document.MainMenu 
+if MainMenu
+  element MainMenu 
 end
 }}
   </nav>

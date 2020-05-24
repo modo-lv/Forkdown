@@ -9,6 +9,7 @@ using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
+using Path = Fluent.IO.Path;
 
 // ReSharper disable UnusedMember.Global
 
@@ -69,53 +70,34 @@ namespace Forkdown.Core {
       _logger.LogInformation("Finding and loading pages...");
       this.Pages = root.Combine("pages")
         .Files("*.md", true)
-        .Select(doc => {
-          var relative = doc.MakeRelativeTo(root);
-          _logger.LogDebug("Loading {doc}...", relative.ToString());
-          return _builder.Build(doc,
-            relative.ToString()
-              .Replace("\\", "/")
-              .TrimPrefix("pages/", StringComparison.InvariantCultureIgnoreCase)
-              .TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
-          );
-        })
+        .Select(doc => this.LoadFile(doc.MakeRelativeTo(root).ToString()))
         .ToHashSet();
       
       // Achors
-      this._logger.LogDebug("Processing anchors...");
+      this._logger.LogDebug("Building internal link index...");
       this.InteralLinks = InternalLinks.From(this.Pages);
 
       // Links
-      this._logger.LogDebug("Processing internal links...");
-      this.Pages.ForEach(_ => this.ProcessLinks(_, _));
-
-      { // Main menu
-        var mmFile = root.Combine("layout/main_menu.md");
-        if (mmFile.Exists) {
-          _logger.LogDebug("Processing main menu...");
-          var mainMenu = _builder.Build(mmFile, "");
-          this.ProcessLinks(mainMenu, mainMenu);
-          this.Pages.ForEach(doc => {
-            mainMenu.FileName = doc.FileName;
-            doc.MainMenu = mainMenu;
-          });
-        }
-      }
-
+      this._logger.LogDebug("Updating internal link targets...");
+      this.Pages.ForEach(this.ProcessLinks);
 
       _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
       return this;
     }
 
-    public void ProcessLinks(Element el, Document doc) {
+    public void ProcessLinks(Element el) {
       if (el is Link link && link.IsInternal && !this.InteralLinks.ContainsKey(link.Target)) {
         if (link.Target.StartsWith("@")) 
           link.Target = link.Target == "@~" ? link.Title : link.Target.Part(1);
         link.Target = this.Config.ExternalLinks.UrlFor(link.Target);
       }
       else
-        el.Subs.ForEach(_ => this.ProcessLinks(_, doc));
+        el.Subs.ForEach(this.ProcessLinks);
     }
-    
+
+    public Document LoadFile(String file) {
+      _logger.LogDebug("Loading {doc}...", file.Replace('\\', '/'));
+      return _builder.Build(_args.ProjectRoot.Combine(file), file);
+    }
   }
 }

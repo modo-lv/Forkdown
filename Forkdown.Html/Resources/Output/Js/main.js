@@ -7,7 +7,7 @@ if (!projectName)
 
 new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
   // CHECKBOXES
-  $("li.checkbox input[type=checkbox]").each(async (i, c) => {
+  $("li.fd_checkbox input[type=checkbox]").each(async (i, c) => {
     let checkbox = $(c)
     let id = checkbox.prop("id")
     if (!id) {
@@ -28,8 +28,3 @@ new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
     })
   })
 })
-
-
-// MENU
-$("nav a[href]").filter((i, e) => e.href == window.location).parent().parent().addClass("current")
-
