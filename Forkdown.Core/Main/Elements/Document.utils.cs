@@ -30,6 +30,7 @@ namespace Forkdown.Core.Elements {
           ParagraphBlock p => new Paragraph(p),
           EmphasisInline e => new Emphasis(e),
           CodeInline c => new Code(c),
+          FencedCodeBlock c => new CodeBlock(c),
           LinkInline l => new Link(l),
           LiteralInline t => new Text(t),
           LineBreakInline lb => new LineBreak(),

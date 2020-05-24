@@ -8,24 +8,24 @@ ul, ol {
     margin-left: @indent;
   }
 
-  &.checklist {
+  &.fd_checklist {
     p {
       display: table;
     }
 
-    &.horizontal {
+    &.fd_horizontal {
       display: flex;
       li + li {
         margin-left: @indent;
       }
     }
 
-    li.checkbox {
+    li.fd_checkbox {
       list-style-type: none;
       display: flex;
       flex-direction: row;
       margin-left: 0;
-      & > .column.checkbox {
+      & > .fd_column.fd_checkbox {
         min-width: @indent;
         text-align: left;
         & > input[type="checkbox"] {
@@ -39,7 +39,7 @@ ul, ol {
   }
 }
 
-ol.checklist li > .content.column {
+ol.fd_checklist li > .fd_content.fd_column {
   display: list-item;
   list-style-type: decimal;
   margin-left: @indent;

@@ -1,10 +1,16 @@
 {{- func element
 
   case $0.Type
+    when 'Code'
+      include 'elements/code' $0
+    when 'CodeBlock'
+      include 'elements/code_block' $0
     when 'Document'
       include 'elements/document' $0
     when 'Heading'
       include 'elements/heading' $0
+    when 'LineBreak'
+      "<br />"
     when 'Listing'
       include 'elements/list' $0
     when 'Section'
@@ -15,8 +21,6 @@
       include 'elements/paragraph' $0
     when 'Emphasis'
       include 'elements/emphasis' $0
-    when 'Code'
-      include 'elements/code' $0
     when 'Link'
       include 'elements/link' $0
     when "Text"

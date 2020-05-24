@@ -11,6 +11,9 @@ namespace Forkdown.Html.Main {
         case ListItem li when li.IsCheckbox:
           li.Attributes.Classes.Add("fd_checkbox");
           break;
+        case Link l when l.IsInternal:
+          l.Attributes.Classes.Add("fd_internal");
+          break;
       }
 
       element.Subs.ForEach(ProcessClasses);

@@ -1,11 +1,11 @@
 
 <li {{ attrs $1 }}>
 {{ if $1.IsCheckbox }}
-<div class="checkbox">
+<div class="fd_checkbox">
 <input type="checkbox" id="{{ $1.CheckboxId }}" />
 </div>
 {{ end }}
-<div class="content">
+<div class="fd_content">
 {{- subs $1 -}}
 </div>
 </li>

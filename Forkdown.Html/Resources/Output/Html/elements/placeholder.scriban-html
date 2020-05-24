@@ -1,4 +1,4 @@
 <span class="placeholder">{{ 
-  "Placeholder: " + $1.Name
+  "Placeholder: " + $1.Name + "/" + $1.Type
   subs $1
 }}</span>

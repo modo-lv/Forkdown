@@ -15,32 +15,31 @@ using Path = Fluent.IO.Path;
 
 namespace Forkdown.Html.Main {
   public partial class HtmlBuilder {
-    /// <summary>
-    /// Forkdown project to build from.
-    /// </summary>
     private readonly Project _project;
     private readonly JsBuilder _jsBuilder; 
     private readonly ILogger<HtmlBuilder> _logger;
-    private readonly BuildArguments _args;
+    private readonly Path _inPath;
+    private readonly Path _outPath;
     public HtmlBuilder(Project project, ILogger<HtmlBuilder> logger, BuildArguments args, JsBuilder jsBuilder) {
       _project = project;
       _logger = logger;
-      _args = args;
       _jsBuilder = jsBuilder;
+      _inPath = Program.InPath.Combine("html");
+      _outPath = args.ProjectRoot.Combine(Program.OutFolder);
     }
 
 
     public HtmlBuilder Build() {
       _project.Load();
-      var outRoot = this._args.ProjectRoot.Combine("out-net").CreateDirectories();
 
-      this._logger.LogInformation("Building {output} in {root}...", "HTML", outRoot.ToString());
+      _outPath.CreateDirectories();
 
-      var inRoot = Path.Get("Resources/Output/html");
-      var inFile = inRoot.Combine("page.scriban-html").FullPath;
+      this._logger.LogInformation("Building {output} in {root}...", "HTML", _outPath.ToString());
+
+      var inFile = _inPath.Combine("page.scriban-html").FullPath;
       var templateContext = new TemplateContext
       {
-        TemplateLoader = new ScribanTemplateLoader(inRoot),
+        TemplateLoader = new ScribanTemplateLoader(_inPath),
         MemberRenamer = _ => _.Name
       };
       var model = new ScriptObject
@@ -49,7 +48,7 @@ namespace Forkdown.Html.Main {
         { "Scripts", _jsBuilder.ScriptPaths },
       };
       templateContext.PushGlobal(model);
-      var template = Template.Parse(text: File.ReadAllText(inFile));
+      var template = Template.Parse(File.ReadAllText(inFile));
 
       foreach (Document doc in this._project.Pages)
       {
@@ -57,7 +56,7 @@ namespace Forkdown.Html.Main {
         ProcessClasses(doc);
 
         var outFile = doc.FileName + ".html";
-        Path outPath = outRoot.Combine("pages", outFile);
+        Path outPath = _outPath.Combine("pages", outFile);
         outPath.Parent().CreateDirectories();
         this._logger.LogDebug("Rendering {page}...", outFile);
 
