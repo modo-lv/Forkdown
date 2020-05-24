@@ -31,6 +31,8 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
           if (isNextHeading) {
             section = new Section { IsImplicit = true };
             section.Subs.Add(el);
+            section.Attributes = el.Attributes;
+            el.Attributes = new ElementAttributes();
           }
           else {
             newSubs.Add(el);

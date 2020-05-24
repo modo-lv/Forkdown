@@ -48,7 +48,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         doc = dEl;
       }
       else if (el.GlobalId.NotBlank()) {
-        id = doc!.ProjectFileId.NotBlank() ? $"{doc!.ProjectFileId}{G}{el.GlobalId}" : el.GlobalId;
+        id = el.GlobalId;
       }
       else if (el is Section sec) {
         id = sec.Title.Replace(' ', W);

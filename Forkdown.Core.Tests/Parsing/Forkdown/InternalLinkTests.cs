@@ -28,7 +28,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
 Paragraph {.#pAnchor}
 ";
       var doc = ForkdownBuilder.Default.Build(input);
-      doc.Subs[0].Subs[0].Attributes.Id.Should().Be("h-anchor");
+      doc.Subs[0].Attributes.Id.Should().Be("h-anchor");
       doc.Subs[0].Subs[1].Attributes.Id.Should().Be("panchor");
       var anchors = InternalLinks.From(doc);
 
