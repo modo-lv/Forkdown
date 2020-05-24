@@ -41,6 +41,7 @@ namespace Forkdown.Html {
         using var scope = services.CreateScope();
         scope.Service<HtmlBuilder>().Build();
         scope.Service<JsBuilder>().Build();
+        scope.Service<CssBuilder>().Build();
 
         logger.LogInformation("All done.");
       }

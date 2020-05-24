@@ -8,6 +8,7 @@ namespace Forkdown.Html.Wiring {
   public static class HtmlDependencies {
     public static readonly Action<IServiceCollection> Config = svc => {
       svc.AddScoped<JsBuilder>();
+      svc.AddScoped<CssBuilder>();
       svc.AddScoped<HtmlBuilder>();
     };
   }

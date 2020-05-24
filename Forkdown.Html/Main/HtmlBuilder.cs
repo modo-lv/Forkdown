@@ -36,7 +36,7 @@ namespace Forkdown.Html.Main {
 
       this._logger.LogInformation("Building {output} in {root}...", "HTML", outRoot.ToString());
 
-      var inRoot = Path.Get("Resources/Output/Html");
+      var inRoot = Path.Get("Resources/Output/html");
       var inFile = inRoot.Combine("page.scriban-html").FullPath;
       var templateContext = new TemplateContext
       {

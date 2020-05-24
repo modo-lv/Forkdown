@@ -22,7 +22,7 @@ namespace Forkdown.Html.Main {
     public JsBuilder(BuildArguments args, ILogger<JsBuilder> logger) {
       _args = args;
       _logger = logger;
-      _inPath = Program.InPath.Combine("Js");
+      _inPath = Program.InPath.Combine("js");
       _outPath = _args.ProjectRoot.Combine(Program.OutFolder);
     }
 
