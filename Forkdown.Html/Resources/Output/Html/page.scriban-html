@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 {{ include 'head' }}
-<body>
+<body data-project-name="{{ Project.Name }}">
 {{ include 'header' }}
 {{ element Document }}
 {{ include 'footer' }}

@@ -1,0 +1,57 @@
+@indent: 1.2rem;
+
+ul, ol {
+  padding: 0;
+  margin-top: 0;
+  margin-block-end: 0;
+  li {
+    margin-left: @indent;
+  }
+
+  &.checklist {
+    p {
+      display: table;
+    }
+
+    &.horizontal {
+      display: flex;
+      li + li {
+        margin-left: @indent;
+      }
+    }
+
+    li.checkbox {
+      list-style-type: none;
+      display: flex;
+      flex-direction: row;
+      margin-left: 0;
+      & > .column.checkbox {
+        min-width: @indent;
+        text-align: left;
+        & > input[type="checkbox"] {
+          margin-right: 0;
+          margin-left: 0;
+          display: inline-block;
+          vertical-align: sub;
+        }
+      }
+    }
+  }
+}
+
+ol.checklist li > .content.column {
+  display: list-item;
+  list-style-type: decimal;
+  margin-left: @indent;
+}
+
+
+header ul {
+  padding: 0;
+  li {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 0 0.25em;
+    margin: 0.25em;
+  }
+}

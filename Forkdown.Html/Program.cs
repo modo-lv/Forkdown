@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using Fluent.IO;
 using Forkdown.Core.Internal;
 using Forkdown.Core.Wiring;
 using Forkdown.Core.Wiring.Dependencies;
@@ -12,6 +14,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Forkdown.Html {
   internal class Program {
+    /// <summary>
+    /// Location of files for HTML output.
+    /// </summary>
+    public static Path InPath = 
+      Path.Get(Assembly.GetExecutingAssembly().Location).Parent().Combine("Resources/Output");
+
+    public const String OutFolder = "out-net";
+    
+    
+
     private static void Main(String argument) {
       var services = new ServiceCollection()
         .AddSingleton(new BuildArguments(projectRoot: argument))
@@ -20,21 +32,19 @@ namespace Forkdown.Html {
         .AddLogging(Logging.Config)
         .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true });
       Core.Program.Services = services;
-      
+
       var logger = services.GetRequiredService<ILogger<Program>>();
 
       Console.WriteLine();
 
-      try
-      {
-        services.CreateScope()
-          .Service<HtmlOutput>()
-          .BuildHtml();
-        
+      try {
+        using var scope = services.CreateScope();
+        scope.Service<HtmlBuilder>().Build();
+        scope.Service<JsBuilder>().Build();
+
         logger.LogInformation("All done.");
       }
-      catch (Exception ex)
-      {
+      catch (Exception ex) {
         logger.LogCritical(ex, "");
       }
     }

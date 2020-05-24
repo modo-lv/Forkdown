@@ -7,7 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Forkdown.Html.Wiring {
   public static class HtmlDependencies {
     public static readonly Action<IServiceCollection> Config = svc => {
-      svc.AddScoped<HtmlOutput>();
+      svc.AddScoped<JsBuilder>();
+      svc.AddScoped<HtmlBuilder>();
     };
   }
 }

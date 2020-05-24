@@ -14,29 +14,29 @@ using Path = Fluent.IO.Path;
 #pragma warning disable 1591
 
 namespace Forkdown.Html.Main {
-  public class HtmlOutput {
+  public partial class HtmlBuilder {
     /// <summary>
     /// Forkdown project to build from.
     /// </summary>
-    public readonly Project Project;
-
-
-    private readonly ILogger<HtmlOutput> _logger;
+    private readonly Project _project;
+    private readonly JsBuilder _jsBuilder; 
+    private readonly ILogger<HtmlBuilder> _logger;
     private readonly BuildArguments _args;
-    public HtmlOutput(Project project, ILogger<HtmlOutput> logger, BuildArguments args) {
-      this.Project = project;
-      this._logger = logger;
-      this._args = args;
+    public HtmlBuilder(Project project, ILogger<HtmlBuilder> logger, BuildArguments args, JsBuilder jsBuilder) {
+      _project = project;
+      _logger = logger;
+      _args = args;
+      _jsBuilder = jsBuilder;
     }
 
 
-    public HtmlOutput BuildHtml() {
-      this.Project.Load();
+    public HtmlBuilder Build() {
+      _project.Load();
       var outRoot = this._args.ProjectRoot.Combine("out-net").CreateDirectories();
 
       this._logger.LogInformation("Building {output} in {root}...", "HTML", outRoot.ToString());
 
-      var inRoot = Path.Get("Resources/Output/Default/Html");
+      var inRoot = Path.Get("Resources/Output/Html");
       var inFile = inRoot.Combine("page.scriban-html").FullPath;
       var templateContext = new TemplateContext
       {
@@ -45,12 +45,13 @@ namespace Forkdown.Html.Main {
       };
       var model = new ScriptObject
       {
-        { "Project", this.Project },
+        { "Project", this._project },
+        { "Scripts", _jsBuilder.ScriptPaths },
       };
       templateContext.PushGlobal(model);
       var template = Template.Parse(text: File.ReadAllText(inFile));
 
-      foreach (Document doc in this.Project.Pages)
+      foreach (Document doc in this._project.Pages)
       {
         this.ProcessLinks(doc);
         ProcessClasses(doc);
@@ -61,6 +62,7 @@ namespace Forkdown.Html.Main {
         this._logger.LogDebug("Rendering {page}...", outFile);
 
         model.Add("Document", doc);
+        model.Add("PathToRoot", "../".Repeat(doc.Depth + 1));
         var html = template.Render(templateContext);
         File.WriteAllText(outPath.ToString(), html);
       }
@@ -68,23 +70,9 @@ namespace Forkdown.Html.Main {
       return this;
     }
 
-    public static void ProcessClasses<T>(T element) where T : Element {
-      switch (element) {
-        case Listing l when l.IsChecklist: 
-          l.Attributes.Classes.Add("fd_checklist");
-          break;
-        case ListItem li when li.IsCheckbox: 
-          li.Attributes.Classes.Add("fd_checkbox");
-          break;
-      }
-
-      element.Subs.ForEach(ProcessClasses);
-    }
-    
-    
     public void ProcessLinks(Element el, Document? doc = null) {
       doc ??= (Document) el;
-      var index = this.Project.InteralLinks;
+      var index = this._project.InteralLinks;
       if (el is Link link && link.IsInternal)
       {
         var target = GlobalId.From(link.Target);
