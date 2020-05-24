@@ -53,6 +53,7 @@ namespace Forkdown.Html.Main {
       foreach (Document doc in this.Project.Pages)
       {
         this.ProcessLinks(doc);
+        ProcessClasses(doc);
 
         var outFile = doc.FileName + ".html";
         Path outPath = outRoot.Combine("pages", outFile);
@@ -66,10 +67,24 @@ namespace Forkdown.Html.Main {
 
       return this;
     }
+
+    public static void ProcessClasses<T>(T element) where T : Element {
+      switch (element) {
+        case Listing l when l.IsChecklist: 
+          l.Attributes.Classes.Add("fd_checklist");
+          break;
+        case ListItem li when li.IsCheckbox: 
+          li.Attributes.Classes.Add("fd_checkbox");
+          break;
+      }
+
+      element.Subs.ForEach(ProcessClasses);
+    }
+    
     
     public void ProcessLinks(Element el, Document? doc = null) {
       doc ??= (Document) el;
-      var index = this.Project.Anchors;
+      var index = this.Project.InteralLinks;
       if (el is Link link && link.IsInternal)
       {
         var target = GlobalId.From(link.Target);

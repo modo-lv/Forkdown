@@ -12,6 +12,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
           element.Attributes.Classes.Remove(_);
           return _;
         })
+        .ToList()
         .Take(1)
         .ForEach(a => element.GlobalId = GlobalId.From(a == "#~" ? element.Title : a.Part(1)));
 

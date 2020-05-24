@@ -25,5 +25,14 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       var doc = ForkdownBuilder.Default.Build(input);
       doc.Subs[0].Subs[0].Attributes.Id.Should().Be("id");
     }
+
+    [Fact]
+    void RemoveFromClasses() {
+      const String input = @"## Heading {##id .#~}";
+      var doc = ForkdownBuilder.Default.Build(input);
+      doc.Subs[0].Subs[0].Attributes.Id.Should().Be("id");
+      doc.Subs[0].Subs[0].GlobalId.Should().Be("id");
+      doc.Subs[0].Subs[0].Attributes.Classes.Should().BeEmpty();
+    }
   }
 }

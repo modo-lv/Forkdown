@@ -1,0 +1,4 @@
+
+<section {{ attrs $1 }}>
+{{ subs $1 }}
+</section>

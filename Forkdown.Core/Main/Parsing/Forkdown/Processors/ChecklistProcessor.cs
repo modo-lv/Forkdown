@@ -27,6 +27,8 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
           inChecklist = true;
         else if (element.Settings.IsFalse("checklist"))
           inChecklist = false;
+
+        element.IsChecklist = inChecklist;
       }
         
       element.Subs.ForEach(_ => _processToggles(_, inChecklist));

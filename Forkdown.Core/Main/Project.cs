@@ -31,7 +31,7 @@ namespace Forkdown.Core {
     /// <summary>
     /// Index mapping anchors to the pages they are in. 
     /// </summary>
-    public IDictionary<String, Document> Anchors = Nil.DStr<Document>();
+    public IDictionary<String, Document> InteralLinks = Nil.DStr<Document>();
 
 
     /// Constructor
@@ -83,7 +83,7 @@ namespace Forkdown.Core {
       
       // Achors
       this._logger.LogDebug("Processing anchors...");
-      this.Anchors = InternalLinks.From(this.Pages);
+      this.InteralLinks = InternalLinks.From(this.Pages);
       // Links
       this._logger.LogDebug("Processing internal links...");
       this.Pages.ForEach(_ => this.ProcessLinks(_, _));
@@ -93,9 +93,9 @@ namespace Forkdown.Core {
     }
 
     public void ProcessLinks(Element el, Document doc) {
-      if (el is Link link && link.IsInternal && !this.Anchors.ContainsKey(link.Target)) {
+      if (el is Link link && link.IsInternal && !this.InteralLinks.ContainsKey(link.Target)) {
         if (link.Target.StartsWith("@")) 
-          link.Target = link.Target == "@" ? link.Title : link.Target.Part(1);
+          link.Target = link.Target == "@~" ? link.Title : link.Target.Part(1);
         link.Target = this.Config.ExternalLinks.UrlFor(link.Target);
       }
       else

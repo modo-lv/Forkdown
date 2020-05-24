@@ -14,9 +14,11 @@ namespace Forkdown.Core.Elements {
 
     public String Title => Element.TitleOf(this);
 
-    public readonly String Type = "";
+    public String Type => this.GetType().Name;
 
     public ElementSettings Settings = new ElementSettings();
+
+    public Boolean IsChecklist = false;
 
     public ElementAttributes Attributes;
 
@@ -38,7 +40,6 @@ namespace Forkdown.Core.Elements {
     }
 
     protected Element(IMarkdownObject mdo) : this() {
-      this.Type = this.GetType().Name;
       this.Attributes = new ElementAttributes(mdo.GetAttributes(), this.Settings);
     }
 

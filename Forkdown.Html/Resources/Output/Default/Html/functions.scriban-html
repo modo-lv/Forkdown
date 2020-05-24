@@ -1,12 +1,14 @@
 {{- func element
 
   case $0.Type
-    when "Document"
+    when 'Document'
       include 'elements/document' $0
-    when "Heading"
+    when 'Heading'
       include 'elements/heading' $0
-      when 'Listing'
+    when 'Listing'
       include 'elements/list' $0
+    when 'Section'
+      include 'elements/section' $0
     when 'ListItem'
       include 'elements/list_item' $0
     when 'Paragraph'
