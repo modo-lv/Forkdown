@@ -5,6 +5,7 @@ namespace Forkdown.Core.Parsing.Forkdown {
     public static ForkdownBuilder Default =>
       new ForkdownBuilder()
         .AddProcessor<SectionProcessor>()
+        .AddProcessor<LabelProcessor>()
         .AddProcessor<GlobalIdProcessor>()
         .AddProcessor<ChecklistProcessor>();
   }

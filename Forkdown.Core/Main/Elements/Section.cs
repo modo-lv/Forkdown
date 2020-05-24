@@ -6,6 +6,7 @@ namespace Forkdown.Core.Elements {
   public class Section : Element, Block {
 
     public Boolean IsChecklist = false;
+    
     public String CheckboxId = "";
     
     /// <summary>

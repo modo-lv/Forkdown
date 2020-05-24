@@ -55,7 +55,7 @@ namespace Forkdown.Html.Main {
         this.ProcessLinks(doc);
 
         var outFile = doc.FileName + ".html";
-        Path outPath = outRoot.Combine(outFile);
+        Path outPath = outRoot.Combine("pages", outFile);
         outPath.Parent().CreateDirectories();
         this._logger.LogDebug("Rendering {page}...", outFile);
 

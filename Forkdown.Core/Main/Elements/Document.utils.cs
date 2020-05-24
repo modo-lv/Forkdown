@@ -5,6 +5,7 @@ using Forkdown.Core.Parsing;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Simpler.NetCore.Collections;
+using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements {
   /// <summary>
@@ -22,7 +23,7 @@ namespace Forkdown.Core.Elements {
 
       static Element from(MarkdownObject mdo) {
         Element result = mdo switch {
-          MarkdownDocument d => new Document(d),
+          MarkdownDocument d => new Document(),
           HeadingBlock h => new Heading(h),
           ListBlock l => new Listing(l),
           ListItemBlock li => new ListItem(li),
@@ -31,6 +32,7 @@ namespace Forkdown.Core.Elements {
           CodeInline c => new Code(c),
           LinkInline l => new Link(l),
           LiteralInline t => new Text(t),
+          LineBreakInline lb => new LineBreak(),
           _ => new Placeholder(mdo),
         };
 
@@ -42,9 +44,25 @@ namespace Forkdown.Core.Elements {
 
         result.Subs = subs.Select(from).ToList();
 
-        if (result is ListItem item && item.Subs[0] is Paragraph par) {
-          item.Attributes = par.Attributes;
-          par.Attributes = new ElementAttributes();
+        { // Document attributes
+          if (result is Document doc
+              && doc.Subs[0] is Paragraph par && par.Subs.Count == 1
+              && par.Subs[0] is Text text && text.Content == ":") {
+            doc.Attributes = par.Attributes;
+            doc.Settings = par.Settings;
+            par.Attributes = new ElementAttributes();
+            par.Settings = new ElementSettings();
+            result.Subs.RemoveAt(0);
+          }
+        }
+
+        { // List item first paragraph attributes move to list item
+          if (result is ListItem item && item.Subs[0] is Paragraph par) {
+            item.Attributes = par.Attributes;
+            item.Settings = par.Settings;
+            par.Attributes = new ElementAttributes();
+            par.Settings = new ElementSettings();
+          }
         }
 
         return result;

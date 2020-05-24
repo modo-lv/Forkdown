@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Simpler.NetCore.Collections;
@@ -15,7 +16,9 @@ namespace Forkdown.Core.Elements {
 
     public readonly String Type = "";
 
-    public ElementAttributes Attributes = new ElementAttributes(new HtmlAttributes());
+    public ElementSettings Settings = new ElementSettings();
+
+    public ElementAttributes Attributes;
 
     private String _globalId = "";
     /// <summary>
@@ -30,11 +33,20 @@ namespace Forkdown.Core.Elements {
       }
     }
 
-    protected Element() { }
+    protected Element() {
+      this.Attributes = new ElementAttributes(new HtmlAttributes(), this.Settings);
+    }
 
-    protected Element(IMarkdownObject mdo) {
+    protected Element(IMarkdownObject mdo) : this() {
       this.Type = this.GetType().Name;
-      this.Attributes = new ElementAttributes(mdo.GetAttributes());
+      this.Attributes = new ElementAttributes(mdo.GetAttributes(), this.Settings);
+    }
+
+
+    public T? Find<T>() where T : Element {
+      return (this.Subs.FirstOrDefault(_ => _ is T)
+              ?? this.Subs.Select(_ => _.Find<T>()).FirstOrDefault(_ => _ != null))
+        as T;
     }
   }
 }

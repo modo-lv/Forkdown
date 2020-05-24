@@ -10,14 +10,17 @@ namespace Forkdown.Core.Elements {
         return t.Content;
 
       if (contentFound) {
-        return el.Subs.Where(_ => _ is Inline)
+        return el.Subs.TakeWhile(_ => _ is Inline && !(_ is LineBreak))
           .Select(_ => Element.TitleOf(_, contentFound))
           .StringJoin();
       }
 
-      return el.Subs.Take(1)
-        .Select(_ => TitleOf(_, _ is Inline))
-        .FirstOrDefault() ?? "";
+      return (el.Subs.FirstOrDefault() is Inline inline && inline != null
+               ? TitleOf(el, true)
+               : el.Subs.Take(1)
+                 .Select(_ => TitleOf(_, false))
+                 .FirstOrDefault())
+             ?? "";
     }
   }
 }

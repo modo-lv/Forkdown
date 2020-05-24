@@ -73,13 +73,14 @@ namespace Forkdown.Core {
           var relative = doc.MakeRelativeTo(root);
           _logger.LogDebug("Loading {doc}...", relative.ToString());
           return _builder.Build(doc,
-            relative.ToString().TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
+            relative.ToString()
+              .Replace("\\", "/")
+              .TrimPrefix("pages/", StringComparison.InvariantCultureIgnoreCase)
+              .TrimSuffix(".md", StringComparison.InvariantCultureIgnoreCase)
           );
         })
         .ToHashSet();
       
-      // Restructure
-
       // Achors
       this._logger.LogDebug("Processing anchors...");
       this.Anchors = InternalLinks.From(this.Pages);

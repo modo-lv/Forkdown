@@ -13,28 +13,26 @@ namespace Forkdown.Core.Elements {
 
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
     public ISet<String> Classes = Nil.SStr;
-    
-    private IDictionary<String, String> _properties = Nil.DStr<String>();
-    public IDictionary<String, String> Properties
-    {
-      get => this._properties;
-      set
-      {
-        this._properties = value;
-        this.PropertiesString = value.Select(_ => $"{_.Key}=\"{_.Value}\"").StringJoin(" ");
-      }
-    }
+
+    public IDictionary<String, String> Properties = Nil.DStr<String>();
 
     public String ClassesString => this.Classes.StringJoin(" ") ?? "";
-    public String PropertiesString { get; protected set; } = "";
 
+    public String PropertiesString => this.Properties.Select(_ => $"{_.Key}=\"{_.Value}\"").StringJoin(" ");
+
+   
+    
     public ElementAttributes() { }
 
-    public ElementAttributes(HtmlAttributes attrs) {
+    public ElementAttributes(HtmlAttributes attrs, ElementSettings settings) {
       this.Id = attrs.Id.Text();
       this.Classes = attrs.Classes?.ToHashSet() ?? Nil.SStr;
-      this.Properties =
-        attrs.Properties?.ToDictionary(_ => _.Key, _ => _.Value) ?? Nil.DStr<String>();
+      attrs.Properties?.ForEach(_ => {
+        if (_.Key.StartsWith(":"))
+          settings[_.Key.Part(1)] = _.Value;
+        else
+          this.Properties.Add(_);
+      });
     }
   }
 }

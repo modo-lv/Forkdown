@@ -9,9 +9,9 @@ namespace Forkdown.Core.Tests.Elements {
   public class ElementTests {
     [Fact]
     void HeadingWithLinkTitle() {
-      const String input = @"# [Heading](link)";
+      const String input = @"# Heading with [link](link)";
       var result = Document.From(input);
-      result.Subs[0].Title.Should().Be("Heading");
+      result.Subs[0].Title.Should().Be("Heading with link");
     }
 
     [Fact]

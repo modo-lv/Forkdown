@@ -10,6 +10,21 @@ using Xunit;
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class ChecklistTests {
     [Fact]
+    void ChecklistOn() {
+      const String input = @":{:checklist}
+# Heading
+* Item";
+      var result = ForkdownBuilder.Default.Build(input);
+
+      result
+        .Subs[0] // Heading section
+        .Subs[1] // List
+        .Subs[0] // Item
+        .As<ListItem>().IsCheckbox.Should().BeTrue();
+    }
+    
+    
+    [Fact]
     void ExplicitId() {
       const String input = @"# Heading One
 * Item
@@ -25,6 +40,23 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
         .Subs[1] // Sub-List
         .Subs[0] // Sub
         .As<ListItem>().CheckboxId.Should().Be($"x{ChecklistProcessor.G}Sub");
+    }
+
+    [Fact]
+    void ComplicatedImplicitId() {
+      const String input = @"# The [Floating Continent](@~)
+`w` Some time after leaving the floating continent, you will permanently lose access to any kind of sea ship and with it all sea enemies.
+## `beast` Mainland
+### `>` Northeast
+Encompasses [Ur], [Kazus] and [Castle Sasune].
+* [Killer Bee]";
+      var result = ForkdownBuilder.Default.Build(input);
+      result.Find<ListItem>()!.CheckboxId.Should().Be(
+        $"The{ChecklistProcessor.W}Floating{ChecklistProcessor.W}Continent" +
+        $"{ChecklistProcessor.G}Mainland" +
+        $"{ChecklistProcessor.G}Northeast" +
+        $"{ChecklistProcessor.G}Killer{ChecklistProcessor.W}Bee"
+      );
     }
 
     [Fact]

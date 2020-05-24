@@ -1,2 +1,6 @@
 
-<li {{ attrs $1 }}>{{ subs $1 }}</li>
+<li {{ attrs $1 }}>
+{{ if $1.IsCheckbox }}
+<input type="checkbox" id="{{ $1.CheckboxId }}" />
+{{ end }}
+{{- subs $1 }}</li>
