@@ -1,10 +1,14 @@
 ﻿<header>
   <h1>{{ Project.Name }}</h1>
   <nav>
+    <ul {{ attrs MainMenu }}>
 {{ 
 if MainMenu
-  element MainMenu 
+  for tab in MainMenu.Subs[0].Subs
+    }}<li {{ attrs tab }}><span>▼▼▼</span>{{subs tab}}</li>{{
+  end
 end
 }}
+</ul>
   </nav>
 </header>

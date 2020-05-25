@@ -10,7 +10,7 @@ namespace Forkdown.Core.Elements {
 
     public Boolean IsInternal => !this.IsExternal;
     public Boolean IsExternal => this.Target.Contains("//");
-
+    
     public Link(LinkInline link) : base(link) =>
       this.Target = link.Url;
   }

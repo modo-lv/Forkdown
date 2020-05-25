@@ -20,7 +20,7 @@ namespace Forkdown.Core.Wiring {
 
     /// Constructor 
     public BuildArguments(String projectRoot) {
-      this.ProjectRoot = new Path(projectRoot);
+      this.ProjectRoot = Path.Get(Path.Get(projectRoot).FullPath);
       this.MainConfigFile = this.ProjectRoot.File("forkdown.main.config.yaml");
     }
 

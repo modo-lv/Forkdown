@@ -5,7 +5,11 @@
 <input type="checkbox" id="{{ $1.CheckboxId }}" />
 </div>
 {{ end }}
-<div class="fd_content">
-{{- subs $1 -}}
-</div>
+{{
+  if $1.IsCheckbox }}
+<div class="fd_content">{{- subs $1 -}}</div>
+{{else 
+     subs $1
+  end
+}}
 </li>

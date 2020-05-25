@@ -44,6 +44,14 @@ namespace Forkdown.Html.Main {
           _project.ProcessLinks(mainMenu);
         }
       }
+      Document? footer = null;
+      { // Footer
+        var fFile = _args.ProjectRoot.Combine("layout/footer.md");
+        if (fFile.Exists) {
+          footer = _project.LoadFile(fFile.ToString());
+          _project.ProcessLinks(footer);
+        }
+      }
 
       var inFile = _inPath.Combine("page.scriban-html").FullPath;
       var templateContext = new TemplateContext
@@ -66,6 +74,10 @@ namespace Forkdown.Html.Main {
         this.ProcessLinks(mainMenu);
         ProcessClasses(mainMenu);
       }
+      if (footer != null) {
+        this.ProcessLinks(footer);
+        ProcessClasses(footer);
+      }
       foreach (Document doc in this._project.Pages)
       {
         this.ProcessLinks(doc);
@@ -79,6 +91,7 @@ namespace Forkdown.Html.Main {
         model.Add("Document", doc);
         model.Add("PathToRoot", "../".Repeat(doc.Depth));
         model.Add("MainMenu", mainMenu);
+        model.Add("Footer", footer);
         var html = template.Render(templateContext);
         File.WriteAllText(outPath.ToString(), html);
       }

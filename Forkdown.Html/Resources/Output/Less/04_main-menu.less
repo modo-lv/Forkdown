@@ -1,0 +1,35 @@
+@focus-color: white;
+
+header > nav > ul {
+  white-space: normal;
+
+  & > li {
+    display: inline-block;
+    margin: 0;
+    margin-right: 1rem;
+    white-space: nowrap;
+
+    & > span {
+      display: inline-block;
+    }
+
+    & > p {
+      display: inline-block;
+    }
+
+    & > ul {
+      width: 100%;
+      display: none;
+    }
+
+    &:hover {
+      background: @focus-color;
+      & > ul, & > div {
+        background: @focus-color;
+        display: block;
+        position: absolute;        
+        width: auto;
+      }
+    }
+  }
+}

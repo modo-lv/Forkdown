@@ -6,10 +6,12 @@
 <html>
 {{ include 'head' }}
 <body data-project-name="{{ Project.Name }}">
+  <div class="body">
 {{ include 'header' }}
 <main>
 {{ element Document }}
 </main>
 {{ include 'footer' }}
+  </div>
 </body>
 </html>
