@@ -1,3 +1,6 @@
+# Forkdown
+![](https://github.com/modo-lv/forkdown/workflows/tests.yml/badge.svg)
+
 `#`: Internal ID (anchor). `#~` for current element title
 
 `@`: External ID (for link generation). `@~` for current element title.
