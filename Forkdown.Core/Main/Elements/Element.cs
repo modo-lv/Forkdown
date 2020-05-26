@@ -22,6 +22,8 @@ namespace Forkdown.Core.Elements {
 
     public ElementAttributes Attributes;
 
+    public ISet<String> Labels = Nil.SStr;
+
     private String _globalId = "";
     /// <summary>
     /// An identifier that is unique within the project. 
