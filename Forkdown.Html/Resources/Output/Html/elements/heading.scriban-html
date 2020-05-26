@@ -4,5 +4,6 @@
 <a name="{{ $1.GlobalId }}"></a>
 {{- end
 subs $1 
+labels $1
 -}}
 </h {{- $1.Level -}}>

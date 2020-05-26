@@ -29,7 +29,10 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
 
         if (section == null) {
           if (isNextHeading) {
-            section = new Section { IsImplicit = true };
+            section = new Section {
+              IsImplicit = true,
+              Level = (el as Heading)!.Level,
+            };
             section.Subs.Add(el);
             section.Attributes = el.Attributes;
             el.Attributes = new ElementAttributes();
@@ -41,7 +44,10 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         else {
           if (isNextHeading) {
             newSubs.Add(section);
-            section = new Section { IsImplicit = true };
+            section = new Section {
+              IsImplicit = true,
+              Level = (el as Heading)!.Level
+            };
           }
           section.Subs.Add(el);
         }

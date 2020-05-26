@@ -18,8 +18,15 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     }
 
     static T _processToggles<T>(T element, Boolean inChecklist = false) where T : Element {
-      if (inChecklist && element is ListItem item) {
-        item.IsCheckbox = item.Settings.NotFalse("checkbox");
+      if (element is ListItem item) {
+        if (inChecklist)
+         item.IsCheckbox = item.Settings.NotFalse("checkbox");
+        
+        item.IsCheckbox = item.BulletType switch {
+          '+' => true,
+          '-' => false,
+          _ => item.IsCheckbox
+        };
       }
 
       if (element is Block) {

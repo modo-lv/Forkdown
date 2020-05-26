@@ -25,7 +25,7 @@ namespace Forkdown.Core.Elements {
           MarkdownDocument d => new Document(),
           HeadingBlock h => new Heading(h),
           ListBlock l => new Listing(l),
-          ListItemBlock li => new ListItem(li),
+          ListItemBlock _ => new ListItem(),
           ParagraphBlock p => new Paragraph(p),
           EmphasisInline e => new Emphasis(e),
           CodeInline c => new Code(c),

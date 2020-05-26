@@ -1,4 +1,4 @@
 
-<section {{ attrs $1 }}>
+<section data-fd_level="{{ $1.Level }}" {{ attrs $1 }}>
 {{ subs $1 }}
 </section>

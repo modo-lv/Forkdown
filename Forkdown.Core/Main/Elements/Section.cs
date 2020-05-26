@@ -11,6 +11,11 @@ namespace Forkdown.Core.Elements {
     /// Was this section created implicitly from a heading, as opposed to being explicitly defined in markdown?
     /// </summary>
     public Boolean IsImplicit = false;
+
+    /// <summary>
+    /// If section created by a heading, heading's level. 
+    /// </summary>
+    public Int32 Level = 0;
     
     public Section() {} 
 
