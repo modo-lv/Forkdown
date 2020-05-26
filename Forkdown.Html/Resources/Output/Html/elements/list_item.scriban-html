@@ -1,5 +1,7 @@
 
-<li {{ attrs $1 }}>
+<li {{ section_attrs $1 }} {{ attrs $1 }}>
+{{ global_anchor $1 }}
+
 {{ if $1.IsCheckbox }}
 <div class="fd_checkbox">
 <input type="checkbox" id="{{ $1.CheckboxId }}" />

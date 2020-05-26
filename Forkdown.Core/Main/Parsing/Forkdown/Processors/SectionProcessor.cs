@@ -13,50 +13,48 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
       Heading? lastHeading = null;
       var newSubs = Nil.L<Element>();
 
-      IEnumerable<Element> subs;
-      if (element is Section s && s.IsImplicit && element.Subs[0] is Heading) {
-        newSubs.Add(element.Subs[0]);
-        subs = element.Subs.Skip(1);
+      // If this is a list item, it's already a section and only needs to copy heading data, if any
+      if (element is ListItem li && li.Subs[0] is Heading head) {
+        li.MergeWith(head);
+        newSubs = li.Subs;
       }
       else {
-        subs = element.Subs;
-      }
+        IEnumerable<Element> subs = element.Subs;
+        
+        // If this is a section created from a heading, don't process the heading again  
+        if (element is Section s && s.IsImplicit && element.Subs[0] is Heading) {
+          newSubs.Add(element.Subs[0]);
+          subs = element.Subs.Skip(1);
+        }
+      
+        foreach (var el in subs.ToList()) {
+          var isNextHeading = el is Heading h && h.Level <= (lastHeading?.Level ?? 7);
+          if (isNextHeading)
+            lastHeading = el as Heading;
 
-      foreach (var el in subs.ToList()) {
-        var isNextHeading = el is Heading h && h.Level <= (lastHeading?.Level ?? 9);
-        if (isNextHeading)
-          lastHeading = el as Heading;
-
-        if (section == null) {
-          if (isNextHeading) {
-            section = new Section {
-              IsImplicit = true,
-              Level = (el as Heading)!.Level,
-            };
-            section.Subs.Add(el);
-            section.Attributes = el.Attributes;
-            el.Attributes = new ElementAttributes();
+          if (section == null) {
+            if (isNextHeading) {
+              section = new Section((Heading) el);
+              section.Subs.Add(el);
+            }
+            else {
+              newSubs.Add(el);
+            }
           }
           else {
-            newSubs.Add(el);
+            if (isNextHeading) {
+              newSubs.Add(section);
+              section = new Section((Heading) el);
+            }
+            section.Subs.Add(el);
           }
         }
-        else {
-          if (isNextHeading) {
-            newSubs.Add(section);
-            section = new Section {
-              IsImplicit = true,
-              Level = (el as Heading)!.Level
-            };
-          }
-          section.Subs.Add(el);
+        
+        if (section != null) {
+          newSubs.Add(section);
         }
       }
-
-      if (section != null) {
-        newSubs.Add(section);
-      }
-
+      
       element.Subs = newSubs.Select(_ => Process(_)).ToList();
 
       return element;

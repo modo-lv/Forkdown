@@ -1,8 +1,6 @@
 
 {{depth}}<h {{- $1.Level -}}{{ attrs $1 -}}>
-{{- if $1.GlobalId != "" -}}
-<a name="{{ $1.GlobalId }}"></a>
-{{- end
+{{-
 subs $1 
 labels $1
 -}}

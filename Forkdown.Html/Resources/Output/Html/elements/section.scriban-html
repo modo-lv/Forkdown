@@ -1,4 +1,5 @@
 
-<section data-fd_level="{{ $1.Level }}" {{ attrs $1 }}>
+<section {{ section_attrs $1 }} {{ attrs $1 }}>
+{{ global_anchor $1 }}
 {{ subs $1 }}
 </section>

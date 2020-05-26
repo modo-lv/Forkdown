@@ -1,5 +1,13 @@
 @indent: 1.2rem;
 
+section[data-fd_h-level] > ul.fd_checklist > li:not(.fd_checkbox) {
+  margin-left: 0;
+  list-style: none;
+  & > ul.fd_checklist > li {
+    margin-left: @indent;
+  }
+}
+
 ul, ol {
   padding: 0;
   margin-top: 0;
@@ -44,4 +52,3 @@ ol.fd_checklist li > .fd_content {
   list-style-type: decimal;
   margin-left: @indent;
 }
-

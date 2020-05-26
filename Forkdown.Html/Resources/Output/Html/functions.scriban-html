@@ -69,3 +69,22 @@ end }}
     end
   end
 end -}}
+
+
+{{- func global_anchor
+
+if $0.GlobalId != ""
+  }}<a name="{{ $0.GlobalId }}"></a>{{
+end
+
+end -}}
+
+
+
+{{- func section_attrs 
+
+if $0.HeadingLevel > 0
+  }} data-fd_h-level="{{ $0.HeadingLevel }}" {{
+end
+
+end -}}

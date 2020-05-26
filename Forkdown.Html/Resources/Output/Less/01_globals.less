@@ -7,50 +7,10 @@ body, table, input {
   font-size: 1rem;
 }
 
-section {
-  margin-top: 1rem;
-  //border: 1px solid black
-  &.level1 {
-    margin-top: 2rem;
-  }
-  &.level6 {
-    margin-top: 0.5rem;
-  }
-  &.indented {
-    margin-left: 1.2rem;
-  }
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 0.25rem;
-  margin-top: 0;
-  white-space: nowrap;
-}
-
-h1 {
-  font-size: 1.8rem;
-}
-h2 {
-  font-size: 1.6rem;
-}
-h3 {
-  font-size: 1.4rem;
-}
-h4 {
-  font-size: 1.2rem;
-}
-h5 {
-  font-size: 1.1rem;
-}
-h6 {
-  font-size: 1rem;
-  margin-bottom: 0;
-  margin-top: 0.1rem;
-  font-weight: normal;
-}
 p {
   margin: @paragraph-spacing 0;
 }
+
 a[href] {
   text-decoration-line: none;
   color: mediumblue;
@@ -74,11 +34,5 @@ h1, h2, h3, h4, h5, h6 {
   .fd_label {
     margin-right: 0;
     margin-left: 0.25rem;
-  }
-}
-
-section {
-  &[data-fd_level="6"] {
-    margin-top: @paragraph-spacing;
   }
 }
