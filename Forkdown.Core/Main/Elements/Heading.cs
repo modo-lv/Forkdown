@@ -1,5 +1,6 @@
 ﻿using System;
 using Markdig.Syntax;
+using Simpler.Net;
 using Block = Forkdown.Core.Elements.Types.Block;
 
 namespace Forkdown.Core.Elements {
@@ -8,6 +9,7 @@ namespace Forkdown.Core.Elements {
 
     public Heading(HeadingBlock mHeading) : base(mHeading) {
       this.Level = mHeading.Level;
+
     }
   }
 }

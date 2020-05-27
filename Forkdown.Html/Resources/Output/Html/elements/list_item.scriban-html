@@ -3,13 +3,13 @@
 {{ global_anchor $1 }}
 
 {{ if $1.IsCheckbox }}
-<div class="fd_checkbox">
+<div class="fd--checkbox">
 <input type="checkbox" id="{{ $1.CheckboxId }}" />
 </div>
 {{ end }}
 {{
   if $1.IsCheckbox }}
-<div class="fd_content">{{- subs $1 -}}</div>
+<div class="fd--content">{{- subs $1 -}}</div>
 {{else 
      subs $1
   end

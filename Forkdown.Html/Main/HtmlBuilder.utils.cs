@@ -1,4 +1,5 @@
-﻿using Forkdown.Core.Elements;
+﻿using Forkdown.Core;
+using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 
 namespace Forkdown.Html.Main {
@@ -10,13 +11,13 @@ namespace Forkdown.Html.Main {
     public static void ProcessClasses<T>(T element) where T : Element {
       switch (element) {
         case Listing l when l.IsChecklist:
-          l.Attributes.Classes.Add("fd_checklist");
+          l.Attributes.Classes.Add($"{Globals.Prefix}checklist");
           break;
         case ListItem li when li.IsCheckbox:
-          li.Attributes.Classes.Add("fd_checkbox");
+          li.Attributes.Classes.Add($"{Globals.Prefix}checkbox");
           break;
         case Link l when l.IsInternal:
-          l.Attributes.Classes.Add("fd_internal");
+          l.Attributes.Classes.Add($"{Globals.Prefix}internal");
           break;
       }
 

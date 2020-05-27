@@ -43,6 +43,15 @@ namespace Forkdown.Core.Elements {
 
     protected Element(IMarkdownObject mdo) : this() {
       this.Attributes = new ElementAttributes(mdo.GetAttributes(), this.Settings);
+      
+      if (this.Settings.ContainsKey("masonry")) {
+        this.Attributes.Classes.Add($"{Globals.Prefix}masonry");
+        this.Attributes.Classes.Add($"{Globals.Prefix}masonry-{this.Settings["masonry"]}");
+      }
+      else if (this.Settings.ContainsKey("columns")) {
+        this.Attributes.Classes.Add($"{Globals.Prefix}columns");
+        this.Attributes.Classes.Add($"{Globals.Prefix}columns-${this.Settings["columns"]}");
+      }
     }
 
 

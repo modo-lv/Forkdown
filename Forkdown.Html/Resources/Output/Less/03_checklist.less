@@ -1,9 +1,9 @@
 @indent: 1.2rem;
 
-section[data-fd_h-level] > ul.fd_checklist > li:not(.fd_checkbox) {
+section[data-fd--h-level] > div > ul.fd--checklist > li:not(.fd--checkbox) {
   margin-left: 0;
   list-style: none;
-  & > ul.fd_checklist > li {
+  & > ul.fd--checklist > li {
     margin-left: @indent;
   }
 }
@@ -16,24 +16,24 @@ ul, ol {
     margin-left: @indent;
   }
 
-  &.fd_checklist {
+  &.fd--checklist {
     p {
       display: table;
     }
 
-    &.fd_horizontal {
+    &.fd--horizontal {
       display: flex;
       li + li {
         margin-left: @indent;
       }
     }
 
-    li.fd_checkbox {
+    li.fd--checkbox {
       list-style-type: none;
       display: flex;
       flex-direction: row;
       margin-left: 0;
-      & > .fd_checkbox {
+      & > .fd--checkbox {
         min-width: @indent;
         text-align: left;
         & > input[type="checkbox"] {
@@ -47,7 +47,7 @@ ul, ol {
   }
 }
 
-ol.fd_checklist li > .fd_content {
+ol.fd--checklist li > .fd--content {
   display: list-item;
   list-style-type: decimal;
   margin-left: @indent;

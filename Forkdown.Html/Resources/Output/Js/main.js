@@ -7,7 +7,7 @@ if (!projectName)
 
 new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
   // CHECKBOXES
-  $("li.fd_checkbox input[type=checkbox]").each(async (i, c) => {
+  $("li.fd--checkbox input[type=checkbox]").each(async (i, c) => {
     let checkbox = $(c)
     let id = checkbox.prop("id")
     if (!id) {
@@ -27,4 +27,31 @@ new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
       main.saveProfile()
     })
   })
+})
+
+$(() => {
+  // Find all masonry items and add <div>s for sizing
+  {
+    let items = $(".fd--masonry section, .fd--masonry ")
+  }
+
+  /*
+  function resizeGridItem(item){
+    let grid = document.getElementsByTagName("main")[0];
+    let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+    let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+    let rowSpan = Math.ceil((item.querySelector('div').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
+    item.style.gridRowEnd = "span "+rowSpan;
+  }
+
+  function resizeAllGridItems(){
+    let allItems = document.querySelectorAll("main > section");
+    for(let x=0;x<allItems.length;x++){
+      console.log("resizing", allItems[x]);
+      resizeGridItem(allItems[x]);
+    }
+  }
+
+  resizeAllGridItems();
+  */
 })

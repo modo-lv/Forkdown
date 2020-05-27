@@ -24,6 +24,9 @@ body {
   border-radius: @border-radius;
   border: @border;
   width: @width;
+  @media screen and (min-width: 900px) {
+    max-width: 900px;
+  }
 }
 
 header, footer {
@@ -47,22 +50,17 @@ main {
   & > * {
     margin: @inner-padding;
   }
-  @media screen and (min-width: 350px) {
-    display: flex;
-    flex-wrap: wrap;
-    & > * {
-      flex-grow: 1;
-    }
-    @media (max-width: 450px) {
-      & > * {
-        flex-basis: 300px;
-      }
-    }
-    @media (min-width: 450px) {
-      & > * {
-        flex-basis: 400px;
-      }
-    }
+}
+
+.fd--columns > div {
+  display: grid;
+  grid-gap: 0 2rem;
+  grid-template-columns: fit-content(50%);
+  & > * {
+    grid-column-start: span 2;
+  }
+  & > ul, & > ol, & > section {
+    grid-column-start: span 1;
   }
 }
 

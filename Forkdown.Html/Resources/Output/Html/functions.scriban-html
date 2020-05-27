@@ -63,9 +63,9 @@ end }}
 
 {{- func labels
   if ($0.Labels.Count > 0)
-    }}<span class="fd_labels">{{
+    }}<span class="fd--labels">{{
     for $label in $0.Labels
-      }}<span class="fd_label">{{$label}}</span>{{
+      }}<span class="fd--label">{{$label}}</span>{{
     end
   end
 end -}}
@@ -74,7 +74,7 @@ end -}}
 {{- func global_anchor
 
 if $0.GlobalId != ""
-  }}<a name="{{ $0.GlobalId }}"></a>{{
+  }}<a name="{{ $0.GlobalId }}" class="fd--global_anchor"></a>{{
 end
 
 end -}}
@@ -84,7 +84,7 @@ end -}}
 {{- func section_attrs 
 
 if $0.HeadingLevel > 0
-  }} data-fd_h-level="{{ $0.HeadingLevel }}" {{
+  }} data-fd--h-level="{{ $0.HeadingLevel }}" {{
 end
 
 end -}}

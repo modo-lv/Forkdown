@@ -1,5 +1,7 @@
 
 <section {{ section_attrs $1 }} {{ attrs $1 }}>
-{{ global_anchor $1 }}
-{{ subs $1 }}
+  <div>
+    {{ global_anchor $1 }}
+    {{ subs $1 }}
+  </div>
 </section>

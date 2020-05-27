@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=ABeeZee");
-
+@Prefix: "fd--";
 @paragraph-spacing: 0.2rem;
 
 body, table, input {
@@ -14,15 +14,15 @@ p {
 a[href] {
   text-decoration-line: none;
   color: mediumblue;
-  &.fd_internal {
+  &.fd--internal {
     color: green;
   }
-  &.fd_dead {
+  &.fd--dead {
     color: red;
   }
 }
 
-.fd_label {
+.fd--label {
   margin-right: 0.25em;
   font-family: monospace;
   background-color: silver;
@@ -31,8 +31,12 @@ a[href] {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  .fd_label {
+  .fd--label {
     margin-right: 0;
     margin-left: 0.25rem;
   }
+}
+
+.fd--global_anchor {
+  display: none;
 }

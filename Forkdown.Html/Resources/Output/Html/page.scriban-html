@@ -8,7 +8,7 @@
 <body data-project-name="{{ Project.Name }}">
   <div class="body">
 {{ include 'header' }}
-<main>
+<main {{ attrs Document }}>
 {{ element Document }}
 </main>
 {{ include 'footer' }}
