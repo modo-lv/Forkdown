@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Forkdown.Core.Config {
   public partial class ExternalLinkConfig {
-    public static ExternalLinkConfig From(MainConfigSource source) {
+    public static ExternalLinkConfig From(ConfigSource source) {
       return new ExternalLinkConfig
       {
         DefaultUrl = source.GetValueOrDefault("external_links.default_url") as String ?? "",

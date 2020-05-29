@@ -4,6 +4,7 @@
 @separator: @border;
 @shadow: 1px 1px 0px 0px rgba(0,0,0,0.5);
 @width: 100%;
+@body-padding: 0.25rem;
 
 * {
   box-sizing: border-box;
@@ -11,7 +12,7 @@
 
 body {
   margin: 0;
-  padding: 0.25rem;
+  padding: @body-padding;
   max-height: 100vh;
   display: flex;
   background: silver;
@@ -20,26 +21,38 @@ body {
 
 .body {
   display: grid;
+  grid-template-rows: min-content 1fr min-content;
+  height: calc(100vh - (@body-padding * 2));
   box-shadow: @shadow;
   border-radius: @border-radius;
   border: @border;
   width: @width;
-  @media screen and (min-width: 900px) {
-    max-width: 900px;
+
+  & > header, & > footer {
+    border-radius: @border-radius;
+    flex-shrink: 0;
   }
-}
+  
+  & > header {
+    padding: @inner-padding;
+    border-bottom: @separator;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(238,238,238,1) 100%);
+  }
 
-header, footer {
-  border-radius: @border-radius;
-  flex-shrink: 0;
-}
-
-header {
-  padding: @inner-padding;
-  border-bottom: @separator;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(238,238,238,1) 100%);
+  & > footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: @separator;
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(238,238,238,1) 100%);
+    min-height: @border-radius;
+    padding: 0.3rem @inner-padding;
+    
+    p {
+      margin: 0;
+    }
+  }
 }
 
 main {
@@ -53,27 +66,24 @@ main {
 }
 
 .fd--columns {
-  display: grid;
-  grid-gap: 0 2rem;
-  grid-template-columns: fit-content(50%) fit-content(50%);
+  section&, main&, article& > [role="main"] {
+    display: grid;
+    grid-column-gap: @inner-padding;
+    grid-template-columns: repeat(auto-fit, minmax(@fd--min-width, max-content));
+  }
+  &.fd--small {
+    section&, main&, article& > [role="main"] {
+      @min-width: calc((@fd--min-width / 2) - @inner-padding);
+
+      grid-template-columns: repeat(auto-fill, minmax(@min-width, max-content));
+    }
+  }
 }
 
-.fd--masonry {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 1px;
-  grid-row-gap: 10px;
-}
-
-footer {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-top: @separator;
-  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(238,238,238,1) 100%);
-  min-height: @border-radius;
-  padding: 0.3rem @inner-padding;
-  
-  p {
-    margin: 0;
+.fd--grid {
+  section&, main&, article& > [role="main"] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(@fd--min-width, max-content));
+    grid-row-gap: 1.5rem;
   }
 }

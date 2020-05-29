@@ -9,7 +9,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
   /// Splits a forkdown element into articles based on headings.
   /// </summary>
   public class ArticleProcessor : IForkdownProcessor {
-    public T ProcessElement<T>(T element, IDictionary<String, Object> context) where T : Element {
+    public void Process<T>(T element) where T : Element {
       Article? article = null;
       Heading? lastHeading = null;
       var newSubs = Nil.L<Element>();
@@ -40,13 +40,13 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         if (startNewArticle)
           lastHeading = el as Heading;
       }
-      
+
       if (article != null) {
         newSubs.Add(article);
       }
-      
+
       element.Subs = newSubs;
-      return element;
+      element.Subs.ForEach(this.Process);
     }
   }
 }

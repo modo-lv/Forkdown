@@ -1,7 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using dotless.Core;
+using dotless.Core.configuration;
+using dotless.Core.Importers;
+using dotless.Core.Parser;
+using dotless.Core.Stylizers;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Collections;
@@ -21,22 +27,36 @@ namespace Forkdown.Html.Main {
       _inPath = Program.InPath.Combine("less");
       _outFile = args.ProjectRoot.Combine(Program.OutFolder, "main.css");
     }
-    
-    
-    
+
+
+
     /// <summary>
     /// Read all .less files from the Forkdown-HTML resources and convert them into main.css for output.
     /// </summary>
-    public CssBuilder Build() {
-      _logger.LogInformation("Building {css}...", "CSS");
-      var sb = new StringBuilder();
-      _inPath.Files("*.less", true).OrderBy(_ => _.ToString()).ForEach(file => {
-        _logger.LogDebug("Parsing {file}...", file.MakeRelativeTo(_inPath).ToString());
-        var css = Less.Parse(File.ReadAllText(file.ToString()));
-        sb.AppendLine(css);
-      });
+    /// <param name="config"></param>
+    public CssBuilder Build(HtmlConfig? config = null) {
+      config ??= new HtmlConfig();
+      
+      var file = _inPath.Combine("main.less");
+
+      if (!file.Exists) {
+        _logger.LogError("LESS file {file} not found!", file.FullPath);
+        return this;
+      }
+
+      _logger.LogInformation("Compiling {css}...", file.MakeRelativeTo(_inPath).ToString());
+      var sb = new StringBuilder()
+        .AppendLine($"@fd--min-width: {config.MinWidth};")
+        .AppendLine(File.ReadAllText(file.ToString()));
+      var less = Regex.Replace(sb.ToString(),
+        @"(@import\s['""])\./",
+        $"$1{file.Parent().FullPath + System.IO.Path.DirectorySeparatorChar}",
+        RegexOptions.IgnoreCase & RegexOptions.Multiline
+      );
+      var css = Less.Parse(less);
+
       _logger.LogDebug("Writing {file}...", _outFile.MakeRelativeTo(_outFile.Parent()).ToString());
-      File.WriteAllText(_outFile.ToString(), sb.ToString());
+      File.WriteAllText(_outFile.ToString(), css);
       return this;
     }
   }

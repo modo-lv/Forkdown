@@ -4,9 +4,9 @@ using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Config {
-  public partial class MainConfigSource : Dictionary<String, Object> {
+  public partial class ConfigSource : Dictionary<String, Object> {
    
-    public MainConfigSource(IDictionary<Object, Object> dictionary) {
+    public ConfigSource(IDictionary<Object, Object> dictionary) {
       void addToIndex(KeyValuePair<Object, Object> kv, String parentKey = "") {
         var key = parentKey.NotBlank() ? $"{parentKey}.{kv.Key}" : kv.Key.ToString().Text();
         this[key] = kv.Value;

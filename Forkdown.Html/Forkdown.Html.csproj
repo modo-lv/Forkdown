@@ -39,8 +39,4 @@
     <EmbeddedResource Remove="Publish\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\Output\Default" />
-  </ItemGroup>
-
 </Project>

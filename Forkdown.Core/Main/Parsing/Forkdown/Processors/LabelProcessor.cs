@@ -8,7 +8,7 @@ using Simpler.NetCore.Collections;
 namespace Forkdown.Core.Parsing.Forkdown.Processors {
   public class LabelProcessor : IForkdownProcessor {
 
-    public T ProcessElement<T>(T element, IDictionary<String, Object> context) where T : Element {
+    public void Process<T>(T element) where T : Element {
       if (element is Block && element.Subs.Any() && element.Subs[0] is Code labels) {
         element.Subs.RemoveAt(0);
 
@@ -21,7 +21,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         if (element.Subs.Any() && element.Subs[0] is Text t)
           t.Content = t.Content.TrimStart();
       }
-      return element;
+      element.Subs.ForEach(this.Process);
     }
   }
 }

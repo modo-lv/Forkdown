@@ -30,17 +30,19 @@ new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
 })
 
 $(() => {
-  // Find all masonry items and add <div>s for sizing
+  $("article.fd--grid > [role='main'], section.fd--grid, main.fd--grid").css("grid-auto-rows", "1.5rem")
+
+  // Find all grid items and add <div>s for sizing
   {
-    let items = $(".fd--masonry section, .fd--masonry ul, .fd--masonry ol")
+    let items = $("article.fd--grid > [role='main'] > *, section.fd--grid > *, main.fd--grid > *")
     items.wrap("<div class='fd--mortar'>")
   }
 
   function resizeGridItem(item){
-    let grid = document.getElementsByClassName("fd--masonry")[0];
+    let grid = document.getElementsByClassName("fd--grid")[0];
     let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
     let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-    let rowSpan = Math.ceil((item.querySelector('*').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
+    let rowSpan = Math.ceil((item.children[0].getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
     item.style.gridRowEnd = "span "+rowSpan;
   }
 

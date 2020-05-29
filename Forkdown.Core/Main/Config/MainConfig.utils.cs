@@ -7,7 +7,7 @@ namespace Forkdown.Core.Config {
   public partial class MainConfig {
     private static readonly ILogger<MainConfig> _logger = Program.Logger<MainConfig>();
 
-    public static MainConfig From(MainConfigSource source) {
+    public static MainConfig From(ConfigSource source) {
       return new MainConfig
       {
         Name = source["name"].ToString() ?? "",
@@ -28,7 +28,7 @@ namespace Forkdown.Core.Config {
       else
       {
         _logger.LogInformation("Loading settings from {file}...", file.Name);
-        result = From(MainConfigSource.From(file));
+        result = From(ConfigSource.From(file));
       }
 
       if (result.Name.IsBlank())

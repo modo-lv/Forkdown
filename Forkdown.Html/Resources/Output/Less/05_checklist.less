@@ -1,10 +1,12 @@
 @indent: 1.2rem;
 
-section[data-fd--h-level] > div > ul.fd--checklist > li:not(.fd--checkbox) {
-  margin-left: 0;
-  list-style: none;
-  & > ul.fd--checklist > li {
-    margin-left: @indent;
+section, article > [role="main"] { 
+  & > ul.fd--checklist > li:not(.fd--checkbox) {
+    margin-left: 0;
+    list-style: none;
+    & > ul.fd--checklist > li {
+      margin-left: @indent;
+    }
   }
 }
 

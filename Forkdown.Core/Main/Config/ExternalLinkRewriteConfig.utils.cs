@@ -8,7 +8,7 @@ namespace Forkdown.Core.Config {
   public partial class ExternalLinkRewriteConfig {
 
     public static ExternalLinkRewriteConfig From(String yaml) =>
-      From(MainConfigSource.From(yaml));
+      From(ConfigSource.From(yaml));
 
     public static ExternalLinkRewriteConfig From(IDictionary<String, Object> input) {
       var items = ((IList<Object>) input["external_links.rewrites"]).Select(item => {

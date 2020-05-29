@@ -6,11 +6,13 @@ using Simpler.NetCore.Collections;
 namespace Forkdown.Core.Parsing.Forkdown.Processors {
   public class ListProcessor : IForkdownProcessor{
 
-    public T ProcessElement<T>(T element, IDictionary<String, Object> context) where T : Element {
-      if (element is Listing list) {
-        list.Subs.ForEach(_ => (_ as ListItem)!.BulletType = list.BulletType);
-      }
-      return element;
+    public void Process<T>(T element) where T : Element {
+      element.Subs.ForEach(el => {
+        if (element is Listing list && el is ListItem li) {
+          li.BulletType = list.BulletType;
+        }
+        this.Process(el);
+      });
     }
   }
 }

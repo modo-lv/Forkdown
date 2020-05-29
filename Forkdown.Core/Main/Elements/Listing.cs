@@ -9,6 +9,8 @@ namespace Forkdown.Core.Elements {
 
     public Boolean IsOrdered;
     
+    public Boolean IsChecklist = false;
+    
     public Char BulletType;
 
     public Listing(ListBlock mdo) : base(mdo) {

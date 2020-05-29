@@ -12,15 +12,12 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
 
-    public T ProcessElement<T>(T element, IDictionary<String, Object> context) where T : Element {
-      _processId(element, context);
-      _processToggle(element, context);
-      return element;
+    public void Process<T>(T element) where T : Element {
+      _processId(element, Nil.DStr<Int32>());
+      _processToggle(element);
     }
 
-    private static void _processId<T>(T element, IDictionary<String, Object> context) where T : Element {
-      var times = (IDictionary<String, Int32>)context.GetOrAdd("times", Nil.DStr<Int32>());
-      var parentId = (String)context.GetOrAdd("parentId", "");
+    private static void _processId<T>(T element, IDictionary<String, Int32> times, String parentId = "") where T : Element {
       var id = parentId;
       
       if (element is Document dEl) {
@@ -30,7 +27,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         id = element.GlobalId;
       }
       else if (element is BlockContainer bc) {
-        id = bc.Title.Replace(' ', W);
+        id = element.Title.Replace(' ', W);
         if (parentId.NotBlank())
           id = $"{parentId}{G}{id}";
         if (id.NotBlank())
@@ -39,13 +36,11 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
           id += $"{R}{times[id]}";
         bc.CheckboxId = id;
       }
-
-      context["parentId"] = id;
+      
+      element.Subs.ForEach(_ => _processId(_, times, id));
     }
 
-    private static void _processToggle<T>(T element, IDictionary<String, Object> context) where T : Element {
-      var inChecklist = (Boolean) context.GetOrAdd("inChecklist", false);
-      
+    private static void _processToggle<T>(T element, Boolean inChecklist = false) where T : Element {
       if (element is ListItem item) {
         if (inChecklist)
          item.IsCheckbox = item.Settings.NotFalse("checkbox");
@@ -62,9 +57,10 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
       else if (element.Settings.IsFalse("checklist"))
         inChecklist = false;
 
-      element.IsChecklist = inChecklist;
-
-      context["inChecklist"] = inChecklist;
+      if (element is Listing l)
+        l.IsChecklist = inChecklist;
+      
+      element.Subs.ForEach(_ => _processToggle(_, inChecklist));
     }
   }
 }

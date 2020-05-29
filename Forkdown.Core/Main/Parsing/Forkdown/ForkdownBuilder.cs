@@ -18,7 +18,7 @@ namespace Forkdown.Core.Parsing.Forkdown {
     public Document Build(String markdown, String fileName = "") {
       var doc = Document.From(markdown);
       doc.ProjectFilePath = fileName;
-      this.Chain.ForEach(_ => doc = _.ProcessElementAndSubs(doc));
+      this.Chain.ForEach(_ => _.Process(doc));
       return doc;
     }
 

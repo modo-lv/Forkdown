@@ -17,8 +17,8 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       var result = ForkdownBuilder.Default.Build(input);
 
       result
-        .Subs[0] // Heading section
-        .Subs[1] // List
+        .Subs[0] // Article
+        .Subs[0] // List
         .Subs[0] // Item
         .As<ListItem>().IsCheckbox.Should().BeTrue();
     }
@@ -32,8 +32,8 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     * Sub";
       var doc = ForkdownBuilder.Default.Build(input);
       doc
-        .Subs[0] // Section
-        .Subs[1] // List
+        .Subs[0] // Article
+        .Subs[0] // List
         .Subs[0] // Item
         .Subs[1] // X-List
         .Subs[0] // X
@@ -81,8 +81,8 @@ Encompasses [Ur], [Kazus] and [Castle Sasune].
 * Item
 * Item";
       ForkdownBuilder.Default.Build(input)
-        .Subs[0] // Section
-        .Subs[1] // List
+        .Subs[0] // Article
+        .Subs[0] // List
         .Subs[2] // 3rd item
         .As<ListItem>()
         .CheckboxId.Should().Be($"Heading{ChecklistProcessor.W}One{ChecklistProcessor.G}Item{ChecklistProcessor.R}3");
@@ -95,8 +95,8 @@ Encompasses [Ur], [Kazus] and [Castle Sasune].
   * Item two";
       var doc = ForkdownBuilder.Default.Build(input);
       doc
-        .Subs[0] // Section
-        .Subs[1] // List
+        .Subs[0] // Article
+        .Subs[0] // List
         .Subs[0] // Item one
         .Subs[1] // List 2
         .Subs[0] // Item two

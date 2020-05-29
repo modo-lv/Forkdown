@@ -13,8 +13,8 @@
       include 'elements/line_break' $0
     when 'Listing'
       include 'elements/list' $0
-    when 'Section'
-      include 'elements/section' $0
+    when 'Article'
+      include 'elements/article' $0
     when 'ListItem'
       include 'elements/list_item' $0
     when 'Paragraph'
@@ -27,7 +27,7 @@
       include 'elements/separator' $0
     when "Text"
       include 'elements/text' $0
-    when 'ContainerBlock'
+    when 'ExplicitContainer'
       include 'elements/block' $0
     else
       include 'elements/placeholder' $0
@@ -69,6 +69,7 @@ end }}
     for $label in $0.Labels
       }}<span class="fd--label">{{$label}}</span>{{
     end
+    }}</span>{{
   end
 end -}}
 

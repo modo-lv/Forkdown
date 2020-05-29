@@ -10,7 +10,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
   /// Parse an element's global ID.
   /// </summary>
   public class GlobalIdProcessor : IForkdownProcessor {
-    public T ProcessElement<T>(T element, IDictionary<String, Object> context) where T : Element {
+    public void Process<T>(T element) where T : Element {
       element.Attributes.Classes.ToList().Prepend(element.Attributes.Id)
         .Where(_ => _.StartsWith("#") || _ == "#~")
         .Select(_ => {
@@ -20,8 +20,8 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         .ToList()
         .Take(1)
         .ForEach(a => element.GlobalId = GlobalId.From(a == "#~" ? element.Title : a.Part(1)));
-
-      return element;
+      
+      element.Subs.ForEach(this.Process);
     }
   }
 }

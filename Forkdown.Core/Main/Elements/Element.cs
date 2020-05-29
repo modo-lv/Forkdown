@@ -12,13 +12,11 @@ namespace Forkdown.Core.Elements {
   public abstract partial class Element {
     public IList<Element> Subs = Nil.L<Element>();
 
-    public String Title => Element.TitleOf(this);
+    public virtual String Title => Element.TitleOf(this);
 
     public String Type => this.GetType().Name;
 
     public ElementSettings Settings = new ElementSettings();
-
-    public Boolean IsChecklist = false;
 
     public ElementAttributes Attributes;
 
@@ -44,13 +42,13 @@ namespace Forkdown.Core.Elements {
     protected Element(IMarkdownObject mdo) : this() {
       this.Attributes = new ElementAttributes(mdo.GetAttributes(), this.Settings);
       
-      if (this.Settings.ContainsKey("masonry")) {
-        this.Attributes.Classes.Add($"{Globals.Prefix}masonry");
-        this.Attributes.Classes.Add($"{Globals.Prefix}masonry-{this.Settings["masonry"]}");
+      if (this.Settings.ContainsKey("grid")) {
+        this.Attributes.Classes.Add($"{Globals.Prefix}grid");
       }
       else if (this.Settings.ContainsKey("columns")) {
         this.Attributes.Classes.Add($"{Globals.Prefix}columns");
-        this.Attributes.Classes.Add($"{Globals.Prefix}columns-{this.Settings["columns"]}");
+        if (this.Settings["columns"].NotBlank())
+          this.Attributes.Classes.Add($"{Globals.Prefix}{this.Settings["columns"]}");
       }
     }
 

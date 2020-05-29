@@ -15,7 +15,7 @@ d.e:
     g.h: i
 ";
 
-      var result = MainConfigSource.From(input);
+      var result = ConfigSource.From(input);
 
       result["a.b"].Should().Be("c");
       result["d.e.f.g.h"].Should().Be("i");
