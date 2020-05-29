@@ -11,7 +11,7 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0-preview.3.20215.2" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.4" />
       <PackageReference Include="Simpler.Net" Version="0.2.1" />
-      <PackageReference Include="Simpler.NetCore.Collections" Version="0.0.5" />
+      <PackageReference Include="Simpler.NetCore.Collections" Version="0.0.6.1" />
       <PackageReference Include="Simpler.NetCore.Text" Version="0.0.3.1" />
       <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
     </ItemGroup>

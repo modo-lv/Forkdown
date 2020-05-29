@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Parsing;
+using Markdig.Extensions.CustomContainers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Simpler.NetCore.Collections;
@@ -34,6 +35,7 @@ namespace Forkdown.Core.Elements {
           LiteralInline t => new Text(t),
           LineBreakInline lb => new LineBreak(),
           ThematicBreakBlock _ => new Separator(),
+          CustomContainer c => new ExplicitContainer(c),
           _ => new Placeholder(mdo),
         };
 

@@ -50,7 +50,7 @@ namespace Forkdown.Core.Elements {
       }
       else if (this.Settings.ContainsKey("columns")) {
         this.Attributes.Classes.Add($"{Globals.Prefix}columns");
-        this.Attributes.Classes.Add($"{Globals.Prefix}columns-${this.Settings["columns"]}");
+        this.Attributes.Classes.Add($"{Globals.Prefix}columns-{this.Settings["columns"]}");
       }
     }
 

@@ -27,6 +27,8 @@
       include 'elements/separator' $0
     when "Text"
       include 'elements/text' $0
+    when 'ContainerBlock'
+      include 'elements/block' $0
     else
       include 'elements/placeholder' $0
   end
@@ -56,7 +58,7 @@ end -}}
     }} class="{{ $attrs.ClassesString }}" {{-
   end
   if $attrs.PropertiesString != ""
-    " " $attrs.PropertiesString
+    " " + $attrs.PropertiesString
   end
 
 end }}

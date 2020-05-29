@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Simpler.NetCore.Collections;
 using Block = Forkdown.Core.Elements.Types.Block;
 
 // ReSharper disable NotAccessedField.Global
@@ -21,8 +23,13 @@ namespace Forkdown.Core.Elements {
 
     /// <summary>
     /// Level of the heading that the section is identified by (or 0 if N/A).  
-    /// </summary>
+    /// </summary>d
     public Int32 HeadingLevel = 0;
+
+    /// <summary>
+    /// Sections are 
+    /// </summary>
+    public IList<Element> Header = Nil.L<Element>();
 
     
 

@@ -16,10 +16,10 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       var doc = ForkdownBuilder.Default.Build(input);
 
       doc.Subs.Count.Should().Be(2);
-      doc.Subs[0].Should().BeOfType<Section>();
-      doc.Subs[1].Should().BeOfType<Section>();
-      doc.Subs[0].Subs[0].Should().BeOfType<Heading>();
-      doc.Subs[1].Subs[0].Should().BeOfType<Heading>();
+      doc.Subs[0].Should().BeOfType<Article>();
+      doc.Subs[1].Should().BeOfType<Article>();
+      ((Article) doc.Subs[0]).Heading.Title.Should().Be("Heading");
+      ((Article) doc.Subs[1]).Heading.Title.Should().Be("Heading 2");
     }
 
     [Fact]
@@ -29,9 +29,9 @@ Paragraph";
       var doc = ForkdownBuilder.Default.Build(input);
 
       doc.Subs.Count.Should().Be(1);
-      doc.Subs[0].Should().BeOfType<Section>();
-      doc.Subs[0].Subs[0].Should().BeOfType<Heading>();
-      doc.Subs[0].Subs[1].Should().BeOfType<Paragraph>();
+      var article = (Article) doc.Subs[0];
+      article.Heading.Title.Should().Be("Heading");
+      article.Subs[0].As<Paragraph>().Title.Should().Be("Paragraph");
     }
   }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Forkdown.Core.Elements;
 using Forkdown.Core.Internal.Exceptions;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
@@ -19,7 +20,7 @@ namespace Forkdown.Core.Parsing.Forkdown {
       set => this._[GlobalId.From(key)] = value;
     }
 
-    public void Add(KeyValuePair<String, Elements.Document> item) {
+    public void Add(KeyValuePair<String, Document> item) {
       item = InternalLink(item);
       if (this.ContainsKey(item.Key))
         throw new DuplicateAnchorException();

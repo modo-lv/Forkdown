@@ -12,12 +12,40 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
 
-    public T Process<T>(T element, Document? doc = null) where T : Element {
-      _processIds(element, Nil.DStr<Int32>(), doc);
-      return _processToggles(element);
+    public T ProcessElement<T>(T element, IDictionary<String, Object> context) where T : Element {
+      _processId(element, context);
+      _processToggle(element, context);
+      return element;
     }
 
-    static T _processToggles<T>(T element, Boolean inChecklist = false) where T : Element {
+    private static void _processId<T>(T element, IDictionary<String, Object> context) where T : Element {
+      var times = (IDictionary<String, Int32>)context.GetOrAdd("times", Nil.DStr<Int32>());
+      var parentId = (String)context.GetOrAdd("parentId", "");
+      var id = parentId;
+      
+      if (element is Document dEl) {
+        id = dEl.ProjectFileId;
+      }
+      else if (element.GlobalId.NotBlank()) {
+        id = element.GlobalId;
+      }
+      else if (element is BlockContainer bc) {
+        id = bc.Title.Replace(' ', W);
+        if (parentId.NotBlank())
+          id = $"{parentId}{G}{id}";
+        if (id.NotBlank())
+          times[id] = times.Get(id) + 1;
+        if (times.Get(id) > 1)
+          id += $"{R}{times[id]}";
+        bc.CheckboxId = id;
+      }
+
+      context["parentId"] = id;
+    }
+
+    private static void _processToggle<T>(T element, IDictionary<String, Object> context) where T : Element {
+      var inChecklist = (Boolean) context.GetOrAdd("inChecklist", false);
+      
       if (element is ListItem item) {
         if (inChecklist)
          item.IsCheckbox = item.Settings.NotFalse("checkbox");
@@ -29,50 +57,14 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         };
       }
 
-      if (element is Block) {
-        if (element.Settings.IsTrue("checklist"))
-          inChecklist = true;
-        else if (element.Settings.IsFalse("checklist"))
-          inChecklist = false;
+      if (element.Settings.IsTrue("checklist"))
+        inChecklist = true;
+      else if (element.Settings.IsFalse("checklist"))
+        inChecklist = false;
 
-        element.IsChecklist = inChecklist;
-      }
-        
-      element.Subs.ForEach(_ => _processToggles(_, inChecklist));
-      
-      return element;
+      element.IsChecklist = inChecklist;
+
+      context["inChecklist"] = inChecklist;
     }
-
-    static T _processIds<T>(
-      T el,
-      IDictionary<String, Int32> times,
-      Document? doc = null,
-      String parentId = ""
-    ) where T : Element {
-      String id = "";
-      if (el is Document dEl) {
-        id = dEl.ProjectFileId;
-        doc = dEl;
-      }
-      else if (el.GlobalId.NotBlank()) {
-        id = el.GlobalId;
-      }
-      else if (el is Section sec) {
-        id = sec.Title.Replace(' ', W);
-        if (parentId.NotBlank())
-          id = $"{parentId}{G}{id}";
-        if (id.NotBlank())
-          times[id] = times.Get(id) + 1;
-        if (times.Get(id) > 1)
-          id += $"{R}{times[id]}";
-        sec.CheckboxId = id;
-      }
-      else
-        id = parentId;
-      el.Subs.ForEach(_ => _processIds(_, times, doc, id));
-      return el;
-    }
-
   }
-
 }
