@@ -8,6 +8,17 @@ using Xunit;
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class InternalLinkTests {
     [Fact]
+    void ExplicitIdImplicitClass() {
+      const String input = @"[Class] {##id .#~}";
+      var doc = ForkdownBuilder.Default.Build(input);
+      var links = InternalLinks.From(doc);
+      links.Count.Should().Be(2);
+      links["id"].Should().Be(doc);
+      links["class"].Should().Be(doc);
+      doc.Subs[0].GlobalId.Should().Be("id");
+    }
+    
+    [Fact]
     void Implicit() {
       const String input = @"
 ## [Class Anchor](xxx) {.#~}

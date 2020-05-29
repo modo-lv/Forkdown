@@ -1,5 +1,6 @@
 ﻿using System;
 using Forkdown.Core.Elements.Types;
+using Simpler.NetCore.Collections;
 
 // ReSharper disable NotAccessedField.Global
 
@@ -15,9 +16,9 @@ namespace Forkdown.Core.Elements {
     public Article(Heading heading) {
       this.Heading = heading;
       this.Attributes = heading.Attributes;
-      this.GlobalId = heading.GlobalId;
+      this.GlobalIds = heading.GlobalIds;
       heading.Attributes = new ElementAttributes();
-      heading.GlobalId = "";
+      heading.GlobalIds = Nil.LStr;
     }
   }
 }

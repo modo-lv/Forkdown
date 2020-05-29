@@ -14,7 +14,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
 
         element.Labels = labels
           .Content
-          .Split(' ', ',', StringSplitOptions.RemoveEmptyEntries)
+          .Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries)
           .Select(_ => _.Trim())
           .ToHashSet();
 

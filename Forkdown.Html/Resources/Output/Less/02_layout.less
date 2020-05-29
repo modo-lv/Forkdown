@@ -65,25 +65,25 @@ main {
   }
 }
 
-.fd--columns {
+@min-col-width: @fd--min-width;
+@min-col-width-small: calc((@fd--min-width / 2) - (@inner-padding));
+
+.fd--columns, .fd--grid {
   section&, main&, article& > [role="main"] {
     display: grid;
+    grid-row-gap: 2px;
     grid-column-gap: @inner-padding;
-    grid-template-columns: repeat(auto-fit, minmax(@fd--min-width, max-content));
+    grid-template-columns: repeat(auto-fit, minmax(@min-col-width, max-content));
   }
   &.fd--small {
     section&, main&, article& > [role="main"] {
-      @min-width: calc((@fd--min-width / 2) - @inner-padding);
-
-      grid-template-columns: repeat(auto-fill, minmax(@min-width, max-content));
+      grid-template-columns: repeat(auto-fit, minmax(@min-col-width-small, max-content));
     }
   }
 }
 
 .fd--grid {
   section&, main&, article& > [role="main"] {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(@fd--min-width, max-content));
-    grid-row-gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(@min-col-width, 1fr));
   }
 }

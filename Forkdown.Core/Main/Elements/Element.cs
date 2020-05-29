@@ -22,18 +22,14 @@ namespace Forkdown.Core.Elements {
 
     public ISet<String> Labels = Nil.SStr;
 
-    private String _globalId = "";
     /// <summary>
-    /// An identifier that is unique within the project. 
+    /// Main identifier that is unique within the project. 
     /// </summary>
-    public String GlobalId {
-      get => this._globalId;
-      set {
-        this._globalId = value;
-        if (value.NotBlank())
-          this.Attributes.Id = value;
-      }
-    }
+    public String GlobalId => this.GlobalIds.FirstOrDefault() ?? "";
+    /// <summary>
+    /// All project-unique identifiers 
+    /// </summary>
+    public IList<String> GlobalIds = Nil.LStr;
 
     protected Element() {
       this.Attributes = new ElementAttributes(new HtmlAttributes(), this.Settings);
@@ -41,9 +37,11 @@ namespace Forkdown.Core.Elements {
 
     protected Element(IMarkdownObject mdo) : this() {
       this.Attributes = new ElementAttributes(mdo.GetAttributes(), this.Settings);
-      
+
       if (this.Settings.ContainsKey("grid")) {
         this.Attributes.Classes.Add($"{Globals.Prefix}grid");
+        if (this.Settings["grid"].NotBlank())
+          this.Attributes.Classes.Add($"{Globals.Prefix}{this.Settings["grid"]}");
       }
       else if (this.Settings.ContainsKey("columns")) {
         this.Attributes.Classes.Add($"{Globals.Prefix}columns");

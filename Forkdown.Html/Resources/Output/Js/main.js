@@ -30,6 +30,8 @@ new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
 })
 
 $(() => {
+
+  // Set  row height on every grid
   $("article.fd--grid > [role='main'], section.fd--grid, main.fd--grid").css("grid-auto-rows", "1.5rem")
 
   // Find all grid items and add <div>s for sizing
@@ -46,14 +48,17 @@ $(() => {
     item.style.gridRowEnd = "span "+rowSpan;
   }
 
-  function resizeAllGridItems(){
-    let allItems = document.querySelectorAll(".fd--mortar");
+  function resizeAllGridItems(grid) {
+    let allItems = grid.querySelectorAll(".fd--mortar");
     for(let x=0;x<allItems.length;x++){
       console.log("resizing", allItems[x]);
       resizeGridItem(allItems[x]);
     }
   }
 
-  resizeAllGridItems();
-  window.addEventListener("resize", resizeAllGridItems);
+  $(".fd--grid").each((i, el) => {
+    resizeAllGridItems(el);
+    window.addEventListener("resize", () => resizeAllGridItems(el));
+  });
+
 })

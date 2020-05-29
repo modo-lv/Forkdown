@@ -11,16 +11,18 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
   /// </summary>
   public class GlobalIdProcessor : IForkdownProcessor {
     public void Process<T>(T element) where T : Element {
-      element.Attributes.Classes.ToList().Prepend(element.Attributes.Id)
+      element.GlobalIds = element
+        .Attributes.Classes.ToList()
+        .Prepend(element.Attributes.Id)
         .Where(_ => _.StartsWith("#") || _ == "#~")
         .Select(_ => {
           element.Attributes.Classes.Remove(_);
-          return _;
+          return GlobalId.From(_ == "#~" ? element.Title : _.Part(1));
         })
-        .ToList()
-        .Take(1)
-        .ForEach(a => element.GlobalId = GlobalId.From(a == "#~" ? element.Title : a.Part(1)));
-      
+        .ToList();
+      if (element.GlobalId.NotBlank())
+        element.Attributes.Id = element.GlobalId;
+
       element.Subs.ForEach(this.Process);
     }
   }

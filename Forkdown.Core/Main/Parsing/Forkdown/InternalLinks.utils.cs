@@ -21,7 +21,7 @@ namespace Forkdown.Core.Parsing.Forkdown {
       void addToIndex(Element el, Document? doc = null) {
         doc ??= (Document) el;
 
-        index.Add(el.GlobalId, doc);
+        el.GlobalIds.ForEach(_ => index.Add(_, doc));
         el.Subs.ForEach(_ => addToIndex(_, doc));
       }
 
