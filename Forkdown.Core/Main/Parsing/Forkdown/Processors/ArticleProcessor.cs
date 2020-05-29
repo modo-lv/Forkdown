@@ -12,11 +12,10 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     public void Process<T>(T element) where T : Element {
       Article? article = null;
       Heading? lastHeading = null;
-      var newSubs = Nil.L<Element>();
-
       IEnumerable<Element> subs = element.Subs;
 
-      foreach (Element el in subs.ToList()) {
+      var newSubs = subs.TakeWhile(_ => _ is Header).ToList();
+      foreach (Element el in subs.SkipWhile(_ => _ is Header)) {
         var startNewArticle = el is Heading h && h.Level <= (lastHeading?.Level ?? 7);
 
         if (article == null) {
@@ -46,7 +45,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
       }
 
       element.Subs = newSubs;
-      element.Subs.ForEach(this.Process);
+      element.Subs.SkipWhile(_ => _ is Header).ForEach(this.Process);
     }
   }
 }

@@ -10,6 +10,7 @@ namespace Forkdown.Core.Parsing.Forkdown {
         .AddProcessor<GlobalIdProcessor>()
         .AddProcessor<ArticleProcessor>()
         .AddProcessor<ListProcessor>()
-        .AddProcessor<ChecklistProcessor>();
+        .AddProcessor<ChecklistProcessor>()
+        .AddProcessor<LinkProcessor>();
   }
 }

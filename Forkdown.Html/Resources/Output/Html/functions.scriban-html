@@ -47,6 +47,14 @@ end -}}
 
 end -}}
 
+{{- func elements
+
+for el in $0
+  element el
+end
+
+end -}}
+
 
 {{ func attrs
   $attrs = $0.Attributes

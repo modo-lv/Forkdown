@@ -1,10 +1,8 @@
 
 <article {{ section_attrs $1 }} {{ attrs $1 }}>
-  <header>
   {{ global_anchor $1 }}
-  {{ element $1.Heading }}
-  </header>
+  <header>{{ subs $1.Subs[0] }}</header>
   <div role="main">
-    {{ subs $1 }}
+    {{ $1.Subs | array.remove_at 0 | elements }}
   </div>
 </article>

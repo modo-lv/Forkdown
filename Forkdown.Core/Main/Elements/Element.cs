@@ -50,6 +50,8 @@ namespace Forkdown.Core.Elements {
       }
     }
 
+    public T First<T>() where T : Element =>
+      this.Find<T>()!;
 
     public T? Find<T>() where T : Element {
       return (this.Subs.FirstOrDefault(_ => _ is T)

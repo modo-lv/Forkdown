@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Parsing.Forkdown;
@@ -16,30 +17,22 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
 * Item";
       var result = ForkdownBuilder.Default.Build(input);
 
-      result
-        .Subs[0] // Article
-        .Subs[0] // List
-        .Subs[0] // Item
-        .As<ListItem>().IsCheckbox.Should().BeTrue();
+      result.Find<ListItem>()!.IsCheckbox.Should().BeTrue();
     }
-    
-    
+
+
     [Fact]
     void ExplicitId() {
       const String input = @"# Heading One
 * Item
   * X {##x}
     * Sub";
-      var doc = ForkdownBuilder.Default.Build(input);
-      doc
-        .Subs[0] // Article
-        .Subs[0] // List
-        .Subs[0] // Item
-        .Subs[1] // X-List
-        .Subs[0] // X
-        .Subs[1] // Sub-List
-        .Subs[0] // Sub
-        .As<ListItem>().CheckboxId.Should().Be($"x{ChecklistProcessor.G}Sub");
+      ForkdownBuilder.Default.Build(input)
+        .First<Listing>()
+        .First<Listing>()
+        .First<Listing>()
+        .First<ListItem>()
+        .CheckboxId.Should().Be($"x{ChecklistProcessor.G}Sub");
     }
 
     [Fact]
@@ -81,8 +74,7 @@ Encompasses [Ur], [Kazus] and [Castle Sasune].
 * Item
 * Item";
       ForkdownBuilder.Default.Build(input)
-        .Subs[0] // Article
-        .Subs[0] // List
+        .First<Listing>()
         .Subs[2] // 3rd item
         .As<ListItem>()
         .CheckboxId.Should().Be($"Heading{ChecklistProcessor.W}One{ChecklistProcessor.G}Item{ChecklistProcessor.R}3");
@@ -95,12 +87,9 @@ Encompasses [Ur], [Kazus] and [Castle Sasune].
   * Item two";
       var doc = ForkdownBuilder.Default.Build(input);
       doc
-        .Subs[0] // Article
-        .Subs[0] // List
-        .Subs[0] // Item one
-        .Subs[1] // List 2
-        .Subs[0] // Item two
-        .As<ListItem>().CheckboxId.Should().Be("Heading⸱One␝Item⸱one␝Item⸱two");
+        .First<Listing>()
+        .First<Listing>()
+        .First<ListItem>().CheckboxId.Should().Be("Heading⸱One␝Item⸱one␝Item⸱two");
     }
   }
 }

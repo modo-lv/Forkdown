@@ -18,20 +18,20 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       doc.Subs.Count.Should().Be(2);
       doc.Subs[0].Should().BeOfType<Article>();
       doc.Subs[1].Should().BeOfType<Article>();
-      ((Article) doc.Subs[0]).Heading.Title.Should().Be("Heading");
-      ((Article) doc.Subs[1]).Heading.Title.Should().Be("Heading 2");
+      ((Article) doc.Subs[0]).Title.Should().Be("Heading");
+      ((Article) doc.Subs[1]).Title.Should().Be("Heading 2");
     }
 
     [Fact]
-    void HeadingEnclosesContentInSection() {
+    void HeadingBecomesArticle() {
       const String input = @"# Heading
 Paragraph";
       var doc = ForkdownBuilder.Default.Build(input);
 
       doc.Subs.Count.Should().Be(1);
       var article = (Article) doc.Subs[0];
-      article.Heading.Title.Should().Be("Heading");
-      article.Subs[0].As<Paragraph>().Title.Should().Be("Paragraph");
+      article.Title.Should().Be("Heading");
+      article.Subs[1].As<Paragraph>().Title.Should().Be("Paragraph");
     }
   }
 }

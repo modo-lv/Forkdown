@@ -64,7 +64,7 @@ namespace Forkdown.Core {
       // Settings
       this.Config = MainConfig.From(_args.MainConfigFile);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
-      
+
       // Builder
       // Pages
       _logger.LogInformation("Finding and loading pages...");
@@ -72,7 +72,7 @@ namespace Forkdown.Core {
         .Files("*.md", true)
         .Select(doc => this.LoadFile(doc.MakeRelativeTo(root).ToString()))
         .ToHashSet();
-      
+
       // Achors
       this._logger.LogDebug("Building internal link index...");
       this.InteralLinks = InternalLinks.From(this.Pages);
@@ -86,9 +86,9 @@ namespace Forkdown.Core {
     }
 
     public void ProcessLinks(Element el) {
-      if (el is Link link && link.IsInternal && !this.InteralLinks.ContainsKey(link.Target)) {
-        if (link.Target.StartsWith("@")) 
-          link.Target = link.Target == "@~" ? link.Title : link.Target.Part(1);
+      if (el is Link link && (link.IsExternal || !this.InteralLinks.ContainsKey(link.Target))) {
+        if (link.Target.StartsWith("@"))
+          link.Target = link.Target.Part(1);
         link.Target = this.Config.ExternalLinks.UrlFor(link.Target);
       }
       else

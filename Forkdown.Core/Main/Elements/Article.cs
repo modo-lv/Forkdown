@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Forkdown.Core.Elements.Types;
 using Simpler.NetCore.Collections;
 
@@ -9,12 +10,8 @@ namespace Forkdown.Core.Elements {
   /// A piece of forkdown content grouped in an article based on heading
   /// </summary>
   public class Article : BlockContainer {
-    public Heading Heading;
-
-    public override String Title => this.Heading.Title;
-
     public Article(Heading heading) {
-      this.Heading = heading;
+      this.Subs.Insert(0, new Header(heading));
       this.Attributes = heading.Attributes;
       this.GlobalIds = heading.GlobalIds;
       heading.Attributes = new ElementAttributes();

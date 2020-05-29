@@ -9,7 +9,7 @@ namespace Forkdown.Core.Elements {
     public String Target;
 
     public Boolean IsInternal => !this.IsExternal;
-    public Boolean IsExternal => this.Target.Contains("//");
+    public Boolean IsExternal => this.Target.Contains("//") || this.Target.StartsWith("@");
     
     public Link(LinkInline link) : base(link) =>
       this.Target = link.Url;
