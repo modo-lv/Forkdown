@@ -38,12 +38,7 @@ namespace Forkdown.Core.Elements {
     protected Element(IMarkdownObject mdo) : this() {
       this.Attributes = new ElementAttributes(mdo.GetAttributes(), this.Settings);
 
-      if (this.Settings.ContainsKey("grid")) {
-        this.Attributes.Classes.Add($"{Globals.Prefix}grid");
-        if (this.Settings["grid"].NotBlank())
-          this.Attributes.Classes.Add($"{Globals.Prefix}{this.Settings["grid"]}");
-      }
-      else if (this.Settings.ContainsKey("columns")) {
+      if (this.Settings.ContainsKey("columns")) {
         this.Attributes.Classes.Add($"{Globals.Prefix}columns");
         if (this.Settings["columns"].NotBlank())
           this.Attributes.Classes.Add($"{Globals.Prefix}{this.Settings["columns"]}");

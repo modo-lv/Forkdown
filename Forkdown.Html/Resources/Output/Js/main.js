@@ -32,16 +32,16 @@ new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
 $(() => {
 
   // Set  row height on every grid
-  $("article.fd--grid > [role='main'], section.fd--grid, main.fd--grid").css("grid-auto-rows", "1.5rem")
+  $(".fd--columns").css("grid-auto-rows", "1.5rem")
 
   // Find all grid items and add <div>s for sizing
   {
-    let items = $("article.fd--grid > [role='main'] > *, section.fd--grid > *, main.fd--grid > *")
-    items.wrap("<div class='fd--mortar'>")
+    let items = $("article.fd--columns > [role='main'] > *, section.fd--columns > *, main.fd--columns > *")
+    items.wrap("<div class='fd--column'>")
   }
 
   function resizeGridItem(item){
-    let grid = document.getElementsByClassName("fd--grid")[0];
+    let grid = $(item).closest(".fd--columns")[0];
     let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
     let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
     let rowSpan = Math.ceil((item.children[0].getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
@@ -49,14 +49,15 @@ $(() => {
   }
 
   function resizeAllGridItems(grid) {
-    let allItems = grid.querySelectorAll(".fd--mortar");
+    let allItems = grid.querySelectorAll(".fd--column");
     for(let x=0;x<allItems.length;x++){
-      console.log("resizing", allItems[x]);
+      //console.log("resizing", allItems[x]);
       resizeGridItem(allItems[x]);
     }
   }
 
-  $(".fd--grid").each((i, el) => {
+  // Reverse so that inner elements get resolved first and properly set the size of their parents
+  $($(".fd--columns").get().reverse()).each((i, el) => {
     resizeAllGridItems(el);
     window.addEventListener("resize", () => resizeAllGridItems(el));
   });

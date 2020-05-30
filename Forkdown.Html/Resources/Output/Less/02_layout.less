@@ -68,22 +68,22 @@ main {
 @min-col-width: @fd--min-width;
 @min-col-width-small: calc((@fd--min-width / 2) - (@inner-padding));
 
-.fd--columns, .fd--grid {
+.fd--columns {
+  grid-row-gap: 2px;
   section&, main&, article& > [role="main"] {
     display: grid;
     grid-row-gap: 2px;
     grid-column-gap: @inner-padding;
+  }
+}
+
+.fd--columns {
+  section&, main&, article& > [role="main"] {
     grid-template-columns: repeat(auto-fit, minmax(@min-col-width, max-content));
   }
   &.fd--small {
     section&, main&, article& > [role="main"] {
       grid-template-columns: repeat(auto-fit, minmax(@min-col-width-small, max-content));
     }
-  }
-}
-
-.fd--grid {
-  section&, main&, article& > [role="main"] {
-    grid-template-columns: repeat(auto-fit, minmax(@min-col-width, 1fr));
   }
 }
