@@ -10,6 +10,7 @@ using dotless.Core.Parser;
 using dotless.Core.Stylizers;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Simpler.NetCore.Collections;
 using Path = Fluent.IO.Path;
 
@@ -46,8 +47,8 @@ namespace Forkdown.Html.Main {
 
       _logger.LogInformation("Compiling {css}...", file.MakeRelativeTo(_inPath).ToString());
       var sb = new StringBuilder()
-        .AppendLine($"@fd--min-width: {config.MinWidth};")
-        .AppendLine(File.ReadAllText(file.ToString()));
+          .AppendLine(File.ReadAllText(file.ToString()))
+          .AppendLine($"@fd--min-article-width: {config.MinArticleWidth};");
       var less = Regex.Replace(sb.ToString(),
         @"(@import\s['""])\./",
         $"$1{file.Parent().FullPath + System.IO.Path.DirectorySeparatorChar}",

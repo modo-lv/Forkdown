@@ -11,7 +11,7 @@ namespace Forkdown.Core.Config {
       From(ConfigSource.From(yaml));
 
     public static ExternalLinkRewriteConfig From(IDictionary<String, Object> input) {
-      var items = ((IList<Object>) input["external_links.rewrites"]).Select(item => {
+      var items = ((IList<Object>) input["externalLinks.rewrites"]).Select(item => {
         (Object key, Object value) = item switch
         {
           IList<Object> list => new KeyValuePair<Object, Object>(list[0], list[1]),

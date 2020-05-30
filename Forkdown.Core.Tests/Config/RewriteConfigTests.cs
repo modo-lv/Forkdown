@@ -11,7 +11,7 @@ namespace Forkdown.Core.Tests.Config {
     [Fact]
     void Load() {
       const String input = @"
-external_links:
+externalLinks:
   rewrites:
     - pattern: X
       rewrite: Y

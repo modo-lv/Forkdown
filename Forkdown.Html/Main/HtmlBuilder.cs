@@ -5,6 +5,7 @@ using Forkdown.Core.Elements;
 using Forkdown.Core.Parsing.Forkdown;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Scriban;
 using Scriban.Runtime;
 using Simpler.NetCore.Collections;
@@ -32,7 +33,8 @@ namespace Forkdown.Html.Main {
     }
 
 
-    public HtmlBuilder Build() {
+    public HtmlBuilder Build(HtmlConfig? config = null) {
+      config ??= new HtmlConfig();
       _project.Load();
       this._logger.LogInformation("Building {output} in {root}...", "HTML", _outPath.ToString());
       
@@ -59,9 +61,11 @@ namespace Forkdown.Html.Main {
         TemplateLoader = new ScribanTemplateLoader(_inPath),
         MemberRenamer = _ => _.Name
       };
+
       var model = new ScriptObject
       {
         { "Project", this._project },
+        { "HtmlConfigJson", JsonConvert.SerializeObject(config) },
         { "Scripts", _jsBuilder.ScriptPaths },
         { "Timestamp", DateTime.Now.Ticks },
       };

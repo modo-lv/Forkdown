@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 {{ include 'head' }}
-<body data-project-name="{{ Project.Name }}">
+<body data-project-name="{{ Project.Name | html.escape }}" data-html-config="{{ HtmlConfigJson | html.escape }}">
   <div class="body">
 {{ include 'header' }}
 <main {{ attrs Document }}>

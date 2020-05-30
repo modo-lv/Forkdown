@@ -27,6 +27,7 @@ body {
   border-radius: @border-radius;
   border: @border;
   width: @width;
+  max-width: 1000px;
 
   & > header, & > footer {
     border-radius: @border-radius;
@@ -60,30 +61,33 @@ main {
   border-top: none;
   border-bottom: none;
   overflow: auto;
-  & > * {
-    margin: @inner-padding;
-  }
+  padding: @inner-padding
 }
 
-@min-col-width: @fd--min-width;
-@min-col-width-small: calc((@fd--min-width / 2) - (@inner-padding));
+@min-col-width: @fd--default-column-width;
+@min-col-width-small: calc((@fd--default-column-width / 2) - (@inner-padding));
+
+.fd--column { min-width: @min-col-width; }
 
 .fd--columns {
-  grid-row-gap: 2px;
   section&, main&, article& > [role="main"] {
     display: grid;
-    grid-row-gap: 2px;
+    grid-row-gap: 0.5rem;
     grid-column-gap: @inner-padding;
+    grid-template-rows: max-content;
   }
 }
 
 .fd--columns {
   section&, main&, article& > [role="main"] {
     grid-template-columns: repeat(auto-fit, minmax(@min-col-width, max-content));
-  }
+  }      
   &.fd--small {
     section&, main&, article& > [role="main"] {
       grid-template-columns: repeat(auto-fit, minmax(@min-col-width-small, max-content));
+      & > .fd--column {
+        min-width: @min-col-width-small;
+      }
     }
   }
 }

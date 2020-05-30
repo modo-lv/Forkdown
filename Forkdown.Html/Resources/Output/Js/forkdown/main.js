@@ -1,5 +1,8 @@
 'use strict'
 
+/**
+ * Main Forkdown class, primarily responsible for holding and persisting user profile data.
+ */
 class ForkdownMain {
   constructor({projectConfig}) {
     this.profileIds = []

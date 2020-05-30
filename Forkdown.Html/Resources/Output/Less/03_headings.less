@@ -1,6 +1,8 @@
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+  line-height: 100%;
 }
 
 .body > header h1 { 
@@ -8,17 +10,12 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
 }
 
-h1 { font-size: 1.8rem; margin-top: 1.4rem; }
-h2 { font-size: 1.6rem; margin-top: 1.2rem; }
-h3 { font-size: 1.4rem; margin-top: 1.0rem; }
-h4 { font-size: 1.2rem; margin-top: 0.8rem; }
-h5, h6 {
-  font-size: 1rem;
-  margin-top: 0.6rem;
-}
-h6 { 
-  font-weight: normal;
-}
+@increase: 0.15rem;
+@spacing-increase: 0.2rem;
 
-
-
+h1 { font-size: 1rem + 5 * @increase; margin-top: 0.5rem + 5 * @spacing-increase; }
+h2 { font-size: 1rem + 4 * @increase; margin-top: 0.5rem + 4 * @spacing-increase; }
+h3 { font-size: 1rem + 3 * @increase; margin-top: 0.5rem + 3 * @spacing-increase; }
+h4 { font-size: 1rem + 2 * @increase; margin-top: 0.5rem + 2 * @spacing-increase; }
+h5 { font-size: 1rem + 1 * @increase; margin-top: 0.5rem + 1 * @spacing-increase; }
+h6 { font-size: 1rem + 0 * @increase; margin-top: 0.5rem + 0 * @spacing-increase; }

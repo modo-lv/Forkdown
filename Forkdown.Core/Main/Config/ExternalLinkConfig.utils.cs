@@ -6,7 +6,7 @@ namespace Forkdown.Core.Config {
     public static ExternalLinkConfig From(ConfigSource source) {
       return new ExternalLinkConfig
       {
-        DefaultUrl = source.GetValueOrDefault("external_links.default_url") as String ?? "",
+        DefaultUrl = source.GetValueOrDefault("externalLinks.defaultUrl") as String ?? "",
         Rewrites = ExternalLinkRewriteConfig.From(source)
       };
     }
