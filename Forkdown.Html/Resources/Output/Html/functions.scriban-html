@@ -63,7 +63,9 @@ end -}}
     }} id="{{ $attrs.Id}}" {{-
   end
   if $attrs.ClassesString != ""
-    }} class="{{ $attrs.ClassesString }}" {{-
+    }} class="{{ $attrs.ClassesString + " " + $1 }}" {{-
+  else if ($1 != "")
+    }} class="{{$1}}" {{
   end
   if $attrs.PropertiesString != ""
     " " + $attrs.PropertiesString
