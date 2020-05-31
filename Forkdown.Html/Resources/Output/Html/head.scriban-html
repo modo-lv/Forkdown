@@ -3,9 +3,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="UTF-8" />
 
-  <link rel="stylesheet" href="{{ PathToRoot }}main.css?{{ Timestamp }}" />
+  <link rel="stylesheet" href="{{ PathToRoot }}/main.css?{{ Timestamp }}" />
 
-  {{ for script in Scripts }}
-  <script src="{{ PathToRoot + script }}?{{ Timestamp }}" defer></script>
-  {{ end }}
+  {{
+  for script in Scripts 
+    if (script | string.ends_with "layout.js" )
+      }}<script src="{{ PathToRoot }}/{{ script }}?{{ Timestamp }}"></script>{{
+    else
+      }}<script src="{{ PathToRoot }}/{{ script }}?{{ Timestamp }}" defer></script>{{
+    end
+  end
+  }}
+  <script>ForkdownLayout.hideMain()</script>
 </head>
