@@ -4,7 +4,7 @@
 {{ 
 if MainMenu
   for tab in MainMenu.Subs[0].Subs
-    }}<li {{ attrs tab }}><span>▼</span>{{subs tab}}</li>{{
+    }}<li {{ attrs tab "fd--noscript" }}><span>▼</span>{{subs tab}}</li>{{
   end
 end
 }}

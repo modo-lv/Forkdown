@@ -39,7 +39,7 @@ class ForkdownLayout {
       items.wrap("<div class='fd--column'></div>")
     }
 
-    this.processMasonry().then(ForkdownLayout.showMain)
+    this.processMasonry().then(ForkdownLayout.showMain).then(() => $("main").attr("tabindex", -1).focus())
     $(window).on("resize", this.processMasonry)
   }
 

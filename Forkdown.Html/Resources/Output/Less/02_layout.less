@@ -61,6 +61,9 @@ main {
   border-bottom: none;
   overflow: auto;
   padding: @inner-padding;
+  &:focus {
+    outline-width: 0;
+  }
 }
 
 @min-col-width: @fd--default-column-width;

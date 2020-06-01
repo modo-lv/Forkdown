@@ -26,7 +26,6 @@
 
       & > li {
         border: 1px solid transparent;
-        border-bottom: none;
         font-size: @header-font-size;
         display: inline-block;
         margin: 0;
@@ -54,27 +53,19 @@
           }
         }
 
-        &:hover, &.fd--active {
+        &.fd--noscript:hover, &.fd--active, &.fd--script:hover {
           border: @border;
-          border-bottom: none;
+          background: @focus-color;
+        }
+
+        &.fd--noscript:hover, &.fd--active, &.fd--active:hover {
+          border-bottom: 1px solid transparent;
+          position: relative;
           & > ul {
             background: @focus-color;
             display: block;
             position: absolute;        
-            width: auto;
-          }
-        }
-
-        &:hover {
-          & > ul {
-            z-index: 1;
-          }
-        }
-
-        &.fd--active {
-          background: @focus-color;
-          & > ul {
-            z-index: 0;
+            width: auto;        
           }
         }
       }

@@ -1,7 +1,7 @@
 {{-
   $target = $1.Target
   if ($1.IsInternal && $target != "")
-    $target = PathToRoot + $target
+    $target = PathToRoot + "/" + $target
   end
 -}}
 <a {{ if $1.Target != "" -}} 

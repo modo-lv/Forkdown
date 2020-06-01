@@ -93,7 +93,7 @@ namespace Forkdown.Html.Main {
         this._logger.LogDebug("Rendering {page}...", outFile);
 
         model.Add("Document", doc);
-        model.Add("PathToRoot", "../".Repeat(doc.Depth));
+        model.Add("PathToRoot", "../".Repeat(doc.Depth).TrimSuffix("/"));
         model.Add("MainMenu", mainMenu);
         model.Add("Footer", footer);
         var html = template.Render(templateContext);
