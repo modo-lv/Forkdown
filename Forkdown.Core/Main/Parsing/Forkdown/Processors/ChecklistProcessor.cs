@@ -11,7 +11,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     public const Char G = '␝'; // Group separator
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
-
+    
     public void Process<T>(T element) where T : Element {
       _processId(element, Nil.DStr<Int32>());
       _processToggle(element);

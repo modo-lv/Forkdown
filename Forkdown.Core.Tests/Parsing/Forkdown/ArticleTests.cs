@@ -7,7 +7,14 @@ using Xunit;
 // ReSharper disable ArrangeTypeMemberModifiers
 
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
-  public class SectionTests {
+  public class ArticleTests {
+    [Fact]
+    void CopySettings() {
+      const String input = @"# Heading {:setting}";
+      var result = ForkdownBuilder.Default.Build(input);
+      result.Find<Article>()!.Settings.IsTrue("setting").Should().BeTrue();
+    }
+    
     [Fact]
     void TwoHeadings() {
       const String input = @"# Heading

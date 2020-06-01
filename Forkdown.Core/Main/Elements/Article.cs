@@ -14,8 +14,10 @@ namespace Forkdown.Core.Elements {
       this.Subs.Insert(0, new Header(heading));
       this.Attributes = heading.Attributes;
       this.GlobalIds = heading.GlobalIds;
+      this.Settings = heading.Settings;
       heading.Attributes = new ElementAttributes();
       heading.GlobalIds = Nil.LStr;
+      heading.Settings = new ElementSettings();
     }
   }
 }
