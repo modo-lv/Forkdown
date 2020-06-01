@@ -3,3 +3,4 @@ obj/
 .idea/
 Publish/
 *.user
+prepros.config

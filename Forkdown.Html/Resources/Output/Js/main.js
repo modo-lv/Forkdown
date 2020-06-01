@@ -30,10 +30,12 @@ let main = new ForkdownMain({projectConfig: {name: projectName}}).init().then(ma
 })
 
 let layout = new ForkdownLayout();
+let menu = new ForkdownMenu().init();
   
 window.Forkdown = {
   "main": main,
-  "layout": layout
+  "layout": layout,
+  "menu": menu,
 }
 
 layout.init()

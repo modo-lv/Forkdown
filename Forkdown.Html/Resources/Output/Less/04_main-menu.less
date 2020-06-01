@@ -25,18 +25,18 @@
       font-weight: bold;
 
       & > li {
+        border: 1px solid transparent;
+        border-bottom: none;
         font-size: @header-font-size;
         display: inline-block;
         margin: 0;
         margin-right: 1rem;
+        padding: 0.25rem;
+        padding-left: 0;
         white-space: nowrap;
         cursor: default;
 
-        & > span {
-          display: inline-block;
-        }
-
-        & > p {
+        & > span, & > p {
           display: inline-block;
         }
 
@@ -54,11 +54,28 @@
           }
         }
 
-        &:hover > ul {
+        &:hover, &.fd--active {
+          border: @border;
+          border-bottom: none;
+          & > ul {
+            background: @focus-color;
+            display: block;
+            position: absolute;        
+            width: auto;
+          }
+        }
+
+        &:hover {
+          & > ul {
+            z-index: 1;
+          }
+        }
+
+        &.fd--active {
           background: @focus-color;
-          display: block;
-          position: absolute;        
-          width: auto;
+          & > ul {
+            z-index: 0;
+          }
         }
       }
     }
