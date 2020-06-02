@@ -5,6 +5,8 @@ namespace Forkdown.Core.Config {
   public partial class ExternalLinkConfig {
 
     public String UrlFor(String target) {
+      if (target.Contains("//"))
+        return target;
       this.Rewrites.ForEach(_ =>
         target = Regex.Replace(target, _.Key, _.Value)
       );
