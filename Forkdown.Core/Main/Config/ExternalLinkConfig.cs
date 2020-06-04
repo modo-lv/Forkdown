@@ -10,7 +10,7 @@ namespace Forkdown.Core.Config {
       this.Rewrites.ForEach(_ =>
         target = Regex.Replace(target, _.Key, _.Value)
       );
-      return this.DefaultUrl.Replace("%~", target);
+      return this.DefaultUrl.Replace("%~", Uri.EscapeDataString(target));
     }
 
     private String _defaultUrl = "";

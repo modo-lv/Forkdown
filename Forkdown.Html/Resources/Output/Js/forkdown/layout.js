@@ -47,7 +47,7 @@ class ForkdownLayout {
    * @returns {Promise}
    */
   processMasonry = () =>
-    this.processMasonryColumns($(".fd--columns").children(".fd--column").get())
+    this.processMasonryColumns($(".fd--columns, .fd--columns > [role=main]").children(".fd--column").get())
 
   /**
    * @param {Array<HTMLElement>} columns
@@ -61,7 +61,7 @@ class ForkdownLayout {
 
     for (let a = 0; a < columns.length; a++) {
       let column = $(columns[a])
-      let grid = column.closest(".fd--columns");
+      let grid = column.closest(".fd--columns > [role=main], .fd--columns");
       if (this.masonryIsOn()) {
         grid.css("grid-auto-rows", "0.5rem")
         let rowHeight = grid.css('grid-auto-rows').replace('px', '') * 1;
