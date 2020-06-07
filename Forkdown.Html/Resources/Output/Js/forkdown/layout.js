@@ -10,23 +10,6 @@ class ForkdownLayout {
 
   static MainHider = document.createElement("style");
 
-  /**
-   * Hide the main content.
-   * Use during page load to hide the layout shuffling as things are moved into masonry positions
-   */
-  static hideMain() {
-    ForkdownLayout.MainHider.innerText = "main > * { visibility: hidden; } main { overflow: hidden }"
-    document.head.appendChild(ForkdownLayout.MainHider)
-  }
-
-  /**
-   * Show the main content.
-   * Use when the initial masonry layout is finished, to display the content.
-   */
-  static showMain() {
-    document.head.removeChild(ForkdownLayout.MainHider)
-  }
-
   init = async () => {
     { // Temporarily create an invisible layout column to get the default column width
       let column = $("<div class='fd--column' style='display: none;'></div>")
@@ -41,8 +24,27 @@ class ForkdownLayout {
 
     this.processMasonry()
       .then(ForkdownLayout.showMain)
-      .then(() => $("main").attr("tabindex", -1).focus())
+      .then(this.focusAnchor)
     $(window).on("resize", this.processMasonry)
+    $(window).on("hashchange", this.focusAnchor)
+  }
+
+  /**
+   * Scroll to and focus on the requested element, if any.
+   */
+  focusAnchor = () => {
+    let anchor = window.location.hash
+    let main = $("main")
+    if (anchor !== "") {
+      let mainTop = main.offset().top
+      let el = $(anchor).closest(":visible")
+      let elTop = el.offset().top
+      main[0].scrollTop = elTop - mainTop
+      el.attr("tabindex", -1).focus()
+    }
+    else {
+      main.attr("tabindex", -1).focus()
+    }
   }
 
   /**
@@ -88,4 +90,22 @@ class ForkdownLayout {
    */
   masonryIsOn = () => 
     $(window).width() > this.defaultColumnWidth * 2
+
+
+      /**
+   * Hide the main content.
+   * Use during page load to hide the layout shuffling as things are moved into masonry positions
+   */
+  static hideMain() {
+    ForkdownLayout.MainHider.innerText = "main > * { visibility: hidden; } main { overflow: hidden }"
+    document.head.appendChild(ForkdownLayout.MainHider)
+  }
+
+  /**
+   * Show the main content.
+   * Use when the initial masonry layout is finished, to display the content.
+   */
+  static showMain() {
+    document.head.removeChild(ForkdownLayout.MainHider)
+  }
 }
