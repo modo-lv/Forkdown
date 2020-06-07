@@ -23,5 +23,9 @@ namespace Forkdown.Core.Elements {
     /// How deep in the project file tree this document is.
     /// </summary>
     public Int32 Depth => this.ProjectFilePath.Count(_ => _ == '/');
+
+
+    public new Document AddSub(Element sub) { return (Document)base.AddSub(sub); }
+    public new Document AddSubs(params Element[] subs) { return (Document)base.AddSubs(subs); }
   }
 }

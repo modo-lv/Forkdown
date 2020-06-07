@@ -30,7 +30,6 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       links.Count.Should().Be(2);
       links["class_anchor"].Should().Be(doc);
       links["id_anchor"].Should().Be(doc);
-      doc.Subs[1].Attributes.Id.Should().Be("id_anchor");
     }
 
     [Fact]
@@ -40,8 +39,8 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
 Paragraph {.#pAnchor}
 ";
       var doc = ForkdownBuilder.Default.Build(input);
-      doc.Find<Article>()!.Attributes.Id.Should().Be("h-anchor");
-      doc.Find<Paragraph>()!.Attributes.Id.Should().Be("panchor");
+      doc.FindSub<Article>()!.GlobalId.Should().Be("h-anchor");
+      doc.FindSub<Paragraph>()!.GlobalId.Should().Be("panchor");
       var anchors = InternalLinks.From(doc);
 
       anchors.Count.Should().Be(2);

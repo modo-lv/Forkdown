@@ -2,28 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements;
-using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Parsing.Forkdown.Processors {
-  /// <summary>
-  /// Parse an element's global ID.
-  /// </summary>
   public class GlobalIdProcessor : IForkdownProcessor {
-    public void Process<T>(T element) where T : Element {
+
+    public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
       element.GlobalIds = element
-        .Attributes.Classes.ToList()
-        .Prepend(element.Attributes.Id)
-        .Where(_ => _.StartsWith("#") || _ == "#~")
+        .Settings.Keys.ToList()
+        .Where(_ => _.Text().StartsWith("#"))
         .Select(_ => {
-          element.Attributes.Classes.Remove(_);
-          return GlobalId.From(_ == "#~" ? element.Title : _.Part(1));
+          element.Settings.Remove(_);
+          return GlobalId.From(_.Part(1).Replace("~", element.Title));
         })
         .ToList();
-      if (element.GlobalId.NotBlank())
-        element.Attributes.Id = element.GlobalId;
-
-      element.Subs.ForEach(this.Process);
+      return element;
     }
   }
 }

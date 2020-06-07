@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Forkdown.Core.Config {
   public partial class ExternalLinkConfig {
-
+    
     public String UrlFor(String target) {
       if (target.Contains("//"))
         return target;

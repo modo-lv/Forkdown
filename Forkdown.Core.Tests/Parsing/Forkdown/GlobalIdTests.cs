@@ -1,7 +1,9 @@
 ﻿using System;
 using FluentAssertions;
+using Forkdown.Core.Elements;
 using Forkdown.Core.Internal.Exceptions;
 using Forkdown.Core.Parsing.Forkdown;
+using Markdig.Renderers.Html;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -10,8 +12,10 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class GlobalIdTests {
     [Fact]
     void ThrowOnDuplicate() {
-      const String input = @"# One {##id}
-# Two {##id}";
+      var input = new Document().AddSubs(
+        new Text { Settings = { { "#id", null } } },
+        new Text { Settings = { { "#id", null } } }
+      );
       var doc = ForkdownBuilder.Default.Build(input);
 
       FluentActions.Invoking(() =>
@@ -20,19 +24,16 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     }
 
     [Fact]
-    void IgnoreRegularId() {
-      const String input = @"## Normal ID {#id}";
-      var doc = ForkdownBuilder.Default.Build(input);
-      doc.Subs[0].Attributes.Id.Should().Be("id");
-    }
+    void HandleMultiple() {
+      var input = new Document().AddSub(
+        new Article((Heading)
+          new Heading(1) { Settings = { { "#id", null }, { "#~", null } } }.AddSub(new Text("Heading"))
+        )
+      );
 
-    [Fact]
-    void RemoveFromClasses() {
-      const String input = @"## Heading {##id .#~}";
       var doc = ForkdownBuilder.Default.Build(input);
-      doc.Subs[0].Attributes.Id.Should().Be("id");
-      doc.Subs[0].GlobalId.Should().Be("id");
-      doc.Subs[0].Attributes.Classes.Should().BeEmpty();
+      doc.FirstSub<Article>().GlobalId.Should().Be("id");
+      doc.FirstSub<Article>().GlobalIds.Should().Contain("heading");
     }
   }
 }

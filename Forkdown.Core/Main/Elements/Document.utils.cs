@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Parsing;
 using Markdig.Extensions.CustomContainers;
+using Tables = Markdig.Extensions.Tables;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Simpler.NetCore.Collections;
 
+/*
 namespace Forkdown.Core.Elements {
   /// <summary>
   /// Main class for converting Markdown to Forkdown.
@@ -36,6 +38,9 @@ namespace Forkdown.Core.Elements {
           LineBreakInline lb => new LineBreak(),
           ThematicBreakBlock _ => new Separator(),
           CustomContainer c => new ExplicitContainer(c),
+          Tables.Table _ => new Table(),
+          Tables.TableRow tr => new TableRow(tr),
+          Tables.TableCell _ => new TableCell(),
           _ => new Placeholder(mdo),
         };
 
@@ -73,3 +78,5 @@ namespace Forkdown.Core.Elements {
     }
   }
 }
+
+*/

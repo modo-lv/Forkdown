@@ -39,7 +39,9 @@ class ForkdownLayout {
       items.wrap("<div class='fd--column'></div>")
     }
 
-    this.processMasonry().then(ForkdownLayout.showMain).then(() => $("main").attr("tabindex", -1).focus())
+    this.processMasonry()
+      .then(ForkdownLayout.showMain)
+      .then(() => $("main").attr("tabindex", -1).focus())
     $(window).on("resize", this.processMasonry)
   }
 
@@ -69,7 +71,7 @@ class ForkdownLayout {
         if (Number.isNaN(rowGap))
           rowGap = 0
         let height = column.children().first().outerHeight();
-        let rowSpan = Math.floor((height + rowGap) / (rowHeight + rowGap));
+        let rowSpan = Math.round((height + rowGap) / (rowHeight + rowGap));
         column.css("grid-row-end", "span " + rowSpan)
       }
       else {

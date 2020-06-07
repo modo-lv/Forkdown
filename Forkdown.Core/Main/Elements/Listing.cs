@@ -13,6 +13,8 @@ namespace Forkdown.Core.Elements {
     
     public Char BulletType;
 
+    public Listing() { }
+
     public Listing(ListBlock mdo) : base(mdo) {
       this.IsOrdered = mdo.IsOrdered;
       this.BulletType = mdo.BulletType;

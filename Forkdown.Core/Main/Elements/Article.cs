@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Forkdown.Core.Elements.Attributes;
 using Forkdown.Core.Elements.Types;
 using Simpler.NetCore.Collections;
 
@@ -7,17 +8,20 @@ using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Elements {
   /// <summary>
-  /// A piece of forkdown content grouped in an article based on heading
+  /// A piece of forkdown content grouped in an article based on a heading
   /// </summary>
   public class Article : BlockContainer {
+    // ReSharper disable once SuggestBaseTypeForParameter
     public Article(Heading heading) {
       this.Subs.Insert(0, new Header(heading));
-      this.Attributes = heading.Attributes;
-      this.GlobalIds = heading.GlobalIds;
-      this.Settings = heading.Settings;
-      heading.Attributes = new ElementAttributes();
-      heading.GlobalIds = Nil.LStr;
-      heading.Settings = new ElementSettings();
+      { // Move all arbitrary data from the heading to containing article
+        this.Data = heading.Data;
+        this.Settings = heading.Settings;
+        this.GlobalIds = heading.GlobalIds;
+        heading.Data = Nil.DStr<Object>();
+        heading.GlobalIds = Nil.LStr;
+        heading.Settings = new ElementSettings();
+      }
     }
   }
 }

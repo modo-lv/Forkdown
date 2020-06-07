@@ -13,12 +13,15 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     /// </summary>
     [Fact]
     void TakeFirstParagraphAttributes() {
+      throw new Exception("FIXME");
+
+      /*
       const String input = @"* Test {#id .class property=value}";
       var doc = ForkdownBuilder.Default.Build(input);
-      var li = doc.Subs[0].Subs[0].As<ListItem>().Attributes;
+      var li = doc.Subs[0].Subs[0].As<ListItem>().HtmlAttributes;
       li.Id.Should().Be("id");
       li.Classes.Should().Contain("class");
-      li.Properties["property"].Should().Be("value");
+      li.Properties["property"].Should().Be("value");*/
     }
   }
 }

@@ -4,15 +4,13 @@ using System.Linq;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
+/*
+namespace Forkdown.Core.Parsing.Forkdown.OldProcessors {
   /// <summary>
-  /// Splits forkdown content into articles based on headings.
+  /// Splits a forkdown element into articles based on headings.
   /// </summary>
   public class ArticleProcessor : IForkdownProcessor {
-    public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
-      if (element is Header)
-        return element;
-      
+    public void Process<T>(T element) where T : Element {
       Article? article = null;
       Heading? lastHeading = null;
       IEnumerable<Element> subs = element.Subs;
@@ -48,7 +46,9 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
       }
 
       element.Subs = newSubs;
-      return element;
+      element.Subs.SkipWhile(_ => _ is Header).ForEach(this.Process);
     }
   }
 }
+
+*/

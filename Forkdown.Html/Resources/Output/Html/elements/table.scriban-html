@@ -1,0 +1,3 @@
+<table {{ attrs $1 }}>
+  {{ subs $1 }}
+</table>

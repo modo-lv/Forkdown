@@ -29,6 +29,12 @@
       include 'elements/text' $0
     when 'ExplicitContainer'
       include 'elements/block' $0
+    when 'Table'
+      include 'elements/table' $0
+    when 'TableRow'
+      include 'elements/table_row' $0
+    when 'TableCell'
+      include 'elements/table_cell' $0
     else
       include 'elements/placeholder' $0
   end

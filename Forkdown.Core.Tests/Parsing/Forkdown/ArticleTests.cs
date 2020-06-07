@@ -10,11 +10,16 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class ArticleTests {
     [Fact]
     void CopySettings() {
-      const String input = @"# Heading {:setting}";
+      var input = (Document) new Document().AddSub(
+        new Article((Heading)
+          new Heading(1) { Settings = { { "setting", null } } }.AddSub(new Text("Heading"))
+        )
+      );
+
       var result = ForkdownBuilder.Default.Build(input);
-      result.Find<Article>()!.Settings.IsTrue("setting").Should().BeTrue();
+      result.FirstSub<Article>().Settings.IsTrue("setting").Should().BeTrue();
     }
-    
+
     [Fact]
     void TwoHeadings() {
       const String input = @"# Heading

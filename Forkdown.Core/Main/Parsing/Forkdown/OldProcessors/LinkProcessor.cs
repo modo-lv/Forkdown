@@ -1,7 +1,8 @@
-﻿using Forkdown.Core.Elements;
+﻿/*
+using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
+namespace Forkdown.Core.Parsing.Forkdown.OldProcessors {
   public class LinkProcessor : IForkdownProcessor{
 
     public void Process<T>(T element) where T : Element {
@@ -12,3 +13,4 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     }
   }
 }
+*/

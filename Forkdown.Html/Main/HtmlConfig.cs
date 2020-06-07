@@ -18,6 +18,6 @@ namespace Forkdown.Html.Main {
     /// </remarks>
     public String MinArticleWidth = "350px";
 
-    public String GridAutoRows = "1rem";
+    //public String GridAutoRows = "1rem";
   }
 }

@@ -12,7 +12,7 @@ namespace Forkdown.Core.Tests.Parsing.Markdown {
     void CheckList() {
       const String input = @"{.:class :one :other=false}
 * Test";
-      var result = BuildMarkdown.From(input);
+      var result = MarkdownBuilder.DefaultBuild(input);
       result[0].As<ListBlock>().GetAttributes().Classes.Should().Contain(":class");
       var props = result[0].As<ListBlock>().GetAttributes().Properties.ToDictionary();
       props[":one"].Should().Be(null);
@@ -22,7 +22,7 @@ namespace Forkdown.Core.Tests.Parsing.Markdown {
     [Fact]
     void Parse() {
       const String input = @"x Item";
-      var result = BuildMarkdown.From(input);
+      var result = MarkdownBuilder.DefaultBuild(input);
       result[0].Should().BeOfType<ListBlock>();
       result[0].As<ListBlock>()[0].Should().BeOfType<ListItemBlock>();
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Elements.Types;
@@ -6,7 +7,7 @@ using Simpler.Net;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
+namespace Forkdown.Core.Parsing.Forkdown.OldProcessors {
   public class ChecklistProcessor : IForkdownProcessor {
     public const Char G = '␝'; // Group separator
     public const Char R = '␞'; // Record separator
@@ -64,3 +65,4 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     }
   }
 }
+*/

@@ -42,7 +42,7 @@ namespace Forkdown.Html.Main {
       { // Main menu
         var mmFile = _args.ProjectRoot.Combine("layout/main_menu.md");
         if (mmFile.Exists) {
-          mainMenu = _project.LoadFile(mmFile.ToString());
+          mainMenu = _project.LoadFile(mmFile);
           _project.ProcessLinks(mainMenu);
         }
       }
@@ -50,7 +50,7 @@ namespace Forkdown.Html.Main {
       { // Footer
         var fFile = _args.ProjectRoot.Combine("layout/footer.md");
         if (fFile.Exists) {
-          footer = _project.LoadFile(fFile.ToString());
+          footer = _project.LoadFile(fFile);
           _project.ProcessLinks(footer);
         }
       }

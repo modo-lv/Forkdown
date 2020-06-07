@@ -5,7 +5,7 @@ using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Elements {
   public partial class Element {
-    private static String TitleOf(Element el, Boolean contentFound = false) {
+    protected static String TitleOf(Element el, Boolean contentFound = false) {
       if (el is Text t)
         return t.Content;
 

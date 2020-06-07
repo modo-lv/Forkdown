@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Forkdown.Core.Elements.Attributes;
 using Markdig.Renderers.Html;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;

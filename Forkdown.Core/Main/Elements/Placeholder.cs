@@ -8,7 +8,7 @@ namespace Forkdown.Core.Elements {
   public class Placeholder : Element, Inline {
     public String Name;
 
-    public Placeholder(MarkdownObject mdo) : base(mdo) => 
+    public Placeholder(IMarkdownObject mdo) : base(mdo) => 
       this.Name = mdo.GetType().Name;
   }
 }

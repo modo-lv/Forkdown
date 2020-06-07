@@ -1,9 +1,10 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
+namespace Forkdown.Core.Parsing.Forkdown.OldProcessors {
   public class ListProcessor : IForkdownProcessor{
 
     public void Process<T>(T element) where T : Element {
@@ -16,3 +17,4 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     }
   }
 }
+*/

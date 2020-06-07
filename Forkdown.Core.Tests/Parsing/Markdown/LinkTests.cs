@@ -13,7 +13,7 @@ namespace Forkdown.Core.Tests.Parsing.Markdown {
     void ExplicitExternalShorthand() {
       const String input = @"[x](@)";
 
-      MarkdownDocument result = Core.Parsing.BuildMarkdown.From(input);
+      MarkdownDocument result = Core.Parsing.MarkdownBuilder.DefaultBuild(input);
       var link = result.Single().As<ParagraphBlock>().Inline.Single().As<LinkInline>();
 
       link.Url.Should().Be("@");
