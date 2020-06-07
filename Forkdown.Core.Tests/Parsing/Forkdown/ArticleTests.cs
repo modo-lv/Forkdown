@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Parsing.Forkdown;
@@ -8,6 +9,16 @@ using Xunit;
 
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class ArticleTests {
+    [Fact]
+    void CopyAttributes() {
+      const String input = @"# Heading {#id .class property=value}";
+      var result = ForkdownBuilder.Default.Build(input);
+      var article = result.FirstSub<Article>();
+      article.Attributes.Id.Should().Be("id");
+      article.Attributes.Classes.Should().Contain("class");
+      article.Attributes.Properties.Should().Contain(new KeyValuePair<String, String>("property", "value"));
+    }
+    
     [Fact]
     void CopySettings() {
       var input = (Document) new Document().AddSub(

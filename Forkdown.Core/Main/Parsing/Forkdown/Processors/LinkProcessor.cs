@@ -7,8 +7,8 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
   public class LinkProcessor : IElementProcessor {
 
     public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
-      if (element is Link link && link.Target.IsOneOf("@~", "~")) {
-        link.Target = link.Target.Replace("~", link.Title);
+      if (element is Link link && link.Target == "@") {
+        link.Target = $"@{link.Title}";
       }
       return element;
     }

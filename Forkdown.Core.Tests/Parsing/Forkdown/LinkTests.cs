@@ -10,7 +10,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class LinkTests {
     [Fact]
     void ExplicitExternalTitle() {
-      const String input = @"# [External](@~)";
+      const String input = @"# [External](@)";
       var result = ForkdownBuilder.Default.Build(input)
         .Subs[0]             // Article
         .Subs[0]             // Header

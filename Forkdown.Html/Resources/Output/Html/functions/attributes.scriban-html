@@ -2,9 +2,6 @@
    $attrs = $0.Attributes
    $extra_classes = $1
    $output = ""
-   if $attrs != null && ($attrs.Id | string.size > 0)
-      $output = attr_id $attrs.id | string.append $output
-   end
    if $attrs != null && ($attrs.Classes | array.size > 0)
       $output = attr_class $attrs.Classes $extra_classes | string.append $output
    end
@@ -19,11 +16,6 @@ end -}}
 
 {{- func attr_class
   ret "class=\"" + (array.add $0 $1 | array.join " " | string.strip | html.escape) + "\""
-end -}}
-
-
-{{- func attr_id
-  ret "id=\"" + (html.escape $0) + "\""
 end -}}
 
 

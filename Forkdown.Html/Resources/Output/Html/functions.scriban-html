@@ -82,17 +82,7 @@ end -}}
 {{- func global_anchor
 
 if $0.GlobalId != ""
-  }}<a name="{{ $0.GlobalId }}" class="fd--global_anchor"></a>{{
-end
-
-end -}}
-
-
-
-{{- func section_attrs 
-
-if $0.HeadingLevel > 0
-  }} data-fd--h-level="{{ $0.HeadingLevel }}" {{
+  }}<a id="{{ $0.GlobalId }}" class="fd--global_anchor"></a>{{
 end
 
 end -}}

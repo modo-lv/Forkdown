@@ -1,5 +1,5 @@
 
-<li {{ section_attrs $1 }} {{ attrs $1 }}>
+<li {{ attrs $1 }}>
 {{ global_anchor $1 }}
 
 {{ if $1.IsCheckbox }}

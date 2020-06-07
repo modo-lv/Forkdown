@@ -1,5 +1,5 @@
 
-<article {{ section_attrs $1 }} {{ attrs $1 }}>
+<article {{ attrs $1 }}>
   {{ global_anchor $1 }}
   <header>{{ subs $1.Subs[0] }}</header>
   <div role="main">
