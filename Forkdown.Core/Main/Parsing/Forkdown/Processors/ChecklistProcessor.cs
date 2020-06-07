@@ -13,7 +13,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         if (inChecklist)
           item.IsCheckbox = item.Settings.NotFalse("checkbox");
         
-        item.IsCheckbox = item.BulletType switch {
+        item.IsCheckbox = item.BulletChar switch {
           '+' => true,
           '-' => false,
           _ => item.IsCheckbox

@@ -11,13 +11,13 @@ namespace Forkdown.Core.Elements {
     
     public Boolean IsChecklist = false;
     
-    public Char BulletType;
+    public Char BulletChar;
 
     public Listing() { }
 
     public Listing(ListBlock mdo) : base(mdo) {
       this.IsOrdered = mdo.IsOrdered;
-      this.BulletType = mdo.BulletType;
+      this.BulletChar = mdo.BulletType;
     }
   }
 }

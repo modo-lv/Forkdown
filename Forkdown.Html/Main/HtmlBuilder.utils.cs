@@ -10,8 +10,9 @@ namespace Forkdown.Html.Main {
     /// Append Forkdown classes to output elements that need them.
     /// </summary>
     public static void ProcessClasses<T>(T element) where T : Element {
-      throw new NotImplementedException();
-      /*switch (element) {
+      
+      
+      switch (element) {
         case Listing l when l.IsChecklist:
           l.HtmlAttributes.Classes.Add($"{Globals.Prefix}checklist");
           break;
@@ -23,7 +24,7 @@ namespace Forkdown.Html.Main {
           break;
       }
 
-      element.Subs.ForEach(ProcessClasses);*/
+      element.Subs.ForEach(ProcessClasses);
     }
   }
 }
