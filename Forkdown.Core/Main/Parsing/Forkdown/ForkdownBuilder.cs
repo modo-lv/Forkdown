@@ -9,8 +9,7 @@ using Path = Fluent.IO.Path;
 
 namespace Forkdown.Core.Parsing.Forkdown {
   public partial class ForkdownBuilder {
-    public readonly IList<IForkdownProcessor> Chain = Nil.L<IForkdownProcessor>();
-    private Boolean _isDone;
+    public readonly IList<IElementProcessor> Chain = Nil.L<IElementProcessor>();
 
     public Document Build(Path file) =>
       this.Build(File.ReadAllText(file.FullPath), file);
@@ -22,22 +21,24 @@ namespace Forkdown.Core.Parsing.Forkdown {
       return this.Build(fDoc);
     }
 
-    public Document Build(Document fDoc) {
-      if (this._isDone)
-        throw new Exception("Don't reuse builders!");
-      this._isDone = true;
-      
-      return process(fDoc, Nil.DStr<Object>());
+    public Document Build(Document document) {
+      // Document processors
+      document = this.Chain.Where(_ => _ is IDocumentProcessor)
+        .Aggregate(document, (doc, p) => ((IDocumentProcessor) p).Process(doc));
+
+      return process(document, Nil.DStr<Object>());
 
       T process<T>(T element, IDictionary<String, Object> context) where T : Element {
-        element = this.Chain.Aggregate(element, (e, p) => p.Process(e, context));
+        element = this.Chain
+          .Where(_ => !(_ is IDocumentProcessor))
+          .Aggregate(element, (e, p) => p.Process(e, context));
         element.Subs = element.Subs.Select(e => process(e, new Dictionary<String, Object>(context))).ToList();
         return element;
       }
     }
 
 
-    public ForkdownBuilder AddProcessor<T>() where T : IForkdownProcessor, new() {
+    public ForkdownBuilder AddProcessor<T>() where T : IElementProcessor, new() {
       this.Chain.Add(new T());
       return this;
     }

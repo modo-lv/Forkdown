@@ -2,9 +2,16 @@
 
 namespace Forkdown.Core.Parsing.Forkdown {
   public partial class ForkdownBuilder {
-    public static ForkdownBuilder Default => new ForkdownBuilder()
+    public static ForkdownBuilder Default = new ForkdownBuilder()
+      // Document
+      .AddProcessor<SettingsProcessor>()
       .AddProcessor<GlobalIdProcessor>()
+      .AddProcessor<DocumentProcessor>()
+      // Element
       .AddProcessor<ArticleProcessor>()
-      .AddProcessor<CheckboxIdProcessor>();
+      .AddProcessor<ListItemProcessor>()
+      .AddProcessor<ChecklistProcessor>()
+      .AddProcessor<CheckboxIdProcessor>()
+      .AddProcessor<LinkProcessor>();
   }
 }

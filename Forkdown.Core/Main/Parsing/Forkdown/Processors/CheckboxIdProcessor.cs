@@ -6,7 +6,7 @@ using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Parsing.Forkdown.Processors {
-  public class CheckboxIdProcessor : IForkdownProcessor{
+  public class CheckboxIdProcessor : IElementProcessor{
     public const Char G = '␝'; // Group separator
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
@@ -14,7 +14,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
     protected readonly IDictionary<String, Int32> Times = Nil.DStr<Int32>();
 
     public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
-      var parentId = (String) args.Get("parentId", "");
+      var parentId = (String) args.GetOr("parentId", "");
       var times = this.Times;
       var id = parentId;
       
@@ -29,8 +29,8 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         if (parentId.NotBlank())
           id = $"{parentId}{G}{id}";
         if (id.NotBlank())
-          times[id] = times.Get(id) + 1;
-        if (times.Get(id) > 1)
+          times[id] = times.GetOr(id, 0) + 1;
+        if (times.GetOr(id, 0) > 1)
           id += $"{R}{times[id]}";
         bc.CheckboxId = id;
       }

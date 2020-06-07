@@ -12,10 +12,9 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class GlobalIdTests {
     [Fact]
     void ThrowOnDuplicate() {
-      var input = new Document().AddSubs(
-        new Text { Settings = { { "#id", null } } },
-        new Text { Settings = { { "#id", null } } }
-      );
+      const String input = @"Text {#id}
+
+More text {#id}";
       var doc = ForkdownBuilder.Default.Build(input);
 
       FluentActions.Invoking(() =>
@@ -25,11 +24,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
 
     [Fact]
     void HandleMultiple() {
-      var input = new Document().AddSub(
-        new Article((Heading)
-          new Heading(1) { Settings = { { "#id", null }, { "#~", null } } }.AddSub(new Text("Heading"))
-        )
-      );
+      const String input = @"# Heading {#id,heading}";
 
       var doc = ForkdownBuilder.Default.Build(input);
       doc.FirstSub<Article>().GlobalId.Should().Be("id");

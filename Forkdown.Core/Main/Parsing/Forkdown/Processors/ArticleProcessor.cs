@@ -8,7 +8,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
   /// <summary>
   /// Splits forkdown content into articles based on headings.
   /// </summary>
-  public class ArticleProcessor : IForkdownProcessor {
+  public class ArticleProcessor : IElementProcessor {
     public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
       if (element is Header)
         return element;

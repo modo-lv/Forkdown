@@ -17,12 +17,12 @@ namespace Forkdown.Html {
     /// <summary>
     /// Location of files for HTML output.
     /// </summary>
-    public static Path InPath = 
+    public static Path InPath =
       Path.Get(Assembly.GetExecutingAssembly().Location).Parent().Combine("Resources/Output");
 
     public const String OutFolder = "out-html";
-    
-    
+
+
 
     private static void Main(String argument) {
       var services = new ServiceCollection()

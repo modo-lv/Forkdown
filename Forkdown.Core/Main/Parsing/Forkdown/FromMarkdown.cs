@@ -23,7 +23,7 @@ namespace Forkdown.Core.Parsing.Forkdown {
         HeadingBlock h => new Heading(h),
         ListBlock l => new Listing(l),
         ListItemBlock _ => new ListItem(),
-        ParagraphBlock _ => new Paragraph(),
+        ParagraphBlock p => new Paragraph(p),
         EmphasisInline e => new Emphasis(e),
         CodeInline c => new Code(c),
         FencedCodeBlock c => new CodeBlock(c),
@@ -32,9 +32,9 @@ namespace Forkdown.Core.Parsing.Forkdown {
         LineBreakInline _ => new LineBreak(),
         ThematicBreakBlock _ => new Separator(),
         CustomContainer c => new ExplicitContainer(c),
-        Tables.Table _ => new Table(),
+        Tables.Table t => new Table(t),
         Tables.TableRow tr => new TableRow(tr),
-        Tables.TableCell _ => new TableCell(),
+        Tables.TableCell tc => new TableCell(tc),
         _ => new Placeholder(mdo),
       };
 

@@ -2,10 +2,13 @@
 using FluentAssertions;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Parsing.Forkdown;
+using Markdig.Renderers.Html;
+using Simpler.NetCore.Collections;
 using Xunit;
+
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Parsing.Forkdown {
+namespace Forkdown.Core.Tests.Elements {
   public class ListItemTests {
     /// <summary>
     /// The first paragraph of a list item is synonymous with the list item itself, so any attributes assigned to the
@@ -13,15 +16,13 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     /// </summary>
     [Fact]
     void TakeFirstParagraphAttributes() {
-      throw new Exception("FIXME");
-
-      /*
-      const String input = @"* Test {#id .class property=value}";
+      const String input = @"* Test {#id .class attribute=value :setting}";
       var doc = ForkdownBuilder.Default.Build(input);
-      var li = doc.Subs[0].Subs[0].As<ListItem>().HtmlAttributes;
-      li.Id.Should().Be("id");
-      li.Classes.Should().Contain("class");
-      li.Properties["property"].Should().Be("value");*/
+      var li = doc.FirstSub<ListItem>();
+      li.HtmlAttributes.Id.Should().Be("id");
+      li.HtmlAttributes.Classes.Should().Contain("class");
+      li.HtmlAttributes.Properties.ToDictionary().GetOr("attribute", default).Should().Be("value");
+      li.Settings.IsTrue("setting").Should().BeTrue();
     }
   }
 }

@@ -70,7 +70,7 @@ namespace Forkdown.Core {
       _logger.LogInformation("Finding and loading pages...");
       this.Pages = root.Combine("pages")
         .Files("*.md", true)
-        .Select(doc => this.LoadFile(doc.MakeRelativeTo(root)))
+        .Select(doc => this.LoadFile(this.PathTo(doc)))
         .ToHashSet();
 
       // Achors
@@ -95,9 +95,13 @@ namespace Forkdown.Core {
         el.Subs.ForEach(this.ProcessLinks);
     }
 
-    public Document LoadFile(Path file) {
-      _logger.LogDebug("Loading {doc}...", file.ToString().Replace('\\', '/'));
-      return _builder.Build(file);
+    public Document LoadFile(Path file) => this.LoadFile(this.PathTo(file));
+    public Document LoadFile(ProjectPath file) {
+      _logger.LogDebug("Loading {doc}...", file.RelPathString());
+      return _builder.Build(file.FullPathString());
     }
+
+    public ProjectPath PathTo(Path file) => 
+      new ProjectPath(_args.ProjectRoot, file);
   }
 }

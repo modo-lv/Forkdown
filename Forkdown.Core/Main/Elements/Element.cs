@@ -19,10 +19,7 @@ namespace Forkdown.Core.Elements {
 
     public ElementSettings Settings = new ElementSettings();
 
-    /// <summary>
-    /// Arbitrary data attached to the element.
-    /// </summary>
-    public IDictionary<String, Object> Data = Nil.DStr<Object>();
+    public HtmlAttributes HtmlAttributes = new HtmlAttributes();
 
     public ISet<String> Labels = Nil.SStr;
 
@@ -39,12 +36,8 @@ namespace Forkdown.Core.Elements {
     
     protected Element() {}
 
-    protected Element(params Element[] subs) : this() {
-      this.Subs = subs;
-    }
-
     protected Element(IMarkdownObject mdo) : this() {
-      this.Data[Globals.HtmlDataKey] = mdo.GetAttributes();
+      this.HtmlAttributes = mdo.GetAttributes();
 
       /*
       if (this.Settings.ContainsKey("columns")) {
@@ -73,6 +66,19 @@ namespace Forkdown.Core.Elements {
       return (this.Subs.FirstOrDefault(_ => _ is T)
               ?? this.Subs.Select(_ => _.FindSub<T>()).FirstOrDefault(_ => _ != null))
         as T;
+    }
+    
+    /// <summary>
+    /// Move HTML attributes and Forkdown settings from this element to another.
+    /// </summary>
+    /// <param name="element">Target element.</param>
+    public void MoveAttributesTo(Element element) {
+      element.HtmlAttributes = this.HtmlAttributes;
+      element.Settings = this.Settings;
+      element.GlobalIds = this.GlobalIds;
+      this.HtmlAttributes = new HtmlAttributes();
+      this.Settings = new ElementSettings();
+      this.GlobalIds = Nil.LStr;
     }
   }
 }

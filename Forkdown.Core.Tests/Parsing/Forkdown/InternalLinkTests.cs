@@ -10,7 +10,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class InternalLinkTests {
     [Fact]
     void ExplicitIdImplicitClass() {
-      const String input = @"[Class] {##id .#~}";
+      const String input = @"[Class] {#id,:id}";
       var doc = ForkdownBuilder.Default.Build(input);
       var links = InternalLinks.From(doc);
       links.Count.Should().Be(2);
@@ -22,8 +22,8 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     [Fact]
     void Implicit() {
       const String input = @"
-## [Class Anchor](xxx) {.#~}
-## **ID Anchor** {##~}
+## [Class Anchor](xxx) {#:id}
+## **ID Anchor** {#:id}
 ";
       var doc = ForkdownBuilder.Default.Build(input);
       var links = InternalLinks.From(doc);
@@ -35,8 +35,8 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     [Fact]
     void Explicit() {
       const String input = @"
-# Heading {##h-Anchor}
-Paragraph {.#pAnchor}
+# Heading {#h-Anchor}
+Paragraph {#pAnchor}
 ";
       var doc = ForkdownBuilder.Default.Build(input);
       doc.FindSub<Article>()!.GlobalId.Should().Be("h-anchor");
