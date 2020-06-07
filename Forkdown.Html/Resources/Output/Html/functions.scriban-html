@@ -1,3 +1,9 @@
+{{-
+
+include 'functions/attributes'
+
+-}}
+
 {{- func element
 
   case $0.Type
@@ -61,23 +67,6 @@ end
 
 end -}}
 
-
-{{ func attrs
-  $attrs = $0.Attributes
-
-  if $attrs.Id != ""
-    }} id="{{ $attrs.Id}}" {{-
-  end
-  if $attrs.ClassesString != ""
-    }} class="{{ $attrs.ClassesString + " " + $1 }}" {{-
-  else if ($1 != "")
-    }} class="{{$1}}" {{
-  end
-  if $attrs.PropertiesString != ""
-    " " + $attrs.PropertiesString
-  end
-
-end }}
 
 {{- func labels
   if ($0.Labels.Count > 0)

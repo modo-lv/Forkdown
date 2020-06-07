@@ -11,9 +11,9 @@ namespace Forkdown.Core.Tests.Elements {
     void DocumentAttributes() {
       const String input = @":{#id .class attribute=value :setting}";
       var result = ForkdownBuilder.Default.Build(input);
-      result.HtmlAttributes.Id.Should().Be("id");
-      result.HtmlAttributes.Classes.Should().Contain("class");
-      result.HtmlAttributes.Properties.ToDictionary().GetOr("attribute", default).Should().Be("value");
+      result.Attributes.Id.Should().Be("id");
+      result.Attributes.Classes.Should().Contain("class");
+      result.Attributes.Properties.ToDictionary().GetOr("attribute", default).Should().Be("value");
       result.Settings.IsTrue("setting").Should().BeTrue();
       result.Subs.Should().BeEmpty();
     }

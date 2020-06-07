@@ -16,9 +16,9 @@ namespace Forkdown.Core.Elements.Attributes {
     /// </remarks>
     /// <param name="setting">Name of the setting to check</param>
     /// <returns><c>true</c> if the setting is "on", <c>false</c> otherwise.</returns>
-    public Boolean IsTrue(String setting) {
-      return new[] { null, "", "true" }.Contains(this.GetOr(setting, ""), StringComparer.InvariantCultureIgnoreCase);
-    }
+    public Boolean IsTrue(String setting) =>
+      this.ContainsKey(setting) &&
+      new[] { null, "", "true" }.Contains(this[setting], StringComparer.InvariantCultureIgnoreCase);
 
     public Boolean IsFalse(String setting) =>
       this.GetOr(setting, "").Equals("false", StringComparison.InvariantCultureIgnoreCase);

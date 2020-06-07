@@ -11,13 +11,10 @@ namespace Forkdown.Core.Parsing.Forkdown {
   public partial class ForkdownBuilder {
     public readonly IList<IElementProcessor> Chain = Nil.L<IElementProcessor>();
 
-    public Document Build(Path file) =>
-      this.Build(File.ReadAllText(file.FullPath), file);
-
-    public Document Build(String markdown, Path? file = null) {
+    public Document Build(String markdown, ProjectPath? file = null) {
       var mDoc = MarkdownBuilder.DefaultBuild(markdown);
       var fDoc = (Document) FromMarkdown.ToForkdown(mDoc);
-      fDoc.ProjectFilePath = file?.ToString() ?? "";
+      fDoc.ProjectFilePath = file?.RelPathString() ?? "";
       return this.Build(fDoc);
     }
 

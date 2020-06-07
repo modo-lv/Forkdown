@@ -10,6 +10,15 @@ using Xunit;
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class ChecklistTests {
     [Fact]
+    void ChecklistOff() {
+      const String input = @"# Heading
+* List item";
+      var result = ForkdownBuilder.Default.Build(input);
+      result.FirstSub<Listing>().IsChecklist.Should().BeFalse();
+      result.FirstSub<ListItem>().IsCheckbox.Should().BeFalse();
+    }
+    
+    [Fact]
     void ChecklistHeading() {
       const String input = @"# Heading {:checklist}
 * Checkbox";

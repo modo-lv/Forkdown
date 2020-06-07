@@ -14,7 +14,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
   public class SettingsProcessor : IDocumentProcessor {
 
     public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
-      var html = element.HtmlAttributes;
+      var html = element.Attributes;
       if (html.Properties != null) {
         // ReSharper disable once RedundantCast
         element.Settings = new ElementSettings(

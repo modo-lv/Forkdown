@@ -19,7 +19,7 @@ namespace Forkdown.Core.Elements {
 
     public ElementSettings Settings = new ElementSettings();
 
-    public HtmlAttributes HtmlAttributes = new HtmlAttributes();
+    public HtmlAttributes Attributes = new HtmlAttributes();
 
     public ISet<String> Labels = Nil.SStr;
 
@@ -37,15 +37,7 @@ namespace Forkdown.Core.Elements {
     protected Element() {}
 
     protected Element(IMarkdownObject mdo) : this() {
-      this.HtmlAttributes = mdo.GetAttributes();
-
-      /*
-      if (this.Settings.ContainsKey("columns")) {
-        this.Attributes.Classes.Add($"{Globals.Prefix}columns");
-        if (this.Settings["columns"].NotBlank())
-          this.Attributes.Classes.Add($"{Globals.Prefix}{this.Settings["columns"]}");
-      }
-    */
+      this.Attributes = mdo.GetAttributes();
     }
 
 
@@ -73,10 +65,10 @@ namespace Forkdown.Core.Elements {
     /// </summary>
     /// <param name="element">Target element.</param>
     public void MoveAttributesTo(Element element) {
-      element.HtmlAttributes = this.HtmlAttributes;
+      element.Attributes = this.Attributes;
       element.Settings = this.Settings;
       element.GlobalIds = this.GlobalIds;
-      this.HtmlAttributes = new HtmlAttributes();
+      this.Attributes = new HtmlAttributes();
       this.Settings = new ElementSettings();
       this.GlobalIds = Nil.LStr;
     }

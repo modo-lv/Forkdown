@@ -98,7 +98,7 @@ namespace Forkdown.Core {
     public Document LoadFile(Path file) => this.LoadFile(this.PathTo(file));
     public Document LoadFile(ProjectPath file) {
       _logger.LogDebug("Loading {doc}...", file.RelPathString());
-      return _builder.Build(file.FullPathString());
+      return _builder.Build(File.ReadAllText(file.FullPathString()), file);
     }
 
     public ProjectPath PathTo(Path file) => 
