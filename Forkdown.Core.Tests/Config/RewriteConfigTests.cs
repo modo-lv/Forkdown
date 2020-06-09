@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using Forkdown.Core.Config;
 using Xunit;
@@ -20,8 +21,10 @@ externalLinks:
 
       var result = ExternalLinkRewriteConfig.From(input);
 
-      result[0].Should().Be(new KeyValuePair<String, String>("X", "Y"));
-      result[1].Should().Be(new KeyValuePair<String, String>("A", "B"));
+      result[0].Key.IsMatch("^X$").Should().BeTrue();
+      result[0].Value.Should().Be("Y");
+      result[1].Key.IsMatch("^A$").Should().BeTrue();
+      result[1].Value.Should().Be("B");
     }
   }
 }

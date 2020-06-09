@@ -6,7 +6,6 @@ namespace Forkdown.Core.Build {
       .AddWorker<LabelWorker>()
       .AddWorker<GlobalIdWorker>()
       .AddWorker<LinkIndexWorker>()
-      /*
 
       .AddWorker<SettingsWorker>()
       .AddWorker<DocumentWorker>()
@@ -15,7 +14,6 @@ namespace Forkdown.Core.Build {
       .AddWorker<ListItemWorker>()
       .AddWorker<ChecklistWorker>()
       .AddWorker<CheckboxIdWorker>()
-      */
       .AddWorker<LinkWorker>();
   }
 }
