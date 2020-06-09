@@ -5,8 +5,8 @@ using Forkdown.Core.Fd.Contexts;
 namespace Forkdown.Core.Fd.Processors {
   public class ChecklistProcessor : IElementProcessor {
 
-    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
-      var inChecklist = context.GetArg<Boolean>();
+    public virtual T ProcessElement<T>(T element, Arguments args, IContext context) where T : Element {
+      var inChecklist = args.Get<Boolean>();
       
       if (element is ListItem item) {
         if (inChecklist)
@@ -27,8 +27,8 @@ namespace Forkdown.Core.Fd.Processors {
       if (element is Listing l)
         l.IsChecklist = inChecklist;
 
-      context.SetArg(inChecklist);
-      return context.ToResult(element);
+      args.Put(inChecklist);
+      return element;
     }
   }
 }

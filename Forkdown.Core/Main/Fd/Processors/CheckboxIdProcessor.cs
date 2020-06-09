@@ -12,8 +12,8 @@ namespace Forkdown.Core.Fd.Processors {
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
 
-    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
-      String parentId = context.GetArg();
+    public virtual T ProcessElement<T>(T element, Arguments args, IContext context) where T : Element {
+      String parentId = args.Get();
       var times = context.Doc<Dictionary<String, Int32>>();
       
       var id = parentId;
@@ -35,8 +35,8 @@ namespace Forkdown.Core.Fd.Processors {
         bc.CheckboxId = id;
       }
 
-      context.SetArg(id);
-      return context.ToResult(element);
+      args.Put(id);
+      return element;
     }
 
 

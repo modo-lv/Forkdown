@@ -7,18 +7,15 @@ namespace Forkdown.Core.Fd.Processors {
   /// A processor that handles a whole element tree at a time.
   /// </summary>
   public interface ITreeProcessor : IProcessor {
-    Result<TE> ProcessTree<TE>(TE tree, IContext context) where TE : Element {
-      return proc(tree, context);
+    public new Result<T> Process<T>(T root, Arguments args, IContext context) where T : Element =>
+      new Result<T>(_proc(root, new Arguments(), context), args);
 
-      // ReSharper disable once VariableHidesOuterVariable
-      Result<T> proc<T>(T el, IContext parentContext) where T : Element {
-        var res = this.Process(el, parentContext);
-        res.Element.Subs = res.Element.Subs
-          .Select(e => proc(e, new Context(source: parentContext)))
-          .Select(r => r.Element)
-          .ToList();
-        return res;
-      }
+    private T _proc<T>(T el, Arguments args, IContext context) where T : Element {
+      var res = this.ProcessElement(el, args, context);
+      res.Subs = res.Subs
+        .Select(e => _proc(e, new Arguments(args), context))
+        .ToList();
+      return res;
     }
   }
 }

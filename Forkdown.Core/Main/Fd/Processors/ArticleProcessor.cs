@@ -10,9 +10,9 @@ namespace Forkdown.Core.Fd.Processors {
   /// </summary>
   public class ArticleProcessor : IElementProcessor {
 
-    public Result<T> Process<T>(T element, IContext context) where T : Element {
+    public T ProcessElement<T>(T element, Arguments args, IContext context) where T : Element {
       if (element is Header)
-        return context.ToResult(element);
+        return element;
 
       Article? article = null;
       Heading? lastHeading = null;
@@ -49,7 +49,7 @@ namespace Forkdown.Core.Fd.Processors {
       }
 
       element.Subs = newSubs;
-      return context.ToResult(element);
+      return element;
     }
     
   }

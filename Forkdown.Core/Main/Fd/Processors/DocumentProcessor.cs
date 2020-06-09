@@ -4,7 +4,7 @@ using Forkdown.Core.Fd.Contexts;
 namespace Forkdown.Core.Fd.Processors {
   public class DocumentProcessor : ITreeProcessor, IElementProcessor {
 
-    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
+    public T ProcessElement<T>(T element, Arguments args, IContext context) where T : Element {
       if (element is Document doc &&
           doc.Subs.Count > 0 &&
           doc.Subs[0] is Paragraph par &&
@@ -14,7 +14,7 @@ namespace Forkdown.Core.Fd.Processors {
         par.MoveAttributesTo(doc);
         doc.Subs.Remove(par);
       }
-      return context.ToResult(element);
+      return element;
     }
   }
 

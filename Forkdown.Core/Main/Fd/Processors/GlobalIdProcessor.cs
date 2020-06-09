@@ -7,7 +7,7 @@ using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Fd.Processors {
   public class GlobalIdProcessor : ITreeProcessor, IElementProcessor {
-    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
+    public virtual T ProcessElement<T>(T element, Arguments args, IContext context) where T : Element {
       if (element.Attributes.Id.NotBlank()) {
         var ids = element.Attributes.Id.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
@@ -15,7 +15,7 @@ namespace Forkdown.Core.Fd.Processors {
           .Select(_ => GlobalId.From(_.Replace(":id", element.Title)))
           .ToList();
       }
-      return context.ToResult(element);
+      return element;
     }
   }
 }

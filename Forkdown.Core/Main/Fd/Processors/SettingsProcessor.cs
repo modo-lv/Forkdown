@@ -12,7 +12,7 @@ namespace Forkdown.Core.Fd.Processors {
   /// </summary>
   public class SettingsProcessor : ITreeProcessor, IElementProcessor {
 
-    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
+    public virtual T ProcessElement<T>(T element, Arguments args, IContext context) where T : Element {
       var html = element.Attributes;
       if (html.Properties != null) {
         // ReSharper disable once RedundantCast
@@ -25,7 +25,7 @@ namespace Forkdown.Core.Fd.Processors {
         html.Properties.RemoveAll(_ => _.Key.StartsWith(":"));
       }
 
-      return context.ToResult(element);
+      return element;
     }
   }
 }

@@ -14,10 +14,8 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       const String input = @"Text {#id}
 
 More text {#id}";
-      var doc = FdBuilder.Default.Build(input);
-
       FluentActions.Invoking(() =>
-        InternalLinks.From(doc)
+        FdBuilder.Default.Build(input)
       ).Should().Throw<DuplicateAnchorException>();
     }
 

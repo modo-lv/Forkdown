@@ -8,7 +8,7 @@ using Forkdown.Core.Fd.Contexts;
 namespace Forkdown.Core.Fd.Processors {
   public class LabelProcessor : ITreeProcessor, IElementProcessor {
 
-    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
+    public virtual T ProcessElement<T>(T element, Arguments args, IContext context) where T : Element {
       if (element is Block && element.Subs.Any() && element.Subs[0] is Code labels) {
         element.Subs.RemoveAt(0);
 
@@ -21,7 +21,7 @@ namespace Forkdown.Core.Fd.Processors {
         if (element.Subs.Any() && element.Subs[0] is Text t)
           t.Content = t.Content.TrimStart();
       }
-      return context.ToResult(element);
+      return element;
     }
   }
 }

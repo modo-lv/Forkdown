@@ -6,11 +6,11 @@ namespace Forkdown.Core.Fd {
   public class Result<TElement> where TElement : Element
   {
     public readonly TElement Element;
-    public readonly IContext Context;
+    public readonly Arguments Arguments;
     
-    public Result(TElement element, IContext context) {
+    public Result(TElement element, Arguments arguments) {
       this.Element = element;
-      this.Context = context;
+      this.Arguments = arguments;
     }
   }
 }
