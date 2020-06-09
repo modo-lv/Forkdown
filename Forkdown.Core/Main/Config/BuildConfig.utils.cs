@@ -4,11 +4,11 @@ using Simpler.NetCore.Text;
 using Yaml = YamlDotNet.Serialization;
 
 namespace Forkdown.Core.Config {
-  public partial class MainConfig {
-    private static readonly ILogger<MainConfig> _logger = Program.Logger<MainConfig>();
+  public partial class BuildConfig {
+    private static readonly ILogger<BuildConfig> _logger = Program.Logger<BuildConfig>();
 
-    public static MainConfig From(ConfigSource source) {
-      return new MainConfig
+    public static BuildConfig From(ConfigSource source) {
+      return new BuildConfig
       {
         Name = source["name"].ToString() ?? "",
         ExternalLinks = ExternalLinkConfig.From(source)
@@ -21,8 +21,8 @@ namespace Forkdown.Core.Config {
     /// </summary>
     /// <param name="file">File to read settings from.</param>
     /// <returns>Default project settings selectively overridden by values from the file.</returns>
-    public static MainConfig From(FileInfo file) {
-      var result = new MainConfig();
+    public static BuildConfig From(FileInfo file) {
+      var result = new BuildConfig();
       if (!file.Exists)
         _logger.LogWarning("Settings file {file} not found!", file.Name);
       else

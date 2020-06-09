@@ -11,7 +11,7 @@ namespace Forkdown.Core.Build.Workers {
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
 
-    public virtual T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
       String parentId = args.Get();
       var times = context.Doc<Dictionary<String, Int32>>();
       

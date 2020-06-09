@@ -7,7 +7,7 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Processing.Workers {
+namespace Forkdown.Core.Tests.Build.Workers {
   public class CheckboxIdTests {
     private static MainBuilder _builder => new MainBuilder()
       .AddWorker<ArticleWorker>()

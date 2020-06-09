@@ -1,7 +1,7 @@
 ﻿using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
-  public class DocumentWorker : ITreeWorker, IElementWorker {
+  public class DocumentWorker : IDocumentWorker, IElementWorker {
 
     public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
       if (element is Document doc &&

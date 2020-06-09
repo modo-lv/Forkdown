@@ -7,7 +7,7 @@ namespace Forkdown.Core.Build.Workers {
   /// <summary>
   /// Parses and applies Forkdown's <c>{:setting=value}</c> settings from element HTML attributes.
   /// </summary>
-  public class SettingsWorker : ITreeWorker, IElementWorker {
+  public class SettingsWorker : IDocumentWorker, IElementWorker {
 
     public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
       var html = element.Attributes;

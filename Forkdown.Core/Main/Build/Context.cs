@@ -4,7 +4,7 @@ using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build {
   public class Context {
-    public MainConfig? ProjectConfig { get; set; }
+    public BuildConfig? Config { get; set; }
 
     public Document Document { get; set; }
     
@@ -13,13 +13,14 @@ namespace Forkdown.Core.Build {
     public BuilderStorage BuildStore { get; set; }
     
     
+    
     public Context(Document doc, BuilderStorage buildStore) {
       this.Document = doc;
       BuildStore = buildStore;
     }
 
     public Context(Context source) : this(source.Document, source.BuildStore) {
-      this.ProjectConfig = source.ProjectConfig;
+      this.Config = source.Config;
       this.DocumentStorage = source.DocumentStorage;
     }
     

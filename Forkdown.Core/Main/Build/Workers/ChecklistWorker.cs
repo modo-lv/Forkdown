@@ -4,7 +4,7 @@ using Forkdown.Core.Elements;
 namespace Forkdown.Core.Build.Workers {
   public class ChecklistWorker : IElementWorker {
 
-    public virtual T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
       var inChecklist = args.Get<Boolean>();
       
       if (element is ListItem item) {

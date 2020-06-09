@@ -4,7 +4,7 @@ namespace Forkdown.Core.Config {
   /// <summary>
   /// Main project settings.
   /// </summary>
-  public partial class MainConfig {
+  public partial class BuildConfig {
     /// <summary>
     /// Project name. Used for display and to generate a unique ID for browser storage.
     /// </summary>

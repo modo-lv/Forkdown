@@ -6,7 +6,7 @@ using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
-using static MoreLinq.MoreEnumerable;
+using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 namespace Forkdown.Core.Build {
   public partial class MainBuilder {
@@ -14,50 +14,64 @@ namespace Forkdown.Core.Build {
 
     public readonly BuilderStorage Storage = new BuilderStorage();
 
-    public Document Build(String markdown, ProjectPath? file = null) =>
-      this.Build(FromMarkdown.ToForkdown(markdown, file));
-    
-    public Document Build(Document doc, MainConfig? projectConfig = null) {
-      var batches = this.WorkerQueue.GroupAdjacent(p => p.GetType().GetInterfaces().Contains(typeof(ITreeWorker)));
-      var baseContext = new Context(doc, this.Storage) {
-        ProjectConfig = projectConfig
-      };
-      
-      var contexts = new ConcurrentDictionary<Type, Context>();
+    public Document Build(Document doc, BuildConfig? config = null) {
+      return this.Build(new[] { doc }, config).Single();
+    }
 
-      foreach (var batch in batches) {
-        if (batch.Key) { // Tree
-          doc = batch.Select(_ => (ITreeWorker) _)
-            .Aggregate(doc, (tree, tp) => {
-                var context = contexts.GetOrAdd(tp.GetType(), new Context(source: baseContext));
-                return tp.Process(tree, new Arguments(), context).Element;
-              }
-            );
-        }
-        else { // Element
-          doc = process(batch, doc, Nil.D<Type, Arguments>());
-        }
-      }
+    public Document Build(String markdown, BuildConfig? config = null, ProjectPath? file = null) =>
+      this.Build(FromMarkdown.ToForkdown(markdown, file), config);
 
-      return doc;
+    public IEnumerable<Document> Build(IEnumerable<Document> docs, BuildConfig? config = null) {
+      var contexts = new Dictionary<Type, Context>();
+
+      docs = this.WorkerQueue.OfType<IProjectWorker>().Aggregate(docs, (ds, worker) => ds.Select(doc => {
+        var context = contexts.GetOrAdd(worker.GetType(), new Context(doc, this.Storage) { Config = config });
+        return worker.Process(doc, new Arguments(), context).Element;
+      })).ToList();
+
+      return docs.Select(doc => {
+        var batches = this.WorkerQueue
+          .Where(_ => !(_ is IProjectWorker))
+          .GroupAdjacent(worker => worker is IDocumentWorker);
+        var baseContext = new Context(doc, this.Storage) {
+          Config = config
+        };
+
+        foreach (var batch in batches) {
+          if (batch.Key) { // Tree
+            doc = batch.Select(_ => (IDocumentWorker) _)
+              .Aggregate(doc, (tree, worker) => {
+                  var c = contexts.GetOrAdd(worker.GetType(), new Context(source: baseContext));
+                  return worker.Process(tree, new Arguments(), c).Element;
+                }
+              );
+          }
+          else { // Element
+            doc = process(batch, doc, Nil.D<Type, Arguments>(), baseContext);
+          }
+        }
+
+        return doc;
+      });
 
 
       T process<T>(
         IEnumerable<IWorker> procs,
         T element,
-        IDictionary<Type, Arguments> parentArgs
+        IDictionary<Type, Arguments> parentArgs,
+        Context baseContext
       ) where T : Element {
         parentArgs = new Dictionary<Type, Arguments>(parentArgs);
         element = procs.Select(_ => (IElementWorker) _)
           .Aggregate(element, (e, p) => {
             var context = contexts.GetOrAdd(p.GetType(), new Context(source: baseContext));
             var args = new Arguments(parentArgs.GetOrAdd(p.GetType(), new Arguments()));
-            var result = p.Process(e, args, context);
+            var result = p.Process(e, args, baseContext);
             parentArgs[p.GetType()] = result.Arguments;
             return result.Element;
           });
 
-        element.Subs = element.Subs.Select(e => process(procs, e, parentArgs)).ToList();
+        element.Subs = element.Subs.Select(e => process(procs, e, parentArgs, baseContext)).ToList();
         return element;
       }
     }

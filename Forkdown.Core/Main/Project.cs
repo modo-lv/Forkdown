@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Forkdown.Core.Build;
-using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Wiring;
@@ -19,10 +18,10 @@ namespace Forkdown.Core {
   /// Main Forkdown project class.
   /// </summary>
   public partial class Project {
-    /// <inheritdoc cref="MainConfig"/>
-    public MainConfig Config = new MainConfig();
+    /// <inheritdoc cref="BuildConfig"/>
+    public BuildConfig Config = new BuildConfig();
 
-    /// <inheritdoc cref="MainConfig.Name"/>
+    /// <inheritdoc cref="BuildConfig.Name"/>
     public String Name => this.Config.Name;
 
     /// <summary>
@@ -63,45 +62,37 @@ namespace Forkdown.Core {
       _logger.LogInformation("Loading project from {dir}...", root.ToString());
 
       // Settings
-      this.Config = MainConfig.From(_args.MainConfigFile);
+      this.Config = BuildConfig.From(_args.MainConfigFile);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
 
       // Builder
       // Pages
+      var start = DateTime.Now.Millisecond;
       _logger.LogInformation("Finding and loading pages...");
       this.Pages = root.Combine("pages")
         .Files("*.md", true)
         .Select(doc => this.LoadFile(this.PathTo(doc)))
         .ToHashSet();
+      var delta = ((Decimal)DateTime.Now.Millisecond - start) / 1000;
 
       // Achors
       this.InteralLinks = _builder.Storage.Get<LinkIndex>();
 
-      // Links
-      this._logger.LogDebug("Updating internal link targets...");
-      this.Pages.ForEach(this.ProcessLinks);
 
-      _logger.LogInformation("Project \"{name}\" loaded, {pages} page(s).", this.Config.Name, this.Pages.Count);
+      _logger.LogInformation(
+        "Project \"{name}\" with {pages} page(s) loaded in {s:0.00} seconds.",
+        this.Config.Name, this.Pages.Count, delta
+      );
       return this;
-    }
-
-    public void ProcessLinks(Element el) {
-      if (el is Link link && (link.IsExternal || !this.InteralLinks.ContainsKey(link.Target))) {
-        if (link.Target.StartsWith("@"))
-          link.Target = link.Target.Part(1);
-        link.Target = this.Config.ExternalLinks.UrlFor(link.Target);
-      }
-      else
-        el.Subs.ForEach(this.ProcessLinks);
     }
 
     public Document LoadFile(Path file) => this.LoadFile(this.PathTo(file));
     public Document LoadFile(ProjectPath file) {
       _logger.LogDebug("Loading {doc}...", file.RelPathString());
-      return _builder.Build(File.ReadAllText(file.FullPathString()), file);
+      return _builder.Build(File.ReadAllText(file.FullPathString()), this.Config, file);
     }
 
-    public ProjectPath PathTo(Path file) => 
+    public ProjectPath PathTo(Path file) =>
       new ProjectPath(_args.ProjectRoot, file);
   }
 }

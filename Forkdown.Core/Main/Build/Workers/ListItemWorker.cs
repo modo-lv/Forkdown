@@ -4,7 +4,7 @@ using Forkdown.Core.Elements;
 namespace Forkdown.Core.Build.Workers {
   public class ListItemWorker : IElementWorker {
 
-    public virtual T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
       switch (element) {
         case Listing list:
           args.Put(list.BulletChar);

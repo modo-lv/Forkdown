@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Simpler.NetCore.Text;
 using Yaml = YamlDotNet.Serialization;
 
@@ -18,7 +19,7 @@ namespace Forkdown.Core.Config {
           IDictionary<Object, Object> dic => new KeyValuePair<Object, Object>(dic["pattern"], dic["rewrite"]),
           _ => throw new Exception("Could not parse external link rewrite rule.")
         };
-        return new KeyValuePair<String, String>(key.ToString().Text(), value.ToString().Text());
+        return new KeyValuePair<Regex, String>(new Regex(key.ToString().Text(), RegexOptions.Compiled), value.ToString().Text());
       });
 
       return new ExternalLinkRewriteConfig(items);

@@ -8,7 +8,7 @@ namespace Forkdown.Core.Config {
       if (target.Contains("//"))
         return target;
       this.Rewrites.ForEach(_ =>
-        target = Regex.Replace(target, _.Key, _.Value)
+        target = _.Key.Replace(target, _.Value)
       );
       return this.DefaultUrl.Replace("%~", Uri.EscapeDataString(target));
     }

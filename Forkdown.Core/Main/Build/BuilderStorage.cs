@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Build.Workers;
-using Simpler.NetCore.Collections;
 using CollectionExtensions = Simpler.NetCore.Collections.CollectionExtensions;
 
 namespace Forkdown.Core.Build {
