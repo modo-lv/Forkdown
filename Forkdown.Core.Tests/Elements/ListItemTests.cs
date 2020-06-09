@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
+using Forkdown.Core.Build;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Fd;
 using Simpler.NetCore.Collections;
 using Xunit;
 
@@ -16,7 +16,7 @@ namespace Forkdown.Core.Tests.Elements {
     [Fact]
     void TakeFirstParagraphAttributes() {
       const String input = @"* Test {#id .class attribute=value :setting}";
-      var doc = FdBuilder.Default.Build(input);
+      var doc = MainBuilder.CreateDefault().Build(input);
       var li = doc.FirstSub<ListItem>();
       li.Attributes.Id.Should().Be("id");
       li.Attributes.Classes.Should().Contain("class");

@@ -2,7 +2,6 @@
 using System.IO;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Fd;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -108,7 +107,7 @@ namespace Forkdown.Html.Main {
       var index = this._project.InteralLinks;
       if (el is Link link && link.IsInternal)
       {
-        var target = GlobalId.From(link.Target);
+        var target = Globals.Id(link.Target);
         if (index.ContainsKey(target))
           link.Target = $"{index[target].ProjectFilePath.TrimSuffix(".md")}.html#{target}";
       }

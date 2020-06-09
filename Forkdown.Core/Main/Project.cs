@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Forkdown.Core.Build;
+using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Fd;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Collections;
@@ -38,8 +39,8 @@ namespace Forkdown.Core {
     /// Constructor
     private readonly ILogger<Project> _logger;
     private readonly BuildArguments _args;
-    private readonly FdBuilder _builder;
-    public Project(ILogger<Project> logger, BuildArguments args, FdBuilder builder) {
+    private readonly MainBuilder _builder;
+    public Project(ILogger<Project> logger, BuildArguments args, MainBuilder builder) {
       _logger = logger;
       _args = args;
       _builder = builder;
@@ -74,8 +75,7 @@ namespace Forkdown.Core {
         .ToHashSet();
 
       // Achors
-      this._logger.LogDebug("Building internal link index...");
-      this.InteralLinks = InternalLinks.From(this.Pages);
+      this.InteralLinks = _builder.Storage.Get<LinkIndex>();
 
       // Links
       this._logger.LogDebug("Updating internal link targets...");
