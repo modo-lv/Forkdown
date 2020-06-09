@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Forkdown.Core.Parsing;
+using Forkdown.Core.Md;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Simpler.NetCore.Collections;

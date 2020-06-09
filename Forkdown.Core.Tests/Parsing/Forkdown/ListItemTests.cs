@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing.Forkdown;
+using Forkdown.Core.Fd;
 using Xunit;
 
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
@@ -11,7 +11,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       const String input = @"+ Plus
 - Minus
 * Star";
-      var result = ForkdownBuilder.Default.Build(input);
+      var result = FdBuilder.Default.Build(input);
 
       result.Subs[0].FirstSub<ListItem>().BulletChar.Should().Be('+');
       result.Subs[1].FirstSub<ListItem>().BulletChar.Should().Be('-');

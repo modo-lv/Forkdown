@@ -1,11 +1,11 @@
 ﻿using System;
-using Forkdown.Core.Parsing.MarkdigExtensions;
+using Forkdown.Core.Md.MarkdigExtensions;
 using Markdig;
 using Markdig.Extensions.CustomContainers;
 using Markdig.Extensions.Tables;
 using Markdig.Syntax;
 
-namespace Forkdown.Core.Parsing {
+namespace Forkdown.Core.Md {
   public static class MarkdownBuilder {
     public static MarkdownDocument DefaultBuild(String markdown) {
       var pipeline = new MarkdownPipelineBuilder();

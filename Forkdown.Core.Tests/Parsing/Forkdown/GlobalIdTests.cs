@@ -1,9 +1,8 @@
 ﻿using System;
 using FluentAssertions;
 using Forkdown.Core.Elements;
+using Forkdown.Core.Fd;
 using Forkdown.Core.Internal.Exceptions;
-using Forkdown.Core.Parsing.Forkdown;
-using Markdig.Renderers.Html;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -15,7 +14,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       const String input = @"Text {#id}
 
 More text {#id}";
-      var doc = ForkdownBuilder.Default.Build(input);
+      var doc = FdBuilder.Default.Build(input);
 
       FluentActions.Invoking(() =>
         InternalLinks.From(doc)
@@ -26,7 +25,7 @@ More text {#id}";
     void HandleMultiple() {
       const String input = @"# Heading {#id,heading}";
 
-      var doc = ForkdownBuilder.Default.Build(input);
+      var doc = FdBuilder.Default.Build(input);
       doc.FirstSub<Article>().GlobalId.Should().Be("id");
       doc.FirstSub<Article>().GlobalIds.Should().Contain("heading");
     }

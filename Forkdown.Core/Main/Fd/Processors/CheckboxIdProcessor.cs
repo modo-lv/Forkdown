@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Elements.Types;
+using Forkdown.Core.Fd.Contexts;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
-  public class CheckboxIdProcessor : IElementProcessor{
+namespace Forkdown.Core.Fd.Processors {
+  public class CheckboxIdProcessor : IElementProcessor {
     public const Char G = '␝'; // Group separator
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
 
-    protected readonly IDictionary<String, Int32> Times = Nil.DStr<Int32>();
-
-    public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
-      var parentId = (String) args.GetOr("parentId", "");
-      var times = this.Times;
+    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
+      String parentId = context.GetArg();
+      var times = context.Doc<Dictionary<String, Int32>>();
+      
       var id = parentId;
       
       if (element is Document dEl) {
@@ -35,8 +35,10 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         bc.CheckboxId = id;
       }
 
-      args["parentId"] = id;
-      return element;
+      context.SetArg(id);
+      return context.ToResult(element);
     }
+
+
   }
 }

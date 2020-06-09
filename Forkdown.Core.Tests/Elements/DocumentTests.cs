@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Forkdown.Core.Parsing.Forkdown;
+using Forkdown.Core.Fd;
 using Simpler.NetCore.Collections;
 using Xunit;
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -10,7 +10,7 @@ namespace Forkdown.Core.Tests.Elements {
     [Fact]
     void DocumentAttributes() {
       const String input = @":{#id .class attribute=value :setting}";
-      var result = ForkdownBuilder.Default.Build(input);
+      var result = FdBuilder.Default.Build(input);
       result.Attributes.Id.Should().Be("id");
       result.Attributes.Classes.Should().Contain("class");
       result.Attributes.Properties.ToDictionary().GetOr("attribute", default).Should().Be("value");

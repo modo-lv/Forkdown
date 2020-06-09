@@ -1,5 +1,4 @@
 ﻿using System;
-using Markdig.Syntax;
 using Block = Forkdown.Core.Elements.Types.Block;
 using Markdown = Markdig.Extensions.Tables;
 

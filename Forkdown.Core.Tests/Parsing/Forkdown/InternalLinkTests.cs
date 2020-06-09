@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing.Forkdown;
+using Forkdown.Core.Fd;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -11,7 +11,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     [Fact]
     void ExplicitIdImplicitClass() {
       const String input = @"[Class] {#id,:id}";
-      var doc = ForkdownBuilder.Default.Build(input);
+      var doc = FdBuilder.Default.Build(input);
       var links = InternalLinks.From(doc);
       links.Count.Should().Be(2);
       links["id"].Should().Be(doc);
@@ -25,7 +25,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
 ## [Class Anchor](xxx) {#:id}
 ## **ID Anchor** {#:id}
 ";
-      var doc = ForkdownBuilder.Default.Build(input);
+      var doc = FdBuilder.Default.Build(input);
       var links = InternalLinks.From(doc);
       links.Count.Should().Be(2);
       links["class_anchor"].Should().Be(doc);
@@ -38,7 +38,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
 # Heading {#h-Anchor}
 Paragraph {#pAnchor}
 ";
-      var doc = ForkdownBuilder.Default.Build(input);
+      var doc = FdBuilder.Default.Build(input);
       doc.FindSub<Article>()!.GlobalId.Should().Be("h-anchor");
       doc.FindSub<Paragraph>()!.GlobalId.Should().Be("panchor");
       var anchors = InternalLinks.From(doc);

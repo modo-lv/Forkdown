@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Forkdown.Core.Elements.Attributes;
-using Forkdown.Core.Elements.Types;
-using Simpler.NetCore.Collections;
+﻿using Forkdown.Core.Elements.Types;
 
 // ReSharper disable NotAccessedField.Global
 

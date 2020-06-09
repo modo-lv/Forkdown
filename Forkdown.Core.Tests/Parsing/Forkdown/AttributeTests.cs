@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Linq;
 using FluentAssertions;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing.Forkdown;
-using Forkdown.Core.Parsing.Forkdown.Processors;
-using Markdig.Renderers.Html;
-using Simpler.NetCore.Collections;
+using Forkdown.Core.Fd;
+using Forkdown.Core.Fd.Processors;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class AttributesTests {
-    private static ForkdownBuilder Builder => new ForkdownBuilder()
+    private static FdBuilder Builder => new FdBuilder()
       .AddProcessor<SettingsProcessor>()
       .AddProcessor<DocumentProcessor>();
 

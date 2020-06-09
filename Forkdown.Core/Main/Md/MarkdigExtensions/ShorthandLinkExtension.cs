@@ -2,7 +2,7 @@
 using Markdig.Parsers.Inlines;
 using Markdig.Renderers;
 
-namespace Forkdown.Core.Parsing.MarkdigExtensions {
+namespace Forkdown.Core.Md.MarkdigExtensions {
   public class ShorthandLinkExtension : IMarkdownExtension {
     public void Setup(MarkdownPipelineBuilder pipeline) {
       if (!pipeline.InlineParsers.Contains<ShorthandLinkParser>())

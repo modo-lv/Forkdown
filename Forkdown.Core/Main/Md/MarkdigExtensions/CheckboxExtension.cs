@@ -2,7 +2,7 @@
 using Markdig.Parsers;
 using Markdig.Renderers;
 
-namespace Forkdown.Core.Parsing.MarkdigExtensions {
+namespace Forkdown.Core.Md.MarkdigExtensions {
   public class CheckboxExtension : IMarkdownExtension {
 
     public void Setup(MarkdownPipelineBuilder pipeline) {

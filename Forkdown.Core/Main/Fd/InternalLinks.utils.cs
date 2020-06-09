@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 
-namespace Forkdown.Core.Parsing.Forkdown {
+namespace Forkdown.Core.Fd {
   public partial class InternalLinks {
     public static InternalLinks From(params Document[] docs) =>
       From(docs as IEnumerable<Document>);

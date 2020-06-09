@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing.Forkdown;
+using Forkdown.Core.Fd;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -12,7 +12,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     [Fact]
     void CopyAttributes() {
       const String input = @"# Heading {#id .class property=value}";
-      var result = ForkdownBuilder.Default.Build(input);
+      var result = FdBuilder.Default.Build(input);
       var article = result.FirstSub<Article>();
       article.Attributes.Id.Should().Be("id");
       article.Attributes.Classes.Should().Contain("class");
@@ -27,7 +27,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
         )
       );
 
-      var result = ForkdownBuilder.Default.Build(input);
+      var result = FdBuilder.Default.Build(input);
       result.FirstSub<Article>().Settings.IsTrue("setting").Should().BeTrue();
     }
 
@@ -36,7 +36,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
       const String input = @"# Heading
 ## Sub-heading
 # Heading 2";
-      var doc = ForkdownBuilder.Default.Build(input);
+      var doc = FdBuilder.Default.Build(input);
 
       doc.Subs.Count.Should().Be(2);
       doc.Subs[0].Should().BeOfType<Article>();
@@ -49,7 +49,7 @@ namespace Forkdown.Core.Tests.Parsing.Forkdown {
     void HeadingBecomesArticle() {
       const String input = @"# Heading
 Paragraph";
-      var doc = ForkdownBuilder.Default.Build(input);
+      var doc = FdBuilder.Default.Build(input);
 
       doc.Subs.Count.Should().Be(1);
       var article = (Article) doc.Subs[0];

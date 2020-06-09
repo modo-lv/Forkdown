@@ -1,7 +1,7 @@
 ﻿using System;
 using Markdig.Parsers;
 
-namespace Forkdown.Core.Parsing.MarkdigExtensions {
+namespace Forkdown.Core.Md.MarkdigExtensions {
   public class CheckboxParser : OrderedListItemParser {
 
     public CheckboxParser() {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simpler.NetCore.Collections;
-using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements.Attributes {
   public class ElementSettings : Dictionary<String, String> {

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using FluentAssertions;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing.Forkdown;
-using Forkdown.Core.Parsing.Forkdown.Processors;
+using Forkdown.Core.Fd;
+using Forkdown.Core.Fd.Processors;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
 namespace Forkdown.Core.Tests.Parsing.Forkdown {
   public class CheckboxIdTests {
-    private static ForkdownBuilder _builder => new ForkdownBuilder()
+    private static FdBuilder _builder => new FdBuilder()
       .AddProcessor<ArticleProcessor>()
       .AddProcessor<CheckboxIdProcessor>();
     

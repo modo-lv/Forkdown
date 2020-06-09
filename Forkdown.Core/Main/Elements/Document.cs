@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Markdig.Syntax;
 using Simpler.NetCore.Text;
 using Block = Forkdown.Core.Elements.Types.Block;
 

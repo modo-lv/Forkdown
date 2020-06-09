@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements;
+using Forkdown.Core.Fd.Contexts;
 using Simpler.NetCore.Text;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
-  public class GlobalIdProcessor : IDocumentProcessor {
-    public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
+namespace Forkdown.Core.Fd.Processors {
+  public class GlobalIdProcessor : ITreeProcessor, IElementProcessor {
+    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
       if (element.Attributes.Id.NotBlank()) {
         var ids = element.Attributes.Id.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
@@ -14,7 +15,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
           .Select(_ => GlobalId.From(_.Replace(":id", element.Title)))
           .ToList();
       }
-      return element;
+      return context.ToResult(element);
     }
   }
 }

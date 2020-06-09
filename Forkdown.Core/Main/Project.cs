@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Parsing.Forkdown;
+using Forkdown.Core.Fd;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Collections;
@@ -38,8 +38,8 @@ namespace Forkdown.Core {
     /// Constructor
     private readonly ILogger<Project> _logger;
     private readonly BuildArguments _args;
-    private readonly ForkdownBuilder _builder;
-    public Project(ILogger<Project> logger, BuildArguments args, ForkdownBuilder builder) {
+    private readonly FdBuilder _builder;
+    public Project(ILogger<Project> logger, BuildArguments args, FdBuilder builder) {
       _logger = logger;
       _args = args;
       _builder = builder;

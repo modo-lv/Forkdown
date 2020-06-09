@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Elements.Types;
+using Forkdown.Core.Fd.Contexts;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
-  public class LabelProcessor : IDocumentProcessor{
+namespace Forkdown.Core.Fd.Processors {
+  public class LabelProcessor : ITreeProcessor, IElementProcessor {
 
-    public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
+    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
       if (element is Block && element.Subs.Any() && element.Subs[0] is Code labels) {
         element.Subs.RemoveAt(0);
 
@@ -20,7 +21,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         if (element.Subs.Any() && element.Subs[0] is Text t)
           t.Content = t.Content.TrimStart();
       }
-      return element;
+      return context.ToResult(element);
     }
   }
 }

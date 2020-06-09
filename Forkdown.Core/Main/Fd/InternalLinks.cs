@@ -6,7 +6,7 @@ using Forkdown.Core.Internal.Exceptions;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
-namespace Forkdown.Core.Parsing.Forkdown {
+namespace Forkdown.Core.Fd {
   /// <summary>
   /// A reference collection for tracking which internal link anchor is defined in which document.
   /// </summary>

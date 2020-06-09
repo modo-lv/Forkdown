@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Elements.Attributes;
-using Markdig.Renderers.Html;
-using Simpler.NetCore.Collections;
+using Forkdown.Core.Fd.Contexts;
 using Simpler.NetCore.Text;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
+namespace Forkdown.Core.Fd.Processors {
   /// <summary>
   /// Parses and applies Forkdown's <c>{:setting=value}</c> settings from element HTML attributes.
   /// </summary>
-  public class SettingsProcessor : IDocumentProcessor {
+  public class SettingsProcessor : ITreeProcessor, IElementProcessor {
 
-    public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
+    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
       var html = element.Attributes;
       if (html.Properties != null) {
         // ReSharper disable once RedundantCast
@@ -26,7 +25,7 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
         html.Properties.RemoveAll(_ => _.Key.StartsWith(":"));
       }
 
-      return element;
+      return context.ToResult(element);
     }
   }
 }

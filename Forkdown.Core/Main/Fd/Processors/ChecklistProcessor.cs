@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using Forkdown.Core.Elements;
-using Simpler.NetCore.Collections;
+using Forkdown.Core.Fd.Contexts;
 
-namespace Forkdown.Core.Parsing.Forkdown.Processors {
-  public class ChecklistProcessor : IElementProcessor{
+namespace Forkdown.Core.Fd.Processors {
+  public class ChecklistProcessor : IElementProcessor {
 
-    public T Process<T>(T element, IDictionary<String, Object> args) where T : Element {
-      var inChecklist = (Boolean) args.GetOr("inChecklist", false);
+    public virtual Result<T> Process<T>(T element, IContext context) where T : Element {
+      var inChecklist = context.GetArg<Boolean>();
       
       if (element is ListItem item) {
         if (inChecklist)
@@ -28,8 +27,8 @@ namespace Forkdown.Core.Parsing.Forkdown.Processors {
       if (element is Listing l)
         l.IsChecklist = inChecklist;
 
-      args["inChecklist"] = inChecklist;
-      return element;
+      context.SetArg(inChecklist);
+      return context.ToResult(element);
     }
   }
 }

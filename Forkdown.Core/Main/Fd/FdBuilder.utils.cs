@@ -1,8 +1,8 @@
-﻿using Forkdown.Core.Parsing.Forkdown.Processors;
+﻿using Forkdown.Core.Fd.Processors;
 
-namespace Forkdown.Core.Parsing.Forkdown {
-  public partial class ForkdownBuilder {
-    public static ForkdownBuilder Default = new ForkdownBuilder()
+namespace Forkdown.Core.Fd {
+  public partial class FdBuilder {
+    public static FdBuilder Default = new FdBuilder()
       // Document
       .AddProcessor<LabelProcessor>()
       .AddProcessor<SettingsProcessor>()

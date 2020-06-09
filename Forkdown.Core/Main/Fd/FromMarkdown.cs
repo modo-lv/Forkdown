@@ -1,18 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements;
+using Forkdown.Core.Md;
 using Markdig.Extensions.CustomContainers;
-using Tables = Markdig.Extensions.Tables;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Simpler.NetCore.Collections;
+using Tables = Markdig.Extensions.Tables;
 using CodeBlock = Forkdown.Core.Elements.CodeBlock;
+using Table = Forkdown.Core.Elements.Table;
+using TableCell = Forkdown.Core.Elements.TableCell;
+using TableRow = Forkdown.Core.Elements.TableRow;
 
-namespace Forkdown.Core.Parsing.Forkdown {
+namespace Forkdown.Core.Fd {
   /// <summary>
   /// Handles conversion from Markdown to Forkdown elements.
   /// </summary>
   public static class FromMarkdown {
+    /// <summary>
+    /// Parse a Markdown string into a tree of Forkdown elements.
+    /// </summary>
+    /// <param name="markdown">Markdown to parse.</param>
+    /// <param name="file">Project file the markdown is from, if any.</param>
+    public static Document ToForkdown(String markdown, ProjectPath? file = null) {
+      var mDoc = MarkdownBuilder.DefaultBuild(markdown);
+      var fDoc = (Document) ToForkdown(mDoc);
+      fDoc.ProjectFilePath = file?.RelPathString() ?? "";
+      return fDoc;
+    }
+    
     /// <summary>
     /// Convert a Markdown element to a Forkdown one.
     /// </summary>
