@@ -78,7 +78,6 @@ namespace Forkdown.Core {
       // Achors
       this.InteralLinks = _builder.Storage.Get<LinkIndex>();
 
-
       _logger.LogInformation(
         "Project \"{name}\" with {pages} page(s) loaded in {s:0.00} seconds.",
         this.Config.Name, this.Pages.Count, delta
