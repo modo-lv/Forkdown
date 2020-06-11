@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Forkdown.Core.Tests.Build.Workers {
   public class LinkIndexTests {
-    private readonly MainBuilder _builder = new MainBuilder(oncePerDocumentId: false)
+    private readonly MainBuilder _builder = new MainBuilder()
       .AddWorker<GlobalIdWorker>()
       .AddWorker<LinkIndexWorker>();
 

@@ -7,19 +7,14 @@ using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
 using Simpler.NetCore.Collections;
+using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build {
   public partial class MainBuilder {
     public readonly BuilderStorage Storage = new BuilderStorage();
     public readonly IList<Type> Workers = new List<Type>();
     public BuildConfig? Config = null;
-    public readonly Boolean OncePerDocumentId = true;
     private readonly ICollection<String> _finishedDocs = new Collection<String>();
-
-    public MainBuilder(Boolean oncePerDocumentId = true) {
-      OncePerDocumentId = oncePerDocumentId;
-    }
-
 
     public Document Build(String markdown, ProjectPath? file = null) =>
       this.Build(FromMarkdown.ToForkdown(markdown, file));
@@ -28,11 +23,11 @@ namespace Forkdown.Core.Build {
       this.Build(new[] { doc }).Single();
 
     public IEnumerable<Document> Build(IList<Document> documents) {
-      if (this.OncePerDocumentId) {
-        var duplicates = this._finishedDocs.Intersect(documents.Select(_ => _.ProjectFileId)).ToList();
-        if (duplicates.Any())
-          throw new Exception($"Documents {duplicates.StringJoin(", ")} already processed with this builder.");
-      }
+      var duplicates = this._finishedDocs.Intersect(
+        documents.Select(_ => _.ProjectFileId).Where(_ => _.NotBlank())
+      ).ToList();
+      if (duplicates.Any())
+        throw new Exception($"Documents {duplicates.StringJoin(", ")} already processed with this builder.");
 
 
       // Group by processing type
@@ -62,7 +57,8 @@ namespace Forkdown.Core.Build {
       });
 
       return documents.Select(doc => {
-        this._finishedDocs.Add(doc.ProjectFileId);
+        if (doc.ProjectFileId.NotBlank())
+          this._finishedDocs.Add(doc.ProjectFileId);
         return doc;
       });
     }
