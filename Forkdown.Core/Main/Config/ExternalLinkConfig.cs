@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
 namespace Forkdown.Core.Config {
   public partial class ExternalLinkConfig {

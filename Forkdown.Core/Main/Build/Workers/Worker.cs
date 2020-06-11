@@ -1,5 +1,4 @@
-﻿using System;
-using Forkdown.Core.Elements;
+﻿using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
   public interface IDocumentWorker { }

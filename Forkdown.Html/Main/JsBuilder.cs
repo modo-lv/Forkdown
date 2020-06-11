@@ -48,6 +48,7 @@ namespace Forkdown.Html.Main {
     /// Process input files and create outputs. 
     /// </summary>
     public JsBuilder Build() {
+      _logger.LogInformation("Building {js}...", "JavaScript");
       this.ScriptPaths.ForEach(path => {
         var inFile = _inPath.Combine(path);
         var outFile = _outPath.Combine(path);

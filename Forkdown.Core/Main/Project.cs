@@ -27,12 +27,14 @@ namespace Forkdown.Core {
     /// <summary>
     /// Project's Forkdown documents, parsed and processed.
     /// </summary>
-    public ISet<Document> Pages = Nil.S<Document>();
+    public IList<Document> Pages = Nil.L<Document>();
 
     /// <summary>
     /// Index mapping anchors to the pages they are in. 
     /// </summary>
-    public IDictionary<String, Document> InteralLinks = Nil.DStr<Document>();
+    public IDictionary<String, Document> InternalLinks = Nil.DStr<Document>();
+
+    private Boolean _initialized;
 
 
     /// Constructor
@@ -45,14 +47,13 @@ namespace Forkdown.Core {
       _builder = builder;
     }
 
-
     /// <summary>
-    /// Load the project, including processing all the Forkdown pages. 
+    /// Initialize the project, including loading main configuration. 
     /// </summary>
     /// <exception cref="DirectoryNotFoundException">
     /// If the project directory doesn't exist or isn't a directory.
     /// </exception>
-    public Project Load() {
+    public Project Init() {
       var root = _args.ProjectRoot;
 
       if (!root.Exists)
@@ -66,32 +67,43 @@ namespace Forkdown.Core {
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
       _builder.Config = this.Config;
 
-      // Builder
-      // Pages
-      var start = DateTime.Now.Millisecond;
-      _logger.LogInformation("Finding and loading pages...");
-      this.Pages = root.Combine("pages")
-        .Files("*.md", true)
-        .Select(doc => this.LoadFile(this.PathTo(doc)))
-        .ToHashSet();
-      var delta = ((Decimal)DateTime.Now.Millisecond - start) / 1000;
-
-      // Achors
-      this.InteralLinks = _builder.Storage.Get<LinkIndex>();
-
-      _logger.LogInformation(
-        "Project \"{name}\" with {pages} page(s) loaded in {s:0.00} seconds.",
-        this.Config.Name, this.Pages.Count, delta
-      );
+      _initialized = true;
       return this;
     }
-
-    public Document LoadFile(Path file) => this.LoadFile(this.PathTo(file));
-    public Document LoadFile(ProjectPath file) {
+    
+    public Document Build(Path file) => this.Build(this.PathTo(file));
+    public Document Build(ProjectPath file) {
       _logger.LogDebug("Loading {doc}...", file.RelPathString());
       return _builder.Build(File.ReadAllText(file.FullPathString()), file);
     }
 
+    /// <summary>
+    /// Process all the pages in the project into Forkdown documents, stored in <see cref="Pages"/>. 
+    /// </summary>
+    public Project BuildAllPages() {
+      if (!_initialized)
+        this.Init();
+      
+      var start = DateTime.Now;
+
+      _logger.LogInformation("Finding and loading pages...");
+      this.Pages = this.PathTo("pages")
+        .Files("*.md", true)
+        .Select(this.Build)
+        .ToList();
+      this.InternalLinks = _builder.Storage.Get<LinkIndex>();
+
+      var elapsed = (DateTime.Now - start).TotalSeconds;
+      _logger.LogInformation(
+        "Project \"{name}\" with {pages} page(s) loaded in {s:0.00} seconds.",
+        this.Config.Name, this.Pages.Count, elapsed
+      );
+      return this;
+    }
+
+    public ProjectPath PathTo(String file) =>
+      this.PathTo(new Path(file));
+    
     public ProjectPath PathTo(Path file) =>
       new ProjectPath(_args.ProjectRoot, file);
   }

@@ -1,5 +1,4 @@
-﻿using System;
-using Forkdown.Core.Elements;
+﻿using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 

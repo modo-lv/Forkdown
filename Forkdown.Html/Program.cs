@@ -17,7 +17,7 @@ namespace Forkdown.Html {
     /// <summary>
     /// Location of files for HTML output.
     /// </summary>
-    public static Path InPath =
+    public static readonly Path InPath =
       Path.Get(Assembly.GetExecutingAssembly().Location).Parent().Combine("Resources/Output");
 
     public const String OutFolder = "out-html";
@@ -39,11 +39,10 @@ namespace Forkdown.Html {
 
       try {
         using var scope = services.CreateScope();
-        scope.Service<HtmlBuilder>().Build();
-        scope.Service<JsBuilder>().Build();
-        scope.Service<CssBuilder>().Build();
-
-        logger.LogInformation("All done.");
+        var project = scope.Service<HtmlProject>();
+        var start = DateTime.Now;
+        project.LoadAndBuildEverything();
+        logger.LogInformation("Forkdown HTML project built in {s:0.00} seconds.", (DateTime.Now - start).TotalSeconds);
       }
       catch (Exception ex) {
         logger.LogCritical(ex, "");

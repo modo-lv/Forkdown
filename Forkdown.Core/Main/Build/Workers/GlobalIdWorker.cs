@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {

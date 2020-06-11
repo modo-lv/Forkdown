@@ -5,6 +5,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Forkdown.Core.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="FluentPath" Version="2.0.0" />
       <PackageReference Include="Markdig" Version="0.20.0" />

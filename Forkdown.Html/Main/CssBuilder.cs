@@ -28,6 +28,8 @@ namespace Forkdown.Html.Main {
     /// </summary>
     /// <param name="config"></param>
     public CssBuilder Build(HtmlConfig? config = null) {
+      _logger.LogInformation("Building {css}...", "CSS");
+
       config ??= new HtmlConfig();
       
       var file = _inPath.Combine("main.less");
@@ -37,7 +39,6 @@ namespace Forkdown.Html.Main {
         return this;
       }
 
-      _logger.LogInformation("Compiling {css}...", file.MakeRelativeTo(_inPath).ToString());
       var sb = new StringBuilder()
           .AppendLine(File.ReadAllText(file.ToString()))
           .AppendLine($"@fd--min-article-width: {config.MinArticleWidth};");
