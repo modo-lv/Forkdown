@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using Forkdown.Core.Build;
+using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
 using Xunit;
 
@@ -12,7 +13,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
     [Fact]
     void CopyAttributes() {
       const String input = @"# Heading {#id .class property=value}";
-      var result = MainBuilder.CreateDefault().Build(input);
+      var result = new MainBuilder().AddWorker<ArticleWorker>().Build(input);
       var article = result.FirstSub<Article>();
       article.Attributes.Id.Should().Be("id");
       article.Attributes.Classes.Should().Contain("class");

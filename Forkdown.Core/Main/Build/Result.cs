@@ -10,10 +10,5 @@ namespace Forkdown.Core.Build {
       this.Element = element;
       this.Arguments = arguments;
     }
-
-    public Result(TElement element) {
-      this.Element = element;
-      this.Arguments = new Arguments();
-    }
   }
 }

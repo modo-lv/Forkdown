@@ -7,9 +7,9 @@ namespace Forkdown.Core.Build.Workers {
   /// <summary>
   /// Parses and applies Forkdown's <c>{:setting=value}</c> settings from element HTML attributes.
   /// </summary>
-  public class SettingsWorker : IDocumentWorker, IElementWorker {
+  public class SettingsWorker : Worker, IDocumentWorker {
 
-    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public override T ProcessElement<T>(T element, Arguments args) {
       var html = element.Attributes;
       if (html.Properties != null) {
         // ReSharper disable once RedundantCast

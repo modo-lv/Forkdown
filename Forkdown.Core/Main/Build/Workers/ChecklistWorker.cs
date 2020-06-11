@@ -2,9 +2,9 @@
 using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
-  public class ChecklistWorker : IElementWorker {
+  public class ChecklistWorker : Worker {
 
-    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public override T ProcessElement<T>(T element, Arguments args) {
       var inChecklist = args.Get<Boolean>();
       
       if (element is ListItem item) {

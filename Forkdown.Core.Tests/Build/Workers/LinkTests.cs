@@ -14,11 +14,11 @@ namespace Forkdown.Core.Tests.Build.Workers {
     void NoFalseExternalLinks() {
       const String input = @"[Link] {#link}";
       var config = new BuildConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
-      var result = new MainBuilder()
+      var result = new MainBuilder { Config = config }
         .AddWorker<GlobalIdWorker>()
         .AddWorker<LinkIndexWorker>()
         .AddWorker<LinkWorker>()
-        .Build(input, config);
+        .Build(input);
       result.FirstSub<Link>().Target.Should().Be("Link");
     }
     
@@ -26,7 +26,9 @@ namespace Forkdown.Core.Tests.Build.Workers {
     void ExternalLinksWithIndex() {
       const String input = @"[Link]";
       var config = new BuildConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
-      var result = new MainBuilder().AddWorker<LinkWorker>().Build(input, config);
+      var result = new MainBuilder { Config = config }
+        .AddWorker<LinkWorker>()
+        .Build(input);
       result.FirstSub<Link>().Target.Should().Be("test://Link");
     }
 

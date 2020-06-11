@@ -6,15 +6,16 @@ using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
-  public class CheckboxIdWorker : IElementWorker {
+  public class CheckboxIdWorker : Worker {
     public const Char G = '␝'; // Group separator
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
+    
+    private readonly IDictionary<String, Int32> _times = new Dictionary<String, Int32>();
 
-    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public override T ProcessElement<T>(T element, Arguments args) {
       String parentId = args.Get();
-      var times = context.Doc<Dictionary<String, Int32>>();
-      
+
       var id = parentId;
       
       if (element is Document dEl) {
@@ -28,9 +29,9 @@ namespace Forkdown.Core.Build.Workers {
         if (parentId.NotBlank())
           id = $"{parentId}{G}{id}";
         if (id.NotBlank())
-          times[id] = times.GetOr(id, 0) + 1;
-        if (times.GetOr(id, 0) > 1)
-          id += $"{R}{times[id]}";
+          _times[id] = _times.GetOr(id, 0) + 1;
+        if (_times.GetOr(id, 0) > 1)
+          id += $"{R}{_times[id]}";
         bc.CheckboxId = id;
       }
 

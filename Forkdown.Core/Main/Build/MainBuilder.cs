@@ -1,86 +1,82 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
-using Simpler.NetCore.Collections;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
+using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Build {
   public partial class MainBuilder {
-    public readonly IList<IWorker> WorkerQueue = Nil.L<IWorker>();
-
     public readonly BuilderStorage Storage = new BuilderStorage();
+    public readonly IList<Type> Workers = new List<Type>();
+    public BuildConfig? Config = null;
+    public readonly Boolean OncePerDocumentId = true;
+    private readonly ICollection<String> _finishedDocs = new Collection<String>();
 
-    public Document Build(Document doc, BuildConfig? config = null) {
-      return this.Build(new[] { doc }, config).Single();
+    public MainBuilder(Boolean oncePerDocumentId = true) {
+      OncePerDocumentId = oncePerDocumentId;
     }
 
-    public Document Build(String markdown, BuildConfig? config = null, ProjectPath? file = null) =>
-      this.Build(FromMarkdown.ToForkdown(markdown, file), config);
 
-    public IEnumerable<Document> Build(IEnumerable<Document> docs, BuildConfig? config = null) {
-      var contexts = new Dictionary<Type, Context>();
+    public Document Build(String markdown, ProjectPath? file = null) =>
+      this.Build(FromMarkdown.ToForkdown(markdown, file));
 
-      docs = this.WorkerQueue.OfType<IProjectWorker>().Aggregate(docs, (ds, worker) => ds.Select(doc => {
-        var context = contexts.GetOrAdd(worker.GetType(), new Context(doc, this.Storage) { Config = config });
-        return worker.Process(doc, new Arguments(), context).Element;
-      })).ToList();
+    public Document Build(Document doc) =>
+      this.Build(new[] { doc }).Single();
 
-      return docs.Select(doc => {
-        var batches = this.WorkerQueue
-          .Where(_ => !(_ is IProjectWorker))
-          .GroupAdjacent(worker => worker is IDocumentWorker);
-        var baseContext = new Context(doc, this.Storage) {
-          Config = config
-        };
+    public IEnumerable<Document> Build(IList<Document> documents) {
+      if (this.OncePerDocumentId) {
+        var duplicates = this._finishedDocs.Intersect(documents.Select(_ => _.ProjectFileId)).ToList();
+        if (duplicates.Any())
+          throw new Exception($"Documents {duplicates.StringJoin(", ")} already processed with this builder.");
+      }
 
-        foreach (var batch in batches) {
-          if (batch.Key) { // Tree
-            doc = batch.Select(_ => (IDocumentWorker) _)
-              .Aggregate(doc, (tree, worker) => {
-                  var c = contexts.GetOrAdd(worker.GetType(), new Context(source: baseContext));
-                  return worker.Process(tree, new Arguments(), c).Element;
-                }
-              );
-          }
-          else { // Element
-            doc = process(batch, doc, Nil.D<Type, Arguments>(), baseContext);
-          }
+
+      // Group by processing type
+      var workerGroups = this.Workers.GroupAdjacent(_ =>
+        _.GetInterfaces().SingleOrDefault(i => i.Name.IsOneOf(nameof(IProjectWorker), nameof(IDocumentWorker)))
+      );
+
+      workerGroups.ForEach(wg => {
+        if (wg.Key == typeof(IProjectWorker)) {
+          documents = wg.Aggregate(documents, (docs, wType) =>
+            docs.Select(doc =>
+              ElementBuilder.Build(doc, new[] { this.CreateWorker(wType) }, new BuilderStorage())
+            ).ToList()
+          );
         }
-
-        return doc;
+        else if (wg.Key == typeof(IDocumentWorker)) {
+          documents = documents.Select(_ => wg.Aggregate(_, (doc, wType) =>
+            ElementBuilder.Build(doc, new[] { this.CreateWorker(wType) }, new BuilderStorage()))
+          ).ToList();
+        }
+        else {
+          documents = documents.Select(doc => {
+            var workers = wg.Select(this.CreateWorker).ToList();
+            return ElementBuilder.Build(doc, workers, new BuilderStorage());
+          }).ToList();
+        }
       });
 
-
-      T process<T>(
-        IEnumerable<IWorker> procs,
-        T element,
-        IDictionary<Type, Arguments> parentArgs,
-        Context baseContext
-      ) where T : Element {
-        parentArgs = new Dictionary<Type, Arguments>(parentArgs);
-        element = procs.Select(_ => (IElementWorker) _)
-          .Aggregate(element, (e, p) => {
-            var context = contexts.GetOrAdd(p.GetType(), new Context(source: baseContext));
-            var args = new Arguments(parentArgs.GetOrAdd(p.GetType(), new Arguments()));
-            var result = p.Process(e, args, baseContext);
-            parentArgs[p.GetType()] = result.Arguments;
-            return result.Element;
-          });
-
-        element.Subs = element.Subs.Select(e => process(procs, e, parentArgs, baseContext)).ToList();
-        return element;
-      }
+      return documents.Select(doc => {
+        this._finishedDocs.Add(doc.ProjectFileId);
+        return doc;
+      });
     }
 
+    protected Worker CreateWorker(Type type) {
+      var worker = (Worker) Activator.CreateInstance(type)!;
+      worker.Builder = this;
+      return worker;
+    }
 
-    public MainBuilder AddWorker<T>() where T : IWorker, new() {
-      if (this.WorkerQueue.OfType<T>().Any())
+    public MainBuilder AddWorker<T>() where T : Worker {
+      if (this.Workers.Contains(typeof(T)))
         throw new Exception($"{nameof(T)} is already registered.");
-      this.WorkerQueue.Add(new T());
+      this.Workers.Add(typeof(T));
       return this;
     }
   }

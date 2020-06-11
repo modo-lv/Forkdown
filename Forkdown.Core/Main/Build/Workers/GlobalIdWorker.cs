@@ -4,8 +4,9 @@ using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
-  public class GlobalIdWorker : IProjectWorker {
-    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+  public class GlobalIdWorker : Worker, IProjectWorker {
+
+    public override T ProcessElement<T>(T element, Arguments args) {
       if (element.Attributes.Id.NotBlank()) {
         var ids = element.Attributes.Id.Split(',', StringSplitOptions.RemoveEmptyEntries);
 

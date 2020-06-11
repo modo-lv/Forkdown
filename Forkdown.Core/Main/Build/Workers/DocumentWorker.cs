@@ -1,9 +1,9 @@
 ﻿using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
-  public class DocumentWorker : IDocumentWorker, IElementWorker {
+  public class DocumentWorker : Worker, IDocumentWorker {
 
-    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public override T ProcessElement<T>(T element, Arguments args) {
       if (element is Document doc &&
           doc.Subs.Count > 0 &&
           doc.Subs[0] is Paragraph par &&

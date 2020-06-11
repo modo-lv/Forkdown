@@ -2,13 +2,19 @@
 using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Build.Workers {
-  public class LinkIndexWorker : IProjectWorker {
+  public class LinkIndexWorker : Worker, IProjectWorker {
 
-    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
-      var index = context.BuildStore.GetOrAdd(this.GetType(), new LinkIndex());
+    private Document? _document;
+
+    public override T ProcessElement<T>(T element, Arguments args) {
+      if (element is Document doc)
+        this._document = doc;
+
+      var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new LinkIndex());
       element.GlobalIds.ForEach(_ =>
-        index.Add(_, context.Document)
+        index.Add(_, this._document!)
       );
+      
       return element;
     }
   }

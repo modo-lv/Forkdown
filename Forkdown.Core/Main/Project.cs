@@ -64,6 +64,7 @@ namespace Forkdown.Core {
       // Settings
       this.Config = BuildConfig.From(_args.MainConfigFile);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
+      _builder.Config = this.Config;
 
       // Builder
       // Pages
@@ -88,7 +89,7 @@ namespace Forkdown.Core {
     public Document LoadFile(Path file) => this.LoadFile(this.PathTo(file));
     public Document LoadFile(ProjectPath file) {
       _logger.LogDebug("Loading {doc}...", file.RelPathString());
-      return _builder.Build(File.ReadAllText(file.FullPathString()), this.Config, file);
+      return _builder.Build(File.ReadAllText(file.FullPathString()), file);
     }
 
     public ProjectPath PathTo(Path file) =>

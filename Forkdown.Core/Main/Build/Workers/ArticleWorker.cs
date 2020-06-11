@@ -6,9 +6,9 @@ namespace Forkdown.Core.Build.Workers {
   /// <summary>
   /// Splits forkdown content into articles based on headings.
   /// </summary>
-  public class ArticleWorker : IElementWorker {
+  public class ArticleWorker : Worker {
 
-    public T ProcessElement<T>(T element, Arguments args, Context context) where T : Element {
+    public override T ProcessElement<T>(T element, Arguments args) {
       if (element is Header)
         return element;
 
