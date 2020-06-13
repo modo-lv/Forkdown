@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using dotless.Core;
+using dotless.Core.configuration;
 using Forkdown.Core.Wiring;
 using Microsoft.Extensions.Logging;
 using Path = Fluent.IO.Path;
@@ -47,7 +48,12 @@ namespace Forkdown.Html.Main {
         $"$1{file.Parent().FullPath + System.IO.Path.DirectorySeparatorChar}",
         RegexOptions.IgnoreCase & RegexOptions.Multiline
       );
-      var css = Less.Parse(less);
+      
+      var css = Less.Parse(less, new DotlessConfiguration { DisableUrlRewriting = true });
+      // the `DisableUrlRewriting` doesn't work, so we have to revert the URLs manually
+      css = css.Replace($"{_inPath.FullPath.Replace("\\", "/")}/", "");
+      // Comments also aren't stripped and get confused for URLs sometimes >:(
+      css = Regex.Replace(css, "/\\*.+\\*/", "");
 
       _logger.LogDebug("Writing {file}...", _outFile.MakeRelativeTo(_outFile.Parent()).ToString());
       File.WriteAllText(_outFile.ToString(), css);

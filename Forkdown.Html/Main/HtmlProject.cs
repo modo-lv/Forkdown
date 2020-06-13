@@ -11,15 +11,16 @@ namespace Forkdown.Html.Main {
     private readonly JsBuilder _jsBuilder;
     private readonly CssBuilder _cssBuilder;
     private readonly HtmlBuilder _htmlBuilder;
+    private readonly AssetBuilder _assetBuilder;
 
     /// <inheritdoc cref="HtmlProject" />
     public HtmlProject(Project project, ILogger<HtmlProject> logger, JsBuilder jsBuilder, CssBuilder cssBuilder,
-      HtmlBuilder htmlBuilder) {
+      HtmlBuilder htmlBuilder, AssetBuilder assetBuilder) {
       _project = project;
       _jsBuilder = jsBuilder;
       _cssBuilder = cssBuilder;
       _htmlBuilder = htmlBuilder;
-
+      _assetBuilder = assetBuilder;
     }
 
     /// <summary>
@@ -33,6 +34,7 @@ namespace Forkdown.Html.Main {
         return file.Exists ? _project.Build(file) : null;
       });
 
+      _assetBuilder.Build();
       _htmlBuilder.Build(layout);
       _jsBuilder.Build();
       _cssBuilder.Build();

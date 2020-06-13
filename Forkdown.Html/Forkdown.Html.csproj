@@ -44,4 +44,8 @@
     <EmbeddedResource Remove="Publish\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core" />
+  </ItemGroup>
+
 </Project>

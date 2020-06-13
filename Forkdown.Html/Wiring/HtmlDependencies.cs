@@ -17,6 +17,7 @@ namespace Forkdown.Html.Wiring {
         .AddWorker<SettingsToClassesWorker>()
       );
 
+      svc.AddScoped<AssetBuilder>();
       svc.AddScoped<HtmlProject>();
       svc.AddScoped<HtmlBuilder>();
       svc.AddScoped<JsBuilder>();
