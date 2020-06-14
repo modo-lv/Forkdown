@@ -14,11 +14,12 @@ h1, h2, h3, h4, h5, h6 {
 
 @increase: 0.15rem;
 @spacing-increase: 0.2rem;
+@heading-size: 1.1rem;
 
 // Have to use padding instead of margin because column/grid calculations don't include margins
-h1 { font-size: 1rem + 5 * @increase; padding-top: 0.5rem + 5 * @spacing-increase; }
-h2 { font-size: 1rem + 4 * @increase; padding-top: 0.5rem + 4 * @spacing-increase; }
-h3 { font-size: 1rem + 3 * @increase; padding-top: 0.5rem + 3 * @spacing-increase; }
-h4 { font-size: 1rem + 2 * @increase; padding-top: 0.5rem + 2 * @spacing-increase; }
-h5 { font-size: 1rem + 1 * @increase; padding-top: 0.5rem + 1 * @spacing-increase; }
-h6 { font-size: 1rem + 0 * @increase; padding-top: 0.5rem + 0 * @spacing-increase; }
+h1 { font-size: @heading-size + 5 * @increase; padding-top: 0.5rem + 5 * @spacing-increase; }
+h2 { font-size: @heading-size + 4 * @increase; padding-top: 0.5rem + 4 * @spacing-increase; }
+h3 { font-size: @heading-size + 3 * @increase; padding-top: 0.5rem + 3 * @spacing-increase; }
+h4 { font-size: @heading-size + 2 * @increase; padding-top: 0.5rem + 2 * @spacing-increase; }
+h5 { font-size: @heading-size + 1 * @increase; padding-top: 0.5rem + 1 * @spacing-increase; }
+h6 { font-size: @heading-size + 0 * @increase; padding-top: 0.5rem + 0 * @spacing-increase; }

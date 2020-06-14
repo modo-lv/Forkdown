@@ -23,6 +23,9 @@ namespace Forkdown.Html.Main.Build {
       }
 
       switch (element) {
+        case Paragraph p when p.Kind != ParagraphKind.Normal:
+          p.Attributes.Classes.Add($"{Globals.Prefix}{p.Kind.ToString().ToLowerInvariant()}");
+          break;
         case Listing l when l.IsChecklist:
           l.Attributes.Classes.Add($"{Globals.Prefix}checklist");
           break;

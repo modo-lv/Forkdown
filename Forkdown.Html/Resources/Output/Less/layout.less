@@ -61,9 +61,14 @@ main {
   border-bottom: none;
   overflow: auto;
   padding: @inner-padding;
+  position: relative;
   &:focus {
     outline-width: 0;
   }
+}
+
+article:focus {
+  outline: none;
 }
 
 @min-col-width: @fd--default-column-width;

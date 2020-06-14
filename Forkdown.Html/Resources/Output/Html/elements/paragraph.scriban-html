@@ -1,5 +1,5 @@
 
-<p {{- attrs $1 -}}>
+<p {{ attrs $1 }}>
 {{- if ($1.Kind != "Normal") -}}
 <span src="{{ PathToRoot }}/assets/labels/{{ $1.Kind | string.downcase }}.png" class="fd--reserved-label">{{ case $1.Kind
 when "X" 

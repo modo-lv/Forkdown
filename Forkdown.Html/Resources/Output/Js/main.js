@@ -31,6 +31,7 @@ let main = new ForkdownMain({projectConfig: {name: projectName}}).init().then(ma
 
 let layout = new ForkdownLayout();
 let menu = new ForkdownMenu().init();
+let labels = new ForkdownLabels();
   
 window.Forkdown = {
   "main": main,
@@ -38,4 +39,4 @@ window.Forkdown = {
   "menu": menu,
 }
 
-layout.init()
+layout.init(labels);

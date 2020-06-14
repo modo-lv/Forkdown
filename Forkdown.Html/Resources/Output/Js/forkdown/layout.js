@@ -10,7 +10,7 @@ class ForkdownLayout {
 
   static MainHider = document.createElement("style");
 
-  init = async () => {
+  init = async (labels) => {
     { // Temporarily create an invisible layout column to get the default column width
       let column = $("<div class='fd--column' style='display: none;'></div>")
       $("body").append(column)
@@ -21,6 +21,8 @@ class ForkdownLayout {
       let items = $("article.fd--columns > [role='main'] > *, section.fd--columns > *, main.fd--columns > *")
       items.wrap("<div class='fd--column'></div>")
     }
+
+    labels.init();
 
     this.processMasonry()
       .then(ForkdownLayout.showMain)

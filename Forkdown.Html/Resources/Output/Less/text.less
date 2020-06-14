@@ -43,11 +43,38 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
+
+
+
+@focus-color: white;
+@corners: 0.5rem;
+@border: 1px solid silver;
+
 .fd--reserved-label {
   min-width: 1.4rem;
-  //height: width();
   vertical-align: middle;
   text-align: center;
   display: inline-block;
-  //margin-right: 0.2rem;
+}
+
+.fd--x.fd--ready {
+  position: absolute;
+  background-color: @focus-color;
+  z-index: 1;
+  border-radius: @corners;
+  border: @border;
+  padding: 0.25rem;
+}
+
+.fd--x-button {
+  cursor: pointer;
+}
+
+p:first-child, h1, h2, h3, h4, h5, h6 {
+  & > .fd--x-button {
+    font-size: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+  }
 }

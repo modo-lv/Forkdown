@@ -24,7 +24,7 @@ end -}}
   for kv in $0
     $key = html.escape kv.Key
     $value = html.escape kv.Value
-    array.add props kv.key + "=\"" + kv.value + "\""
+    array.add $props kv.key + "=\"" + kv.value + "\""
   end
   ret array.join $props " "
 end -}}
