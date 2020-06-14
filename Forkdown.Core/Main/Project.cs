@@ -70,7 +70,7 @@ namespace Forkdown.Core {
       _initialized = true;
       return this;
     }
-    
+
     public Document Build(Path file) => this.Build(this.PathTo(file));
     public Document Build(ProjectPath file) {
       _logger.LogDebug("Loading {doc}...", file.RelPathString());
@@ -83,14 +83,16 @@ namespace Forkdown.Core {
     public Project BuildAllPages() {
       if (!_initialized)
         this.Init();
-      
+
       var start = DateTime.Now;
 
       _logger.LogInformation("Finding and loading pages...");
-      this.Pages = this.PathTo("pages")
-        .Files("*.md", true)
-        .Select(this.Build)
-        .ToList();
+
+      this.Pages = _builder.Build(
+        this.PathTo("pages")
+          .Files("*.md", true)
+          .Select(FromMarkdown.ToForkdown)
+      ).ToList();
       this.InternalLinks = _builder.Storage.Get<LinkIndex>();
 
       var elapsed = (DateTime.Now - start).TotalSeconds;
@@ -103,7 +105,7 @@ namespace Forkdown.Core {
 
     public ProjectPath PathTo(String file) =>
       this.PathTo(new Path(file));
-    
+
     public ProjectPath PathTo(Path file) =>
       new ProjectPath(_args.ProjectRoot, file);
   }

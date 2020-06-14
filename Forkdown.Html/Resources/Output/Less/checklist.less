@@ -1,4 +1,6 @@
-@indent: 1.2rem;
+@checkbox-spacing: 0.2rem;
+@checkbox-size: 1.2rem;
+@indent: calc(@checkbox-spacing + @checkbox-size);
 
 
 ul, ol {
@@ -30,9 +32,8 @@ ul, ol {
         min-width: @indent;
         text-align: left;
         & > input[type="checkbox"] {
-          @size: 1rem;
-          width: @size;
-          height: @size;
+          width: @checkbox-size;
+          height: @checkbox-size;
           margin-right: 0;
           margin-left: 0;
           display: inline-block;

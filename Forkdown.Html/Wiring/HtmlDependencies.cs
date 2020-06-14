@@ -12,9 +12,10 @@ namespace Forkdown.Html.Wiring {
     public static readonly Action<IServiceCollection> Config = svc => {
       // Add HTML workers to the page builder.
       svc.RemoveAll(typeof(MainBuilder));
-      svc.AddSingleton(MainBuilder.CreateDefault()
-        .AddWorker<InternalLinkWorker>()
-        .AddWorker<SettingsToClassesWorker>()
+      svc.AddSingleton(
+        MainBuilder.CreateDefault()
+          .AddWorker<InternalLinkWorker>()
+          .AddWorker<SettingsToClassesWorker>()
       );
 
       svc.AddScoped<AssetBuilder>();

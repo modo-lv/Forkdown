@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Config;
@@ -22,7 +23,9 @@ namespace Forkdown.Core.Build {
     public Document Build(Document doc) =>
       this.Build(new[] { doc }).Single();
 
-    public IEnumerable<Document> Build(IList<Document> documents) {
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    public IEnumerable<Document> Build(IEnumerable<Document> documents) {
+      documents = documents.ToList();
       var duplicates = this._finishedDocs.Intersect(
         documents.Select(_ => _.ProjectFileId).Where(_ => _.NotBlank())
       ).ToList();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Markdown;
@@ -18,6 +19,10 @@ namespace Forkdown.Core.Build {
   /// Handles conversion from Markdown to Forkdown elements.
   /// </summary>
   public static class FromMarkdown {
+    public static Document ToForkdown(ProjectPath file) =>
+      ToForkdown(File.ReadAllText(file.FullPathString()), file);
+
+
     /// <summary>
     /// Parse a Markdown string into a tree of Forkdown elements.
     /// </summary>
