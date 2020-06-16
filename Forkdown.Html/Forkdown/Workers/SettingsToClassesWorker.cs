@@ -29,8 +29,8 @@ namespace Forkdown.Html.Main.Build {
         case Listing l when l.IsChecklist:
           l.Attributes.Classes.Add($"{Globals.Prefix}checklist");
           break;
-        case ListItem li when li.IsCheckbox:
-          li.Attributes.Classes.Add($"{Globals.Prefix}checkbox");
+        case ListItem li when li.IsCheckitem:
+          li.Attributes.Classes.Add($"{Globals.Prefix}checkitem");
           break;
         case Link l when l.IsInternal:
           l.Attributes.Classes.Add($"{Globals.Prefix}internal");

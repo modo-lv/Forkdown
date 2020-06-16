@@ -1,7 +1,9 @@
 'use strict'
 
-class ForkdownLabels {
+class ForkdownMetaText {
   init = () => {
+
+    /*
     // Find all X paragraphs
     this.xs = $("p.fd--x")
 
@@ -16,7 +18,7 @@ class ForkdownLabels {
       let button = $("<p>" + this.label + "</p>").addClass("fd--x-button")
       button.on("click", (e) => {
         e.stopPropagation();
-        ForkdownLabels.hideAll();
+        ForkdownMetaText.hideAll();
         console.log(e.target, $(e.target).offset(), $(e.target).position(), $(e.target).outerHeight(), )
         let top = $(e.target).position().top + $(e.target).outerHeight(true) + $("main").scrollTop()
         let left = $(e.target).closest("article").position().left;
@@ -38,14 +40,15 @@ class ForkdownLabels {
         $(x).parent().append(button)
     })
 
-    $("body").on("click", ForkdownLabels.hideAll)
+    $("body").on("click", ForkdownMetaText.hideAll)
     $(document).on("keyup", (e) => {
       if (e.keyCode == 27) // Escape
-        ForkdownLabels.hideAll()
+        ForkdownMetaText.hideAll()
     })
+    */
   }
 
   static hideAll() {
-    $("p.fd--x").removeClass("fd--open").hide()
+    //$("p.fd--x").removeClass("fd--open").hide()
   }
 }

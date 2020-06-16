@@ -9,12 +9,12 @@ namespace Forkdown.Core.Build.Workers {
       
       if (element is ListItem item) {
         if (inChecklist)
-          item.IsCheckbox = item.Settings.NotFalse("checkbox");
+          item.IsCheckitem = item.Settings.NotFalse("checkbox");
         
-        item.IsCheckbox = item.BulletChar switch {
+        item.IsCheckitem = item.BulletChar switch {
           '+' => true,
           '-' => false,
-          _ => item.IsCheckbox
+          _ => item.IsCheckitem
         };
       }
 

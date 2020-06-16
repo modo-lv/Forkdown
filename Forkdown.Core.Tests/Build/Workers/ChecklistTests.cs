@@ -14,7 +14,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
 * List item";
       var result = MainBuilder.CreateDefault().Build(input);
       result.FirstSub<Listing>().IsChecklist.Should().BeFalse();
-      result.FirstSub<ListItem>().IsCheckbox.Should().BeFalse();
+      result.FirstSub<ListItem>().IsCheckitem.Should().BeFalse();
     }
     
     [Fact]
@@ -23,7 +23,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
 * Checkbox";
       var result = MainBuilder.CreateDefault().Build(input);
       result.FirstSub<Listing>().IsChecklist.Should().BeTrue();
-      result.FirstSub<ListItem>().IsCheckbox.Should().BeTrue();
+      result.FirstSub<ListItem>().IsCheckitem.Should().BeTrue();
     }
 
 
@@ -34,7 +34,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
 * Item";
       var result = MainBuilder.CreateDefault().Build(input);
 
-      result.FirstSub<ListItem>().IsCheckbox.Should().BeTrue();
+      result.FirstSub<ListItem>().IsCheckitem.Should().BeTrue();
     }
   }
 }

@@ -7,7 +7,7 @@ if (!projectName)
 
 let main = new ForkdownMain({projectConfig: {name: projectName}}).init().then(main => {
   // CHECKBOXES
-  $("li.fd--checkbox input[type=checkbox]").each(async (i, c) => {
+  $("li.fd--checkitem input[type=checkbox]").each(async (i, c) => {
     let checkbox = $(c)
     let id = checkbox.prop("id")
     if (!id) {
@@ -31,7 +31,7 @@ let main = new ForkdownMain({projectConfig: {name: projectName}}).init().then(ma
 
 let layout = new ForkdownLayout();
 let menu = new ForkdownMenu().init();
-let labels = new ForkdownLabels();
+let meta = new ForkdownMetaText();
   
 window.Forkdown = {
   "main": main,
@@ -39,4 +39,4 @@ window.Forkdown = {
   "menu": menu,
 }
 
-layout.init(labels);
+layout.init(meta);
