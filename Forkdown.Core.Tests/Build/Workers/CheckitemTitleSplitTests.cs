@@ -8,13 +8,12 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build.Workers {
   public class CheckitemTitleSplitTests {
     [Fact]
-    void NoExtraParagraphs() {
+    void KeepAllElements() {
       const String input = @"* Item
 New line";
       var result = new MainBuilder().AddWorker<CheckitemTitleSplitWorker>().Build(input);
-      var para = result.FirstSub<ListItem>().FirstSub<Paragraph>();
-      para.Title.Should().Be("Item");
-      para.IsTitle.Should().BeTrue();
+      var li = result.FirstSub<ListItem>();
+      li.Subs.Count.Should().Be(2);
     }
   }
 }

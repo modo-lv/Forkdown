@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Forkdown.Core.Elements;
+using static MoreLinq.Extensions.InsertExtension;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 namespace Forkdown.Core.Build.Workers {
@@ -13,13 +14,15 @@ namespace Forkdown.Core.Build.Workers {
       if (element is ListItem li && li.Subs.FirstOrDefault() is Paragraph p) {
         if (p.Subs.Any(_ => _ is LineBreak)) {
           var pGroups = p.Subs.GroupAdjacent(_ => !(_ is LineBreak));
-          li.Subs = pGroups
+          var tParas = pGroups
             .Where(_ => _.Key)
             .Select(elements => (Element) new Paragraph {
               IsTitle = true,
               Subs = elements.ToList()
-            })
-            .ToList();
+            });
+
+          li.Subs.RemoveAt(0);
+          li.Subs = li.Subs.Insert(tParas, 0).ToList();
         }
         else {
           p.IsTitle = true;
