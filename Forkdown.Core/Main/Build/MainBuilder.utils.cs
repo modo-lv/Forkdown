@@ -3,6 +3,7 @@
 namespace Forkdown.Core.Build {
   public partial class MainBuilder {
     public static MainBuilder CreateDefault() => new MainBuilder()
+      .AddWorker<CheckitemTitleSplitWorker>()
       .AddWorker<LabelWorker>()
       .AddWorker<GlobalIdWorker>()
       .AddWorker<LinkIndexWorker>()

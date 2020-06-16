@@ -1,4 +1,7 @@
 {{- func attrs # Output all the attributes of an HTML element
+   if ($0 == null)
+      ret
+   end
    $attrs = $0.Attributes
    $extra_classes = $1
    $output = ""
