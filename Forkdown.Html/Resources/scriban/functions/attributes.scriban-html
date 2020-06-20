@@ -5,7 +5,7 @@
    $attrs = $0.Attributes
    $extra_classes = $1
    $output = ""
-   if $attrs != null && ($attrs.Classes | array.size > 0)
+   if ($attrs != null && ($attrs.Classes | array.size > 0)) || $extra_classes
       $output = attr_class $attrs.Classes $extra_classes | string.append $output
    end
    if $attrs != null && ($attrs.Properties | array.size > 0)

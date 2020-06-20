@@ -10,7 +10,7 @@ class ForkdownLayout {
 
   static MainHider = document.createElement("style");
 
-  init = async (labels) => {
+  init = async () => {
     { // Temporarily create an invisible layout column to get the default column width
       let column = $("<div class='fd--column' style='display: none;'></div>")
       $("body").append(column)
@@ -21,8 +21,6 @@ class ForkdownLayout {
       let items = $("article.fd--columns > [role='main'] > *, section.fd--columns > *, main.fd--columns > *")
       items.wrap("<div class='fd--column'></div>")
     }
-
-    labels.init();
 
     this.processMasonry()
       .then(ForkdownLayout.showMain)
@@ -94,12 +92,12 @@ class ForkdownLayout {
     $(window).width() > this.defaultColumnWidth * 2
 
 
-      /**
+   /**
    * Hide the main content.
    * Use during page load to hide the layout shuffling as things are moved into masonry positions
    */
   static hideMain() {
-    ForkdownLayout.MainHider.innerText = "main > * { visibility: hidden; } main { overflow: hidden }"
+    ForkdownLayout.MainHider.innerText = ForkdownLayout.MainHider.innerText || "main > * { visibility: hidden; } main { overflow: hidden }"
     document.head.appendChild(ForkdownLayout.MainHider)
   }
 

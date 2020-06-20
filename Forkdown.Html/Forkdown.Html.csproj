@@ -31,7 +31,19 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Remove="Publish\**" />
-    <None Update="Resources\Output\**">
+    <None Update="Resources\assets\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\js\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\less\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\libs\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\scriban\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -46,6 +58,8 @@
 
   <ItemGroup>
     <Folder Include="Forkdown" />
+    <Folder Include="Resources\assets" />
+    <Folder Include="Resources\scriban" />
   </ItemGroup>
 
 </Project>

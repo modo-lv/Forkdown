@@ -3,11 +3,15 @@
 body, table, input {
   font-family: 'Baloo 2', 'Tahoma', sans-serif;
   font-size: @font-size;
-  line-height: 1.1em;
 }
 
 strong {
   font-weight: 600;
+}
+
+.fd--paragraph {
+  display: flex;
+  align-items: baseline;
 }
 
 p {
@@ -50,7 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 @corners: 0.5rem;
 @border: 1px solid silver;
 
-.fd--reserved-label {
+.fd--meta-label {
   min-width: 1.4rem;
   vertical-align: middle;
   text-align: center;

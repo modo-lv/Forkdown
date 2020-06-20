@@ -1,0 +1,18 @@
+
+<div {{ attrs $1 "fd--paragraph" }}>
+{{- if ($1.Kind != "Normal") -}}
+<span class="fd--meta-label">{{ case $1.Kind
+when "X" 
+}}🔎{{
+when "Warning"
+}}⚠️{{
+when "Info"
+}}ℹ️{{
+end }}</span>
+{{- end -}}
+
+{{ labels $1 | html.escape }}
+<p>
+{{ subs $1 }}
+</p>
+</div>

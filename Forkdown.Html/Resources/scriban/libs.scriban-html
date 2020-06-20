@@ -1,0 +1,8 @@
+{{-
+for lib in [ "jquery", "localforage", "popper", "tippy" ]
+}}<script src="{{ PathToRoot }}/libs/{{ lib }}.min.js" defer></script>{{
+end
+-}}
+<link rel="stylesheet" href="{{ PathToRoot }}/libs/normalize.css" />
+
+<link rel="stylesheet" href="{{ PathToRoot }}/libs/tippy/themes/light.css" />

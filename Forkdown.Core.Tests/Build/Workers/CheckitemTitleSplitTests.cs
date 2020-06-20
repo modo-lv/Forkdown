@@ -14,6 +14,7 @@ New line";
       var result = new MainBuilder().AddWorker<CheckitemTitleSplitWorker>().Build(input);
       var li = result.FirstSub<ListItem>();
       li.Subs.Count.Should().Be(2);
+      li.Subs[1].As<Paragraph>().IsTitle.Should().BeTrue();
     }
   }
 }

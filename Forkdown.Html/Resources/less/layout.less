@@ -5,10 +5,12 @@
 @shadow: 1px 1px 0px 0px rgba(0,0,0,0.5);
 @width: 100%;
 @body-padding: 0.25rem;
+@li-bullet: calc(1.25rem + @body-padding);
 
 * {
   box-sizing: border-box;
 }
+
 
 body {
   margin: 0;
@@ -25,7 +27,7 @@ body {
   height: calc(100vh - (@body-padding * 2));
   box-shadow: @shadow;
   border-radius: @border-radius;
-  border: @border;
+  border-right: @border;
   width: @width;
   max-width: 1000px;
 
@@ -35,7 +37,7 @@ body {
   }
   
   & > header {
-    border-bottom: @separator;
+    //border-bottom: @separator;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(238,238,238,1) 100%);
@@ -57,8 +59,7 @@ body {
 
 main {
   background-color: #EEE;
-  border-top: none;
-  border-bottom: none;
+  border-left: @border;
   overflow: auto;
   padding: @inner-padding;
   position: relative;

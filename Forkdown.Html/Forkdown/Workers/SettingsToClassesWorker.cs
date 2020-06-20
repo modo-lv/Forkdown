@@ -6,7 +6,7 @@ using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
 
-namespace Forkdown.Html.Main.Build {
+namespace Forkdown.Html.Forkdown.Workers {
   /// <summary>
   /// Decorates an element with CSS classes according to its settings. 
   /// </summary>
@@ -23,8 +23,11 @@ namespace Forkdown.Html.Main.Build {
       }
 
       switch (element) {
-        case Paragraph p when p.Kind != ParagraphKind.Normal:
-          p.Attributes.Classes.Add($"{Globals.Prefix}{p.Kind.ToString().ToLowerInvariant()}");
+        case Paragraph p:
+          if (p.Kind != ParagraphKind.Normal)
+            p.Attributes.Classes.Add($"{Globals.Prefix}{p.Kind.ToString().ToLowerInvariant()}");
+          if (p.IsTitle)
+            p.Attributes.Classes.Add($"{Globals.Prefix}title");
           break;
         case Listing l when l.IsChecklist:
           l.Attributes.Classes.Add($"{Globals.Prefix}checklist");

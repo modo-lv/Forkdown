@@ -3,6 +3,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="UTF-8" />
 
+  {{ include 'libs' }}
+
   <link rel="stylesheet" href="{{ PathToRoot }}/main.css?{{ Timestamp }}" />
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -18,7 +20,7 @@
 
   {{
   for script in Scripts 
-    if (script | string.ends_with "layout.js" )
+    if (script | string.ends_with "layout.js") || (script | string.ends_with "menu.js")
       }}<script src="{{ PathToRoot }}/{{ script }}?{{ Timestamp }}"></script>{{
     else
       }}<script src="{{ PathToRoot }}/{{ script }}?{{ Timestamp }}" defer></script>{{
@@ -26,4 +28,5 @@
   end
   }}
   <script>ForkdownLayout.hideMain()</script>
+  <script>ForkdownMenu.hideMain()</script>
 </head>

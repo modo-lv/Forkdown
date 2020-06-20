@@ -1,0 +1,74 @@
+.body > header {
+  @color: silver;
+  @border:
+    1px 0 0 0 @color, 
+    0 1px 0 0 @color, 
+    1px 1px 0 0 @color,
+    1px 0 0 0 @color inset, 
+    0 1px 0 0 @color inset;
+
+
+  max-height: calc(100vh * 0.25);
+  display: flex;
+  flex-direction: row-reverse;
+  line-height: normal;
+
+  h1 {
+    border: 1px solid @color;
+    border-right: 0;
+    border-left: 0;
+  }
+  
+  nav {
+    display: flex;
+    align-self: stretch;
+    flex-grow: 1;
+    li {
+      overflow-x: hidden;
+      font-weight: normal;
+      flex-grow: 1;
+    }
+
+    .tippy-box[data-theme~="menu"] {
+      background-color: white;
+      font-size: inherit;
+      color: inherit;
+      border: 1px solid silver;
+      border-radius: 0.25rem;
+    }
+
+    & > ul {
+      flex-grow: 1;
+      display: flex;
+      overflow: auto;
+      flex-wrap: wrap;
+      border-bottom: 1px solid silver;
+      border-right: 1px solid silver;
+      //padding-right: 1px;
+      //padding-bottom: 1px;
+      & > li {
+        padding: 0 0.25rem;
+        box-shadow: @border;
+        font-weight: bold;
+        & > .fd--paragraph > p { cursor: pointer; }
+        &:first-child {
+          border-top-left-radius: 0.5rem;
+        }
+        &.fd--scripted {
+          flex-grow: 1;
+          display: flex;
+          //justify-content: center;
+        }
+      }
+    }
+  }
+
+  ul {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+    & ul {
+      padding-left: 1.5rem;
+    }
+  }
+}

@@ -18,7 +18,7 @@ namespace Forkdown.Html {
     /// Location of files for HTML output.
     /// </summary>
     public static readonly Path InPath =
-      Path.Get(Assembly.GetExecutingAssembly().Location).Parent().Combine("Resources/Output");
+      Path.Get(Assembly.GetExecutingAssembly().Location).Parent().Combine("Resources");
 
     public const String OutFolder = "out-html";
 

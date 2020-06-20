@@ -27,7 +27,7 @@ namespace Forkdown.Html.Main {
       _logger = logger;
       _jsBuilder = jsBuilder;
       
-      _inPath = Program.InPath.Combine("html");
+      _inPath = Program.InPath.Combine("scriban");
       _outPath = _project.PathTo(Program.OutFolder);
     }
     

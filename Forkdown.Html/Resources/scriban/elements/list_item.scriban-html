@@ -1,0 +1,17 @@
+
+<li {{ attrs $1 }}>
+{{ global_anchor $1 }}
+
+<div class="fd--bullet">
+{{ if ($1.IsCheckitem) -}}
+  <input type="checkbox" id="{{ $1.CheckboxId }}" />
+{{- end }}
+</div>
+<div class="fd--content">
+  <div class="fd--meta"></div>
+  <div class="fd--main">
+    {{- subs $1 -}}
+  </div>
+</div>
+
+</li>

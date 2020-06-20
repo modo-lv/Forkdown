@@ -4,7 +4,7 @@ using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
 
-namespace Forkdown.Html.Main.Build {
+namespace Forkdown.Html.Forkdown.Workers {
   /// <summary>
   /// Change internal link keyword targets to the corresponding HTML files.
   /// </summary>
