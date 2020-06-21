@@ -26,6 +26,7 @@ class ForkdownLayout {
       .then(ForkdownLayout.showMain)
       .then(this.focusAnchor)
     $(window).on("resize", this.processMasonry)
+    $(window).on("hashchange", window.tippy.hideAll)
     $(window).on("hashchange", this.focusAnchor)
   }
 

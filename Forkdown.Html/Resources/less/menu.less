@@ -28,15 +28,7 @@
       font-weight: normal;
       flex-grow: 1;
     }
-
-    .tippy-box[data-theme~="menu"] {
-      background-color: white;
-      font-size: inherit;
-      color: inherit;
-      border: 1px solid silver;
-      border-radius: 0.25rem;
-    }
-
+    
     & > ul {
       flex-grow: 1;
       display: flex;
@@ -47,7 +39,11 @@
       //padding-right: 1px;
       //padding-bottom: 1px;
       & > li {
-        padding: 0 0.25rem;
+        @padding: 0.4rem;
+        padding: 0 @padding;
+        .tippy-box {
+          margin-left: @padding;
+        }
         box-shadow: @border;
         font-weight: bold;
         & > .fd--paragraph > p { cursor: pointer; }

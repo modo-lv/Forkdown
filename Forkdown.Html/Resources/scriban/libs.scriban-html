@@ -5,4 +5,4 @@ end
 -}}
 <link rel="stylesheet" href="{{ PathToRoot }}/libs/normalize.css" />
 
-<link rel="stylesheet" href="{{ PathToRoot }}/libs/tippy/themes/light.css" />
+<link rel="stylesheet" href="{{ PathToRoot }}/libs/tippy/themes/light-border.css" />

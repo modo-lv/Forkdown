@@ -48,12 +48,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-
-
-@focus-color: white;
-@corners: 0.5rem;
-@border: 1px solid silver;
-
 .fd--meta-label {
   min-width: 1.4rem;
   vertical-align: middle;
@@ -61,24 +55,6 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block;
 }
 
-.fd--x.fd--ready {
-  position: absolute;
-  background-color: @focus-color;
-  z-index: 1;
-  border-radius: @corners;
-  border: @border;
-  padding: 0.25rem;
-}
-
-.fd--x-button {
-  cursor: pointer;
-}
-
-p:first-child, h1, h2, h3, h4, h5, h6 {
-  & > .fd--x-button {
-    font-size: 1rem;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0;
-  }
+.tippy-box[data-theme~="light-border"] {
+  font-size: inherit;
 }

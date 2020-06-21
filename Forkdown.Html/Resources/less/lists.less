@@ -3,7 +3,6 @@
 @indent: calc(@checkbox-spacing + @checkbox-size);
 
 main {
-
   ul, ol {
     padding-left: 0;
     margin: 0;
@@ -38,8 +37,14 @@ main {
       align-items: baseline;
     }
 
-    .fd--meta .fd--x {
+    .fd--meta {
       cursor: help;
+      & > span {
+        width: 24px;
+        line-height: 24px;
+        text-align: center;
+        display: inline-block;
+      }
     }
   }
 

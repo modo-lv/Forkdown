@@ -17,11 +17,12 @@ class ForkdownMenu {
         content: content,
         allowHTML: true,
         interactive: true,
-        trigger: 'click',
-        theme: 'menu',
+        trigger: 'click mouseenter focus',
+        theme: 'light-border',
         arrow: false,
         offset: [0, 0],
-        placement: 'bottom-start'
+        placement: 'bottom-start',
+        triggerTarget: $(li).find("p").get()
       })
     })
 
