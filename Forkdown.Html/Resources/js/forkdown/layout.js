@@ -18,7 +18,7 @@ class ForkdownLayout {
       column.remove()
     }
     { // Wrap columns in divs
-      let items = $("article.fd--columns > [role='main'] > *, section.fd--columns > *, main.fd--columns > *")
+      let items = $("article.fd--columns > .fd--main > *, section.fd--columns > *, main.fd--columns > *")
       items.wrap("<div class='fd--column'></div>")
     }
 
@@ -52,7 +52,7 @@ class ForkdownLayout {
    * @returns {Promise}
    */
   processMasonry = () =>
-    this.processMasonryColumns($(".fd--columns, .fd--columns > [role=main]").children(".fd--column").get())
+    this.processMasonryColumns($(".fd--columns, .fd--columns > .fd--main").children(".fd--column").get().reverse())
 
   /**
    * @param {Array<HTMLElement>} columns
@@ -66,9 +66,9 @@ class ForkdownLayout {
 
     for (let a = 0; a < columns.length; a++) {
       let column = $(columns[a])
-      let grid = column.closest(".fd--columns > [role=main], .fd--columns");
+      let grid = column.closest(".fd--columns > .fd--main, .fd--columns");
       if (this.masonryIsOn()) {
-        grid.css("grid-auto-rows", "0.5rem")
+        grid.css("grid-auto-rows", ".5rem")
         let rowHeight = grid.css('grid-auto-rows').replace('px', '') * 1;
         let rowGap = grid.css('grid-row-gap').replace('px', '') * 1;
         if (Number.isNaN(rowGap))
@@ -89,8 +89,8 @@ class ForkdownLayout {
   /**
    * @returns {Boolean}
    */
-  masonryIsOn = () => 
-    $(window).width() > this.defaultColumnWidth * 2
+  masonryIsOn = () => true
+    //$(window).width() > this.defaultColumnWidth * 2
 
 
    /**

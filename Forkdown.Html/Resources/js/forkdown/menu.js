@@ -22,7 +22,8 @@ class ForkdownMenu {
         arrow: false,
         offset: [0, 0],
         placement: 'bottom-start',
-        triggerTarget: $(li).find("p").get()
+        triggerTarget: $(li).find("p").get(),
+        maxWidth: 'none',
       })
     })
 

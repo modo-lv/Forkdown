@@ -12,6 +12,7 @@ let menu = new ForkdownMenu();
 let meta = new ForkdownMetaText();
 
 main.init()
+  .then(meta.init)
   .then(checklists.init)
   .then(menu.init)
   .then(layout.init);

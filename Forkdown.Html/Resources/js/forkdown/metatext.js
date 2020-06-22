@@ -2,53 +2,36 @@
 
 class ForkdownMetaText {
   init = () => {
+    let meta = cssClass => {
+      let metas = $("." + cssClass)
+      let icon = metas.first().children(".fd--meta-label").text()
+      metas.each((i, meta) => {
+        let main = $(meta).closest(".fd--main")
+        if (main.parent().is("article")) {
+          if (!$(meta).hasClass("fd--x"))
+            return;
+          main = main.parent().find("header").first()
+        }
+        else
+          main = main.find(".fd--paragraph > p").first()
+        let button = $("<span>").addClass(cssClass).addClass("fd--meta").html(icon)
+        let content = $(meta).find("p").html()
 
-    /*
-    // Find all X paragraphs
-    this.xs = $("p.fd--x")
-
-    // Find the symbol
-    this.label = this.xs.children().first().text()
-
-    this.xs.each((i, x) => {
-      $(x).children().first().remove(); // Remove the icon from the text
-      $(x).hide()
-      $(x).addClass("fd--ready")
-
-      let button = $("<p>" + this.label + "</p>").addClass("fd--x-button")
-      button.on("click", (e) => {
-        e.stopPropagation();
-        ForkdownMetaText.hideAll();
-        console.log(e.target, $(e.target).offset(), $(e.target).position(), $(e.target).outerHeight(), )
-        let top = $(e.target).position().top + $(e.target).outerHeight(true) + $("main").scrollTop()
-        let left = $(e.target).closest("article").position().left;
-        let width = $(e.target).closest("article").outerWidth()
-        $(x).show().css({
-          "top": top + "px",
-          "left": left + "px",
-          "width": width + "px"
-        }).addClass("fd--open");
+        main.append(button)
+        $(meta).remove();
+  
+        window.tippy(button.get(), {
+          content: content,
+          allowHTML: true,
+          interactive: true,
+          placement: 'bottom-start',
+          theme: 'light-border',
+          trigger: 'click' + (cssClass == "fd--info" ? ' mouseenter focus' : ''),
+          maxWidth: 'none',
+        })
       })
-
-      if ($(x).parent().hasClass("fd--content"))
-        $(x).closest(".fd--content").find("p:first-child").prepend(button)
-      else if ($(x).parent().is("li"))
-        $(x).parent().children("p:first-child").prepend(button);
-      else if ($(x).parent().is("div[role='main']"))
-        $(x).closest("article").find("header > *").append(button);
-      else
-        $(x).parent().append(button)
-    })
-
-    $("body").on("click", ForkdownMetaText.hideAll)
-    $(document).on("keyup", (e) => {
-      if (e.keyCode == 27) // Escape
-        ForkdownMetaText.hideAll()
-    })
-    */
-  }
-
-  static hideAll() {
-    //$("p.fd--x").removeClass("fd--open").hide()
+    }
+    meta("fd--x")
+    meta("fd--info")   
   }
 }

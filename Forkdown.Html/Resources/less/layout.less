@@ -22,6 +22,7 @@ body {
 }
 
 .body {
+  margin: 0 0.1rem; // Prevent menu Tippy from getting pushed around on smaller screens.
   display: grid;
   grid-template-rows: min-content 1fr min-content;
   height: calc(100vh - (@body-padding * 2));
@@ -61,7 +62,7 @@ main {
   background-color: #EEE;
   border-left: @border;
   overflow: auto;
-  padding: @inner-padding;
+  padding: 0 @inner-padding;
   position: relative;
   &:focus {
     outline-width: 0;
@@ -72,26 +73,27 @@ article:focus {
   outline: none;
 }
 
+@fd--default-column-width: 340px;
 @min-col-width: @fd--default-column-width;
 @min-col-width-small: calc((@fd--default-column-width / 2) - (@inner-padding));
 
 .fd--column { min-width: @min-col-width; }
 
 .fd--columns {
-  section&, main&, article& > [role="main"] {
+  section&, main&, article& > .fd--main {
     display: grid;
-    grid-row-gap: 0.75rem;
+    //grid-row-gap: 0.1rem;
     grid-column-gap: @inner-padding;
     grid-template-rows: max-content;
   }
 }
 
 .fd--columns {
-  section&, main&, article& > [role="main"] {
+  section&, main&, article& > .fd--main {
     grid-template-columns: repeat(auto-fit, minmax(@min-col-width, 1fr));
   }      
   &.fd--small {
-    section&, main&, article& > [role="main"] {
+    section&, main&, article& > .fd--main {
       grid-template-columns: repeat(auto-fit, minmax(@min-col-width-small, 1fr));
       & > .fd--column {
         min-width: @min-col-width-small;

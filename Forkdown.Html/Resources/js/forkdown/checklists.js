@@ -37,29 +37,6 @@ class ForkdownChecklists {
       })
     })
 
-    // Meta
-    let meta = cssClass => {
-      let metas = $("." + cssClass + ".fd--title")
-      let icon = metas.first().children(".fd--meta-label").text()
-      metas.each((i, meta) => {
-        let button = $("<span>").addClass(cssClass).html(icon)
-        let content = $(meta).find("p").html()
-        $(meta).closest(".fd--content").find(".fd--meta").first().append(button)
-        $(meta).hide();
-  
-        window.tippy(button.get(), {
-          content: content,
-          allowHTML: true,
-          interactive: true,
-          placement: 'bottom-start',
-          theme: 'light-border',
-          trigger: cssClass == "fd--x" ? 'click' : 'mouseenter focus',
-        })
-      })
-    }
-    meta("fd--x")
-    meta("fd--info")
-
     resolve();
   })
 

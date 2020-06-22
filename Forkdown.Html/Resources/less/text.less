@@ -11,7 +11,7 @@ strong {
 
 .fd--paragraph {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
 }
 
 p {
@@ -26,15 +26,33 @@ a[href] {
   }
 }
 
+.fd--labels {
+  display: inline-block;
+}
+
 .fd--label {
   margin-right: 0.25em;
-  font-family: monospace;
-  font-size: 10pt;
+  font-size: 80%;
   background-color: silver;
   padding: 0.1em 0.25em;
   border-radius: 5px;
-  vertical-align: bottom;
+  vertical-align: sub;
 }
+
+.fd--meta {
+  cursor: help;
+  width: 24px;
+  line-height: 24px;
+  text-align: center;
+  display: inline-block;
+}
+
+article > header {
+  h1, h2, h3, h4, h5, h6 {
+    display: inline-block;
+  }
+}
+
 
 h1, h2, h3, h4, h5, h6 {
   .fd--label {
@@ -46,7 +64,6 @@ h1, h2, h3, h4, h5, h6 {
 .fd--global_anchor {
   display: none;
 }
-
 
 .fd--meta-label {
   min-width: 1.4rem;
