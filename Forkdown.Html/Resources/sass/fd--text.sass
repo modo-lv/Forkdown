@@ -1,0 +1,77 @@
+$font-size: 13pt
+
+body, table, input 
+  font-family: 'Baloo 2', 'Tahoma', sans-serif
+  font-size: $font-size
+
+
+strong 
+  font-weight: 600
+
+
+.fd--paragraph 
+  display: flex
+  align-items: flex-start
+
+
+p 
+  margin: 0.2rem 0
+
+
+a[href] 
+  text-decoration-line: none
+  color: mediumblue
+  &.fd--internal 
+    color: green
+  
+
+
+.fd--labels 
+  display: inline-block
+
+
+.fd--label 
+  margin-right: 0.25em
+  font-size: 80%
+  background-color: silver
+  padding: 0.1em 0.25em
+  border-radius: 5px
+  vertical-align: sub
+
+
+.fd--meta 
+  cursor: help
+  width: 24px
+  line-height: 24px
+  text-align: center
+  display: inline-block
+
+
+article > header 
+  h1, h2, h3, h4, h5, h6 
+    display: inline-block
+  
+
+
+
+h1, h2, h3, h4, h5, h6 
+  .fd--label 
+    margin-right: 0
+    margin-left: 0.25rem
+  
+
+
+.fd--global_anchor 
+  display: none
+
+
+.fd--meta-label 
+  min-width: 1.4rem
+  vertical-align: middle
+  text-align: center
+  display: inline-block
+
+
+.tippy-box[data-theme~="light-border"] 
+  font-size: inherit
+

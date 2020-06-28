@@ -9,18 +9,18 @@ namespace Forkdown.Html.Main {
   public class HtmlProject {
     private readonly Project _project;
     private readonly JsBuilder _jsBuilder;
-    private readonly CssBuilder _cssBuilder;
     private readonly HtmlBuilder _htmlBuilder;
     private readonly AssetBuilder _assetBuilder;
+    private readonly SassBuilder _sassBuilder;
 
     /// <inheritdoc cref="HtmlProject" />
-    public HtmlProject(Project project, ILogger<HtmlProject> logger, JsBuilder jsBuilder, CssBuilder cssBuilder,
-      HtmlBuilder htmlBuilder, AssetBuilder assetBuilder) {
+    public HtmlProject(Project project, ILogger<HtmlProject> logger, JsBuilder jsBuilder,
+      HtmlBuilder htmlBuilder, AssetBuilder assetBuilder, SassBuilder sassBuilder) {
       _project = project;
       _jsBuilder = jsBuilder;
-      _cssBuilder = cssBuilder;
       _htmlBuilder = htmlBuilder;
       _assetBuilder = assetBuilder;
+      _sassBuilder = sassBuilder;
     }
 
     /// <summary>
@@ -36,8 +36,9 @@ namespace Forkdown.Html.Main {
 
       _assetBuilder.Build();
       _htmlBuilder.Build(layout);
+      _sassBuilder.Build();
       _jsBuilder.Build();
-      _cssBuilder.Build();
+      //_cssBuilder.Build();
 
       return this;
     }

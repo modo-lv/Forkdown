@@ -22,7 +22,7 @@ namespace Forkdown.Html.Wiring {
       svc.AddScoped<HtmlProject>();
       svc.AddScoped<HtmlBuilder>();
       svc.AddScoped<JsBuilder>();
-      svc.AddScoped<CssBuilder>();
+      svc.AddScoped<SassBuilder>();
     };
   }
 }

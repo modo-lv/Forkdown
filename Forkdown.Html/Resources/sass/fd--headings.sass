@@ -1,0 +1,28 @@
+$heading-font: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif
+
+h1, h2, h3, h4, h5, h6 
+  margin: 0
+  font-weight: bold
+  font-family: $heading-font
+
+
+.body > header * 
+  font-family: $heading-font
+
+
+.body > header h1  
+  font-size: 2rem 
+  padding-top: 0
+
+
+@mixin heading($level)
+  $increase: 0.17rem
+  $spacing-increase: 0.2rem
+  $heading-size: 1.1rem
+  
+  h#{$level}
+    font-size: calc(#{$heading-size} + (6 - #{$level}) * #{$increase})
+    padding-top: calc(0.5rem + (6 - #{$level}) * #{$spacing-increase})
+
+@for $h from 1 through 6
+  @include heading($h)
