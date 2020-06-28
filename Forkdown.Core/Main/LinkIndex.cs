@@ -23,7 +23,8 @@ namespace Forkdown.Core {
     public void Add(KeyValuePair<String, Document> item) {
       item = InternalLink(item);
       if (this.ContainsKey(item.Key))
-        throw new DuplicateAnchorException();
+        throw new DuplicateAnchorException($"Cannot add anchor {item.Key} from {item.Value.ProjectFileId} since it" +
+                                           $" already exists in {this[item.Key].ProjectFileId}");
       if (item.Key.NotBlank())
         this._.Add(item);
     }

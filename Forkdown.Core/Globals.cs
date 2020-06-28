@@ -11,11 +11,6 @@ namespace Forkdown.Core {
     public const String Prefix = "fd--";
 
     /// <summary>
-    /// Key in <see cref="Element.Data"/> where HTML attributes are stored. 
-    /// </summary>
-    public const String HtmlDataKey = "HtmlAttributes";
-    
-    /// <summary>
     /// Convert a string to a valid global ID.
     /// </summary>
     /// <param name="input">String to convert.</param>
