@@ -11,6 +11,15 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build.Workers {
   public class ArticleTests {
     [Fact]
+    void ListItemBecomesArticle() {
+      const String input = @"* Heading";
+      var result = new MainBuilder().AddWorker<ArticleWorker>().Build(input);
+      var article = result.FirstSub<Article>();
+      article.Title.Should().Be("Heading");
+    }
+    
+    
+    [Fact]
     void CopyAttributes() {
       const String input = @"# Heading {#id .class property=value}";
       var result = new MainBuilder().AddWorker<ArticleWorker>().Build(input);
@@ -55,7 +64,7 @@ Paragraph";
       doc.Subs.Count.Should().Be(1);
       var article = (Article) doc.Subs[0];
       article.Title.Should().Be("Heading");
-      article.Subs[1].As<Paragraph>().Title.Should().Be("Paragraph");
+      article.FirstSub<Paragraph>().Title.Should().Be("Paragraph");
     }
   }
 }

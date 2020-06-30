@@ -21,7 +21,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
         .Build(input);
       result.FirstSub<Link>().Target.Should().Be("Link");
     }
-    
+
     [Fact]
     void ExternalLinksWithIndex() {
       const String input = @"[Link]";
@@ -36,7 +36,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
     void ExplicitExternalTitle() {
       const String input = @"# [External](@)";
       var result = MainBuilder.CreateDefault().Build(input)
-        .Subs[0] // Article
+        .FirstSub<Article>()
         .Subs[0] // Header
         .Subs[0] // Heading
         .Subs[0].As<Link>(); // Link

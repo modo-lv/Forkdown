@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements;
+using Forkdown.Core.Elements.Types;
 
 namespace Forkdown.Core.Build.Workers {
   /// <summary>
@@ -9,9 +10,26 @@ namespace Forkdown.Core.Build.Workers {
   public class ArticleWorker : Worker {
 
     public override T ProcessElement<T>(T element, Arguments args) {
-      if (element is Header)
+      if (element is Article || element is Header)
         return element;
 
+      // List item
+      if (element is ListItem li) {
+        var heading = li.Subs.FirstOrDefault();
+        if (heading is BlockContainer)
+          heading = null;
+
+        if (heading != null)
+          li.Subs.RemoveAt(0);
+
+        li.Subs = new List<Element> {
+          new Article(heading).AddSubs(li.Subs.ToArray())
+        };
+
+        return element;
+      }
+
+      // Heading
       Article? article = null;
       Heading? lastHeading = null;
       IEnumerable<Element> subs = element.Subs;
@@ -49,6 +67,6 @@ namespace Forkdown.Core.Build.Workers {
       element.Subs = newSubs;
       return element;
     }
-    
+
   }
 }

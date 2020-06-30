@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Elements.Types;
 using Simpler.NetCore.Collections;
@@ -25,7 +26,11 @@ namespace Forkdown.Core.Build.Workers {
         id = element.GlobalId;
       }
       else if (element is BlockContainer bc) {
-        id = element.Title.Replace(' ', W);
+        if (element is ListItem)
+          id = "";
+        else
+          id = element.Title.Replace(' ', W);
+        
         if (parentId.NotBlank())
           id = $"{parentId}{G}{id}";
         if (id.NotBlank())

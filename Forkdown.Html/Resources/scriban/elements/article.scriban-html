@@ -1,8 +1,5 @@
-
 <article {{ attrs $1 }}>
   {{ global_anchor $1 }}
-  <header>{{ subs $1.Subs[0] }}</header>
-  <div class="fd--main">
-    {{ $1.Subs | array.remove_at 0 | elements }}
-  </div>
+  <header>{{ subs $1.Header }}</header>
+  <div class="fd--main">{{ subs $1 }}</div>
 </article>
