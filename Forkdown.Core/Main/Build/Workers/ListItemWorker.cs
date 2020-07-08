@@ -4,7 +4,7 @@ using Forkdown.Core.Elements;
 namespace Forkdown.Core.Build.Workers {
   public class ListItemWorker : Worker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       switch (element) {
         case Listing list:
           args.Put(list.BulletChar);

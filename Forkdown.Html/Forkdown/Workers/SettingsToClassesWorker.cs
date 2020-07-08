@@ -13,7 +13,7 @@ namespace Forkdown.Html.Forkdown.Workers {
   public class SettingsToClassesWorker : Worker {
 
     /// <inheritdoc />
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       element.Attributes.Classes ??= new List<String>();
 
       if (element.Settings.ContainsKey("columns")) {

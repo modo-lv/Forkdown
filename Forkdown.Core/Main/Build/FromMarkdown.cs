@@ -47,7 +47,7 @@ namespace Forkdown.Core.Build {
         ListItemBlock _ => new ListItem(),
         ParagraphBlock p => new Paragraph(p),
         CustomContainer c => new ExplicitContainer(c),
-        CustomContainerInline _ => new ExplicitInlineContainer(),
+        CustomContainerInline c => new ExplicitInlineContainer(c),
         CodeInline c => new Code(c),
         FencedCodeBlock c => new CodeBlock(c),
         LinkInline l => new Link(l),

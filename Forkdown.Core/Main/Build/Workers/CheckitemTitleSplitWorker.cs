@@ -9,7 +9,7 @@ namespace Forkdown.Core.Build.Workers {
   /// Split the lines of a checkbox title into paragraphs.
   /// </summary>
   public class CheckitemTitleSplitWorker : Worker, IDocumentWorker {
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       if (element is ListItem li && li.Subs.FirstOrDefault() is Paragraph p) {
         if (p.Subs.Any(_ => _ is LineBreak)) {
           var pGroups = p.Subs.GroupAdjacent(_ => !(_ is LineBreak));

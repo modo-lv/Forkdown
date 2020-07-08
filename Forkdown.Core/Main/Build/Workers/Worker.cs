@@ -7,9 +7,9 @@ namespace Forkdown.Core.Build.Workers {
   public abstract class Worker {
     public MainBuilder? Builder = null;
 
-    public Result<T> Process<T>(T element, Arguments args) where T : Element =>
-      new Result<T>(this.ProcessElement(element, args), args);
+    public Result Process(Element element, Arguments args) =>
+      new Result(this.ProcessElement(element, args), args);
 
-    public abstract T ProcessElement<T>(T element, Arguments args) where T : Element;
+    public abstract Element ProcessElement(Element element, Arguments args);
   }
 }

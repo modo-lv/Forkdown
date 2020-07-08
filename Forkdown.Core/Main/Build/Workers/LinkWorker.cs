@@ -5,7 +5,7 @@ using Simpler.NetCore.Text;
 namespace Forkdown.Core.Build.Workers {
   public class LinkWorker : Worker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       if (element is Link link) {
         if (link.Target == "@") {
           link.Target = $"@{link.Title}";

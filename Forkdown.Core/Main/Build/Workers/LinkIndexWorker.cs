@@ -6,7 +6,7 @@ namespace Forkdown.Core.Build.Workers {
 
     private Document? _document;
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       if (element is Document doc)
         this._document = doc;
 

@@ -12,7 +12,7 @@ namespace Forkdown.Html.Forkdown.Workers {
     private LinkIndex _index => this.Builder!.Storage.Get<LinkIndex>();
 
     /// <inheritdoc />
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       if (element is Link link && link.IsInternal)
       {
         var target = Globals.Id(link.Target);

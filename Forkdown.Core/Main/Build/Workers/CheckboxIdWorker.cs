@@ -14,7 +14,7 @@ namespace Forkdown.Core.Build.Workers {
     
     private readonly IDictionary<String, Int32> _times = new Dictionary<String, Int32>();
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       String parentId = args.Get();
 
       var id = parentId;

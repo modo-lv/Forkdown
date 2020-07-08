@@ -3,7 +3,7 @@
 namespace Forkdown.Core.Build.Workers {
   public class DocumentWorker : Worker, IDocumentWorker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       if (element is Document doc &&
           doc.Subs.Count > 0 &&
           doc.Subs[0] is Paragraph par &&

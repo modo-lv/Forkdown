@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
   public class GlobalIdWorker : Worker, IProjectWorker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       if (element.Attributes.Id.NotBlank()) {
         var ids = element.Attributes.Id.Split(',', StringSplitOptions.RemoveEmptyEntries);
 

@@ -9,7 +9,7 @@ namespace Forkdown.Core.Build.Workers {
   /// </summary>
   public class ArticleWorker : Worker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       if (element is Article || element is Header)
         return element;
 

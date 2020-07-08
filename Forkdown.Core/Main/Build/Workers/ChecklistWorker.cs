@@ -4,7 +4,7 @@ using Forkdown.Core.Elements;
 namespace Forkdown.Core.Build.Workers {
   public class ChecklistWorker : Worker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       var inChecklist = args.Get<Boolean>();
       
       if (element is ListItem item) {

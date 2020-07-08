@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Forkdown.Core.Elements;
 using Forkdown.Core.Elements.Attributes;
 using Simpler.NetCore.Text;
 
@@ -8,7 +9,7 @@ namespace Forkdown.Core.Build.Workers {
   /// </summary>
   public class SettingsWorker : Worker, IDocumentWorker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       var html = element.Attributes;
       if (html.Properties != null) {
         // ReSharper disable once RedundantCast
