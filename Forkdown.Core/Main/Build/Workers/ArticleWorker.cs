@@ -15,7 +15,7 @@ namespace Forkdown.Core.Build.Workers {
 
       // List item
       if (element is ListItem li) {
-        var heading = li.Subs.FirstOrDefault();
+        Element? heading = li.Subs.FirstOrDefault();
         if (heading is BlockContainer)
           heading = null;
 
