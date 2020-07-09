@@ -11,6 +11,22 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build.Workers {
   public class ArticleTests {
     [Fact]
+    void MultipleHeadingsBecomeArticles() {
+      const String input = @"# Altar Cave
+Paragraph.
+## Enemies
+### Level 1
+* [Carbuncle]()";
+
+      var result = new MainBuilder().AddWorker<ArticleWorker>().Build(input);
+      result
+        .FirstSub<Article>()
+        .FirstSub<Article>()
+        .FirstSub<Article>()
+        .FirstSub<ListItem>().Title.Should().Be("Carbuncle");
+    }
+    
+    [Fact]
     void ListItemBecomesArticle() {
       const String input = @"* Heading";
       var result = new MainBuilder().AddWorker<ArticleWorker>().Build(input);

@@ -10,7 +10,7 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build.Workers {
   public class LinkIndexTests {
     private readonly MainBuilder _builder = new MainBuilder()
-      .AddWorker<GlobalIdWorker>()
+      .AddWorker<ExplicitIdWorker>()
       .AddWorker<LinkIndexWorker>();
 
     [Fact]
@@ -29,7 +29,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
       links.Count.Should().Be(2);
       links["id"].Should().Be(doc);
       links["class"].Should().Be(doc);
-      doc.Subs[0].GlobalId.Should().Be("id");
+      doc.Subs[0].ExplicitId.Should().Be("id");
     }
     
     [Fact]
@@ -52,8 +52,8 @@ namespace Forkdown.Core.Tests.Build.Workers {
 Paragraph {#pAnchor}
 ";
       var doc = _builder.Build(input);
-      doc.FirstSub<Heading>().GlobalId.Should().Be("h-anchor");
-      doc.FirstSub<Paragraph>()!.GlobalId.Should().Be("panchor");
+      doc.FirstSub<Heading>().ExplicitId.Should().Be("h-anchor");
+      doc.FirstSub<Paragraph>()!.ExplicitId.Should().Be("panchor");
       var anchors = _builder.Storage.Get<LinkIndex>();
 
       anchors.Count.Should().Be(2);

@@ -22,14 +22,11 @@ namespace Forkdown.Core.Build.Workers {
       if (element is Document dEl) {
         id = dEl.ProjectFileId;
       }
-      else if (element.GlobalId.NotBlank()) {
-        id = element.GlobalId;
+      else if (element.ExplicitId.NotBlank()) {
+        id = element.ExplicitId;
       }
-      else if (element is BlockContainer bc) {
-        if (element is ListItem)
-          id = "";
-        else
-          id = element.Title.Replace(' ', W);
+      else if (element is Article) {
+        id = element.Title.Replace(' ', W);
         
         if (parentId.NotBlank())
           id = $"{parentId}{G}{id}";
@@ -37,13 +34,11 @@ namespace Forkdown.Core.Build.Workers {
           _times[id] = _times.GetOr(id, 0) + 1;
         if (_times.GetOr(id, 0) > 1)
           id += $"{R}{_times[id]}";
-        bc.CheckboxId = id;
+        element.ImplicitId = id;
       }
 
       args.Put(id);
       return element;
     }
-
-
   }
 }

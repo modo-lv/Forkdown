@@ -11,8 +11,6 @@ namespace Forkdown.Core.Build.Workers {
           break;
         case ListItem li: {
           li.BulletChar = args.GetOr('*');
-          if (li.Subs.FirstOrDefault() is Paragraph par)
-            par.MoveAttributesTo(li);
           break;
         }
       }

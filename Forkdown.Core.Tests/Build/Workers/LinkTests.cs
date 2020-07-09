@@ -15,7 +15,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
       const String input = @"[Link] {#link}";
       var config = new BuildConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
       var result = new MainBuilder { Config = config }
-        .AddWorker<GlobalIdWorker>()
+        .AddWorker<ExplicitIdWorker>()
         .AddWorker<LinkIndexWorker>()
         .AddWorker<LinkWorker>()
         .Build(input);

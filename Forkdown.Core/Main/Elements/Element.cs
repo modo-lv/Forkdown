@@ -5,6 +5,7 @@ using Forkdown.Core.Elements.Attributes;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Simpler.NetCore.Collections;
+using Simpler.NetCore.Text;
 
 // ReSharper disable NotAccessedField.Global
 
@@ -30,6 +31,11 @@ namespace Forkdown.Core.Elements {
     public Boolean IsCheckItem => this.CheckItem != null;
 
     /// <summary>
+    /// Element's project-unique identifier, either implicit or explicit.
+    /// </summary>
+    public String GlobalId => this.ExplicitId.NonBlank(this.ImplicitId)!;
+
+    /// <summary>
     /// ID calculated from the item's (including its parents') <see cref="Title"/> and location in the document. 
     /// </summary>
     public String ImplicitId = "";
@@ -37,11 +43,12 @@ namespace Forkdown.Core.Elements {
     /// <summary>
     /// Main identifier that is unique within the project. 
     /// </summary>
-    public String GlobalId => this.GlobalIds.FirstOrDefault() ?? "";
+    public String ExplicitId => this.ExplicitIds.FirstOrDefault() ?? "";
+    
     /// <summary>
     /// All project-unique identifiers for this element. 
     /// </summary>
-    public IList<String> GlobalIds = Nil.LStr;
+    public IList<String> ExplicitIds = Nil.LStr;
 
     
     
@@ -78,10 +85,10 @@ namespace Forkdown.Core.Elements {
     public void MoveAttributesTo(Element element) {
       element.Attributes = this.Attributes;
       element.Settings = this.Settings;
-      element.GlobalIds = this.GlobalIds;
+      element.ExplicitIds = this.ExplicitIds;
       this.Attributes = new HtmlAttributes();
       this.Settings = new ElementSettings();
-      this.GlobalIds = Nil.LStr;
+      this.ExplicitIds = Nil.LStr;
     }
   }
 }

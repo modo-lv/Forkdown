@@ -11,7 +11,7 @@ namespace Forkdown.Core.Build.Workers {
         this._document = doc;
 
       var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new LinkIndex());
-      element.GlobalIds.ForEach(_ =>
+      element.ExplicitIds.ForEach(_ =>
         index.Add(_, this._document!)
       );
       

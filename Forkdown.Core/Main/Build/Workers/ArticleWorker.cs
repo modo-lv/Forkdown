@@ -10,8 +10,10 @@ namespace Forkdown.Core.Build.Workers {
   public class ArticleWorker : Worker {
 
     public override Element ProcessElement(Element element, Arguments args) {
-      if (element is Article || element is Header)
-        return element;
+      { // Article headers can't contain other articles
+        if (element is Header)
+          return element;
+      }
 
       // List item
       if (element is ListItem li) {

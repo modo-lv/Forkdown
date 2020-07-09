@@ -5,7 +5,7 @@ namespace Forkdown.Core.Build {
     public static MainBuilder CreateDefault() => new MainBuilder()
       .AddWorker<CheckitemTitleSplitWorker>()
       .AddWorker<LabelWorker>()
-      .AddWorker<GlobalIdWorker>()
+      .AddWorker<ExplicitIdWorker>()
       .AddWorker<LinkIndexWorker>()
 
       .AddWorker<SettingsWorker>()
