@@ -1,5 +1,5 @@
 <article {{ attrs $1 }}>
   {{ global_anchor $1 }}
   <header>{{ subs $1.Header }}</header>
-  <div class="fd--main">{{ subs $1 }}</div>
+  <div class="fd--main">{{ elements $1.Contents }}</div>
 </article>

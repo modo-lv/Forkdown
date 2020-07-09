@@ -9,7 +9,7 @@ class ForkdownChecklists {
     this.main = main
   }
 
-  
+
   /**
    * 
    */
