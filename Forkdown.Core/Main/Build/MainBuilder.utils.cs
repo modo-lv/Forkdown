@@ -14,8 +14,8 @@ namespace Forkdown.Core.Build {
       .AddWorker<ArticleWorker>()
       .AddWorker<ReservedLabelsWorker>()
       .AddWorker<ListItemWorker>()
-      .AddWorker<ChecklistWorker>()
-      .AddWorker<CheckboxIdWorker>()
+      .AddWorker<ImplicitIdWorker>()
+      .AddWorker<CheckItemWorker>()
       .AddWorker<LinkWorker>();
   }
 }

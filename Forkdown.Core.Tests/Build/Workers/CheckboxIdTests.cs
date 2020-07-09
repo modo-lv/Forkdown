@@ -11,7 +11,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
   public class CheckboxIdTests {
     private static MainBuilder _builder => new MainBuilder()
       .AddWorker<ArticleWorker>()
-      .AddWorker<CheckboxIdWorker>();
+      .AddWorker<ImplicitIdWorker>();
     
     [Fact]
     void ExplicitId() {
@@ -40,7 +40,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
         .FirstSub<Listing>()
         .FirstSub<Listing>()
         .FirstSub<ListItem>()
-        .CheckboxId.Should().Be($"x{CheckboxIdWorker.G}Sub");
+        .CheckboxId.Should().Be($"x{ImplicitIdWorker.G}Sub");
     }
 
 
@@ -66,8 +66,8 @@ namespace Forkdown.Core.Tests.Build.Workers {
       var result = _builder.Build(input);
       result.FindSub<ListItem>()!.CheckboxId.Should().Be(
         $"enemies" +
-        $"{CheckboxIdWorker.G}Level{CheckboxIdWorker.W}1" +
-        $"{CheckboxIdWorker.G}Carbuncle"
+        $"{ImplicitIdWorker.G}Level{ImplicitIdWorker.W}1" +
+        $"{ImplicitIdWorker.G}Carbuncle"
       );
     }
 
@@ -98,10 +98,10 @@ namespace Forkdown.Core.Tests.Build.Workers {
 
       var result = _builder.Build(input);
       result.FindSub<ListItem>()!.CheckboxId.Should().Be(
-        $"The{CheckboxIdWorker.W}Floating{CheckboxIdWorker.W}Continent" +
-        $"{CheckboxIdWorker.G}Mainland" +
-        $"{CheckboxIdWorker.G}Northeast" +
-        $"{CheckboxIdWorker.G}Killer{CheckboxIdWorker.W}Bee"
+        $"The{ImplicitIdWorker.W}Floating{ImplicitIdWorker.W}Continent" +
+        $"{ImplicitIdWorker.G}Mainland" +
+        $"{ImplicitIdWorker.G}Northeast" +
+        $"{ImplicitIdWorker.G}Killer{ImplicitIdWorker.W}Bee"
       );
     }
 
@@ -116,7 +116,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
         .Subs[2] // 3rd item
         .As<ListItem>()
         .CheckboxId.Should()
-        .Be($"Heading{CheckboxIdWorker.W}One{CheckboxIdWorker.G}Item{CheckboxIdWorker.R}3");
+        .Be($"Heading{ImplicitIdWorker.W}One{ImplicitIdWorker.G}Item{ImplicitIdWorker.R}3");
     }
 
     [Fact]

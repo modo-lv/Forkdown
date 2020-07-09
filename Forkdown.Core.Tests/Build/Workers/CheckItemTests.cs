@@ -14,7 +14,7 @@ namespace Forkdown.Core.Tests.Build.Workers {
     void InlineCheckItem(Boolean isExplicit) {
       var input = isExplicit ? "::CheckItem::{:check}" : "::+ CheckItem::";
       var result = new MainBuilder().AddWorker<SettingsWorker>().AddWorker<CheckItemWorker>().Build(input);
-      result.FindSub<CheckItem>().Should().NotBeNull();
+      result.FirstSub<ExplicitInlineContainer>().IsCheckItem.Should().BeTrue();
     }
   }
 }

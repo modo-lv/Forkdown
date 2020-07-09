@@ -8,9 +8,7 @@ namespace Forkdown.Core.Elements {
   public class Listing : Element, Block {
 
     public Boolean IsOrdered;
-    
-    public Boolean IsChecklist = false;
-    
+
     public Char BulletChar;
 
     public Listing() { }

@@ -12,6 +12,9 @@ namespace Forkdown.Core.Elements {
   public abstract partial class Element {
     public IList<Element> Subs = Nil.L<Element>();
 
+    /// <summary>
+    /// The first line of the element's text content.
+    /// </summary>
     public virtual String Title => Element.TitleOf(this);
 
     public String Type => this.GetType().Name;
@@ -21,6 +24,15 @@ namespace Forkdown.Core.Elements {
     public HtmlAttributes Attributes = new HtmlAttributes();
 
     public ISet<String> Labels = Nil.SStr;
+
+    public CheckItemData? CheckItem = null;
+    
+    public Boolean IsCheckItem => this.CheckItem != null;
+
+    /// <summary>
+    /// ID calculated from the item's (including its parents') <see cref="Title"/> and location in the document. 
+    /// </summary>
+    public String ImplicitId = "";
 
     /// <summary>
     /// Main identifier that is unique within the project. 

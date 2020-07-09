@@ -7,7 +7,7 @@ using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
-  public class CheckboxIdWorker : Worker {
+  public class ImplicitIdWorker : Worker {
     public const Char G = '␝'; // Group separator
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
