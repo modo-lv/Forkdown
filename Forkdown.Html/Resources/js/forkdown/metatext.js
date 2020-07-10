@@ -6,14 +6,7 @@ class ForkdownMetaText {
       let metas = $("." + cssClass)
       let icon = metas.first().children(".fd--meta-label").text()
       metas.each((i, meta) => {
-        let main = $(meta).closest(".fd--main")
-        if (main.parent().is("article")) {
-          if (!$(meta).hasClass("fd--x"))
-            return;
-          main = main.parent().find("header").first()
-        }
-        else
-          main = main.find(".fd--paragraph > p").first()
+        let main = $(meta).closest("article").children("header").first().find("p").first()
         let button = $("<span>").addClass(cssClass).addClass("fd--meta").html(icon)
         let content = $(meta).find("p").html()
 
