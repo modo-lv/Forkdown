@@ -5,7 +5,7 @@ namespace Forkdown.Core.Build {
     public static MainBuilder CreateDefault() => new MainBuilder()
       .AddWorker<CheckitemTitleSplitWorker>()
       .AddWorker<LabelWorker>()
-      .AddWorker<GlobalIdWorker>()
+      .AddWorker<ExplicitIdWorker>()
       .AddWorker<LinkIndexWorker>()
 
       .AddWorker<SettingsWorker>()
@@ -14,8 +14,8 @@ namespace Forkdown.Core.Build {
       .AddWorker<ArticleWorker>()
       .AddWorker<ReservedLabelsWorker>()
       .AddWorker<ListItemWorker>()
-      .AddWorker<ChecklistWorker>()
-      .AddWorker<CheckboxIdWorker>()
+      .AddWorker<ImplicitIdWorker>()
+      .AddWorker<CheckItemWorker>()
       .AddWorker<LinkWorker>();
   }
 }

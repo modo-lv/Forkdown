@@ -81,8 +81,8 @@ end -}}
 
 {{- func global_anchor
 
-if $0.GlobalId != ""
-  }}<a id="{{ $0.GlobalId }}" class="fd--global_anchor"></a>{{
+if $0.ExplicitId != ""
+  }}<a id="{{ $0.ExplicitId }}" class="fd--global_anchor"></a>{{
 end
 
 end -}}

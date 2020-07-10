@@ -1,0 +1,43 @@
+@media print {
+  $header-height: 2rem;
+  $footer-height: 2rem;
+
+  .body {
+    & > header {
+      & > nav > ul {
+        display: none;
+      }
+
+      h1 {
+        width: 100%;
+        text-align: center;
+        display: block;
+        height: $header-height;
+        border-left: 1px solid silver;
+        border-top-left-radius: 0.5rem;
+      }
+    }
+
+    & > footer {
+      height: $footer-height;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  main {
+    height: 100%;
+    overflow: visible;
+  }
+
+  a[href] {
+    color: black;
+    &.fd--internal {
+      color: black;
+    }
+  }
+
+  .fd--x {
+    font-size: 50%;
+  }
+}

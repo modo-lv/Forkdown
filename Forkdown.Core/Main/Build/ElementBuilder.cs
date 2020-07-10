@@ -5,7 +5,7 @@ using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build {
   public class ElementBuilder {
-    public static T Build<T>(T root, IList<Worker> workers, BuilderStorage arguments) where T : Element {
+    public static Element Build(Element root, IList<Worker> workers, BuilderStorage arguments) {
       arguments = new BuilderStorage(arguments);
       root = workers.Aggregate(root, (e, worker) => {
         var args = new Arguments(arguments.GetOrAdd(worker.GetType(), new Arguments()));

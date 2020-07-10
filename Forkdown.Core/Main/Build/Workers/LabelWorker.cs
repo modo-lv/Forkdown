@@ -7,7 +7,7 @@ using Simpler.NetCore.Text;
 namespace Forkdown.Core.Build.Workers {
   public class LabelWorker : Worker, IProjectWorker {
 
-    public override T ProcessElement<T>(T element, Arguments args) {
+    public override Element ProcessElement(Element element, Arguments args) {
       // Code labels
       if (element is Block && element.Subs.Any() && element.Subs[0] is Code labels) {
         element.Subs.RemoveAt(0);

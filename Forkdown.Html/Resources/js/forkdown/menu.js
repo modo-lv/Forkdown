@@ -36,7 +36,7 @@ class ForkdownMenu {
    * Use during page load to hide the layout shuffling as things are moved into masonry positions
    */
   static hideMain() {
-    ForkdownMenu.MenuHider.innerText = ForkdownMenu.MenuHider.innerText || "nav > ul > li > ul { display: none; }"
+    ForkdownMenu.MenuHider.innerText = ForkdownMenu.MenuHider.innerText || "nav > ul > li > article > .fd--main { display: none; }"
     document.head.appendChild(ForkdownMenu.MenuHider)
   }
 }

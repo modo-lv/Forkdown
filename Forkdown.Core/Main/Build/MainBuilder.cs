@@ -42,19 +42,19 @@ namespace Forkdown.Core.Build {
         if (wg.Key == typeof(IProjectWorker)) {
           documents = wg.Aggregate(documents, (docs, wType) =>
             docs.Select(doc =>
-              ElementBuilder.Build(doc, new[] { this.CreateWorker(wType) }, new BuilderStorage())
+              (Document)ElementBuilder.Build(doc, new[] { this.CreateWorker(wType) }, new BuilderStorage())
             ).ToList()
           );
         }
         else if (wg.Key == typeof(IDocumentWorker)) {
           documents = documents.Select(_ => wg.Aggregate(_, (doc, wType) =>
-            ElementBuilder.Build(doc, new[] { this.CreateWorker(wType) }, new BuilderStorage()))
+            (Document)ElementBuilder.Build(doc, new[] { this.CreateWorker(wType) }, new BuilderStorage()))
           ).ToList();
         }
         else {
           documents = documents.Select(doc => {
             var workers = wg.Select(this.CreateWorker).ToList();
-            return ElementBuilder.Build(doc, workers, new BuilderStorage());
+            return (Document)ElementBuilder.Build(doc, workers, new BuilderStorage());
           }).ToList();
         }
       });
