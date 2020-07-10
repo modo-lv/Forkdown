@@ -16,6 +16,7 @@ namespace Forkdown.Core.Build {
       .AddWorker<ListItemWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<CheckItemWorker>()
-      .AddWorker<LinkWorker>();
+      .AddWorker<LinkWorker>()
+      .AddWorker<SinglesIndexWorker>();
   }
 }

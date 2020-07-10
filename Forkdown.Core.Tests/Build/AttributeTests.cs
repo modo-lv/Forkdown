@@ -7,7 +7,7 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build.Workers {
+namespace Forkdown.Core.Tests.Build {
   public class AttributesTests {
     private static MainBuilder Builder => new MainBuilder()
       .AddWorker<SettingsWorker>()

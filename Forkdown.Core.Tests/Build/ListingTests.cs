@@ -4,7 +4,7 @@ using Forkdown.Core.Build;
 using Forkdown.Core.Elements;
 using Xunit;
 
-namespace Forkdown.Core.Tests.Build.Workers {
+namespace Forkdown.Core.Tests.Build {
   public class ListingTests {
     [Fact]
     void OrderedContainsUnordered() {

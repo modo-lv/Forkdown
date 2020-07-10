@@ -7,13 +7,20 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build.Workers {
+namespace Forkdown.Core.Tests.Build {
   public class ImplicitIdTests {
     private static MainBuilder _builder => new MainBuilder()
       .AddWorker<ExplicitIdWorker>()
       .AddWorker<ArticleWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<ImplicitIdWorker>();
+
+    [Fact]
+    void TrimSpaces() {
+      const String input = @"* Heading {something}";
+      var result = _builder.Build(input);
+      result.FirstSub<Article>().ImplicitId.Should().Be("Heading");
+    }
 
     [Fact]
     void ExplicitId() {

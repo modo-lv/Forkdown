@@ -5,7 +5,7 @@ using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
 using Xunit;
 
-namespace Forkdown.Core.Tests.Build.Workers {
+namespace Forkdown.Core.Tests.Build {
   public class CheckitemTitleSplitTests {
     [Fact]
     void KeepAllElements() {

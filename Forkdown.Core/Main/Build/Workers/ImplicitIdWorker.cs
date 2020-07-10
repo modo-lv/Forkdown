@@ -26,7 +26,7 @@ namespace Forkdown.Core.Build.Workers {
         id = element.ExplicitId;
       }
       else if (element is Article) {
-        id = element.Title.Replace(' ', W);
+        id = element.Title.Trim().Replace(' ', W);
         
         if (parentId.NotBlank())
           id = $"{parentId}{G}{id}";

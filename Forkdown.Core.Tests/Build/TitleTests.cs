@@ -5,7 +5,7 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build.Workers {
+namespace Forkdown.Core.Tests.Build {
   public class TitleTests {
     [Fact]
     void ListItemTitle() {
