@@ -16,12 +16,12 @@ h1, h2, h3, h4, h5, h6
 
 
 @mixin heading($level)
-  $increase: 0.17rem
+  $heading-size: 1.3rem
+  $size-increase: 0.1rem
   $spacing-increase: 0.2rem
-  $heading-size: 1.1rem
-  
+
   h#{$level}
-    font-size: calc(#{$heading-size} + (6 - #{$level}) * #{$increase})
+    font-size: calc(#{$heading-size} + (6 - #{$level}) * #{$size-increase})
     padding-top: calc(0.5rem + (6 - #{$level}) * #{$spacing-increase})
 
 @for $h from 1 through 6

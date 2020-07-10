@@ -1,4 +1,7 @@
-$font-size: 13pt
+$label-spacing: 0.25rem
+$label-min-width: calc(1.5rem + (#{$label-spacing} * 2))
+$line-height: 1.6rem
+$font-size-increase: 10%
 
 body, table, input 
   font-family: 'Baloo 2', 'Tahoma', sans-serif
@@ -11,11 +14,17 @@ strong
 
 .fd--paragraph 
   display: flex
-  align-items: flex-start
 
+main
+  li
+    header
+      font-size: calc(#{$font-size} + #{$font-size-increase})
+      & > .fd--paragraph > p
+        line-height: 1.6rem
 
 p 
-  margin: 0.2rem 0
+  margin: 0
+  align-self: center
 
 
 a[href] 
@@ -23,55 +32,56 @@ a[href]
   color: mediumblue
   &.fd--internal 
     color: green
-  
 
 
-.fd--labels 
-  display: inline-block
 
-
-.fd--label 
-  margin-right: 0.25em
+.fd--label
+  margin-right: $label-spacing
+  padding: 0 $label-spacing
   font-size: 80%
-  background-color: silver
-  padding: 0.1em 0.25em
-  border-radius: 5px
-  vertical-align: sub
+  background: gainsboro
+  border-radius: 0.25rem
+  display: inline-block
+  text-align: center
+  line-height: normal
+  &:first-of-type
+    min-width: $label-min-width
 
 
 .fd--meta 
   cursor: help
-  width: 24px
-  line-height: 24px
+  width: $line-height
+  line-height: $line-height
   text-align: center
   display: inline-block
 
 
-article > header 
-  h1, h2, h3, h4, h5, h6 
-    display: inline-block
-  
-
-
-
-h1, h2, h3, h4, h5, h6 
-  .fd--label 
-    margin-right: 0
-    margin-left: 0.25rem
-  
-
-
-.fd--global_anchor 
-  display: none
-
-
-.fd--meta-label 
-  min-width: 1.4rem
+.fd--meta-label
+  min-width: $label-min-width
   vertical-align: middle
   text-align: center
   display: inline-block
+  margin-right: $label-spacing
+  line-height: normal
+
+.fd--warning
+  background: rgba(255, 243, 205, 0.5)
+  border-radius: 0.25rem
 
 
 .tippy-box[data-theme~="light-border"] 
   font-size: inherit
 
+
+.fd--global_anchor
+  display: none
+
+
+article > header
+  h1, h2, h3, h4, h5, h6
+    display: inline-block
+
+h1, h2, h3, h4, h5, h6
+  .fd--label
+    margin-right: 0
+    margin-left: 0.25rem
