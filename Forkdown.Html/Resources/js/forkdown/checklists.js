@@ -24,16 +24,12 @@ class ForkdownChecklists {
         throw new Error("Checkbox without an ID")
       }
 
-      checkbox.prop("checked", (main.profile.checked || {})[id] || false)
+      checkbox.prop("checked", main.profile.isChecked(id))
       checkbox.on("change", async (e) => {
         let c = $(e.target)
         let id = c.prop("id")
-        if (c.prop("checked"))
-          main.profile.checked[id] = true
-        else if (id in main.profile.checked) {
-          delete main.profile.checked[id]
-        }
-        main.saveProfile()
+        main.profile.toggleCheck(id, c.prop("checked"))
+        await this.main.saveProfile()
       })
     })
 
