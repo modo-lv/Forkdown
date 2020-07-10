@@ -15,7 +15,7 @@ class ForkdownChecklists {
    */
   init = () => new Promise(resolve => {
     // CHECKBOXES
-    $(".fd--checkitem > .fd--bullet > input[type='checkbox']").each((i, c) => {
+    $(".fd--checkitem > .fd--bullet input[type='checkbox']").each((i, c) => {
       let checkbox = $(c)
       let main = this.main;
       let id = checkbox.prop("id")

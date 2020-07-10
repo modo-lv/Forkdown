@@ -1,0 +1,79 @@
+$checkbox-spacing: 0.2rem;
+$checkbox-size: 1.2rem;
+$indent: calc(#{$checkbox-spacing} + #{$checkbox-size});
+
+main {
+  ul, ol {
+    padding-left: 0;
+    margin: 0;
+    overflow: hidden;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+
+      & + li {
+        margin-top: 0.1rem;
+      }
+
+      & > li {
+        & > ul, & > ol {
+          margin-left: 1rem;
+        }
+
+        .fd--bullet {
+          min-height: $li-bullet;
+          min-width: $li-bullet;
+          height: $li-bullet;
+          width: $li-bullet;
+          text-align: center;
+
+          &::before {
+            content: '•';
+            font-size: 2rem;
+            line-height: $checkbox-size;
+          }
+        }
+      }
+    }
+  }
+}
+
+li.fd--checkitem {
+  & > .fd--bullet {
+    margin-top: 0;
+    padding-right: 0.1rem;
+
+    &::before {
+      content: none;
+    }
+
+    & > input {
+      @mixin appearance($val) {
+        appearance: $val;
+        -webkit-appearance: $val;
+        -moz-appearance: $val;
+        -ms-progress-appearance: $val;
+      }
+
+      @include appearance(none);
+      width: 1.5rem;
+      height: 1.5rem;
+      display: block;
+      margin: 0;
+      outline: none;
+      border: 2px solid black;
+      border-radius: 0.25rem;
+      background-size: cover;
+
+      &:checked {
+        border: none;
+        background-image: url("assets/icons/check.svg");
+      }
+
+      &.fd--single:checked {
+        background-image: url("assets/icons/check-bold.svg");
+      }
+    }
+  }
+}
