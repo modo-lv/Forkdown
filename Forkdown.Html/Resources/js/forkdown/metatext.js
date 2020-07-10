@@ -26,7 +26,7 @@ class ForkdownMetaText {
           interactive: true,
           placement: 'bottom-start',
           theme: 'light-border',
-          trigger: 'click' + (cssClass == "fd--info" ? ' mouseenter focus' : ''),
+          trigger: 'click' + (cssClass === "fd--info" ? ' mouseenter focus' : ''),
           maxWidth: 350,
         })
       })
