@@ -30,6 +30,8 @@ namespace Forkdown.Core.Elements {
     
     public virtual Boolean IsCheckItem => this.CheckItem != null;
 
+    public Boolean IsSingle;
+
     /// <summary>
     /// Element's project-unique identifier, either implicit or explicit.
     /// </summary>

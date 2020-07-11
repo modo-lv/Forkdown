@@ -3,7 +3,6 @@ using System.Linq;
 using FluentAssertions;
 using Forkdown.Core.Build;
 using Forkdown.Core.Build.Workers;
-using Simpler.NetCore.Collections;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -14,17 +13,33 @@ namespace Forkdown.Core.Tests.Build {
       .AddWorker<SettingsWorker>()
       .AddWorker<ArticleWorker>()
       .AddWorker<ImplicitIdWorker>()
+      .AddWorker<ListItemWorker>()
+      .AddWorker<CheckItemWorker>()
       .AddWorker<SinglesIndexWorker>();
+
+    [Fact]
+    void WithText() {
+      const String input = @"
++ {:single} General
+  :w Killing all the soldiers before the general will make him flee, making his [Bestiary] {:singles} entry unattainable until [next playthrough](NG+).
+";
+      var builder = MainBuilder.CreateDefault();
+      var test = FromMarkdown.ToForkdown(input);
+      var result = builder.Build(input);
+      var index = builder.Storage.Get<SinglesIndex>();
+
+      index.Should().ContainKey("general");
+    }
 
 
     [Fact]
     void Implicit() {
       const String input1 = @"# Heading {:singles}
-* One
-* Other";
++ One
++ Other";
       const String input2 = @"# Heading 2 {:singles}
-* One
-* Other";
++ One
++ Other";
 
       _builder.Build(input1);
       _builder.Build(input2);
@@ -43,8 +58,8 @@ namespace Forkdown.Core.Tests.Build {
 
     [Fact]
     void Basic() {
-      const String input1 = @"* Bob the Blob {:single}";
-      const String input2 = @"* Bob the Blob {:single}";
+      const String input1 = @"+ Bob the Blob {:single}";
+      const String input2 = @"+ Bob the Blob {:single}";
 
       _builder.Build(input1);
       _builder.Build(input2);

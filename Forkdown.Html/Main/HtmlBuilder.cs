@@ -4,6 +4,7 @@ using System.IO;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Scriban;
 using Scriban.Runtime;
 using Simpler.NetCore.Text;
@@ -26,17 +27,18 @@ namespace Forkdown.Html.Main {
       _project = project;
       _logger = logger;
       _jsBuilder = jsBuilder;
-      
+
       _inPath = Program.InPath.Combine("scriban");
       _outPath = _project.PathTo(Program.OutFolder);
     }
-    
+
     /// <summary>
     /// Load Scriban templates and build HTML.
     /// </summary>
     /// <param name="layout">Header, footer and other layout fragments.</param>
     public HtmlBuilder Build(IDictionary<String, Document?> layout) {
-      _logger.LogInformation($"Building {{h}} in {_project.PathTo(".").FullPathString()}/{{path}}...", "HTML", _outPath);
+      _logger.LogInformation($"Building {{h}} in {_project.PathTo(".").FullPathString()}/{{path}}...", "HTML",
+        _outPath);
 
       var start = DateTime.Now;
       var inFile = _inPath.Combine("page.scriban-html").FullPath;
@@ -44,11 +46,16 @@ namespace Forkdown.Html.Main {
         TemplateLoader = new ScribanTemplateLoader(_inPath),
         MemberRenamer = _ => _.Name
       };
+      
+      var json = new ScriptObject();
+      json.Import(typeof(Json), null, member => member.Name);
+      
       var model = new ScriptObject {
         { "Project", this._project },
 //        { "HtmlConfigJson", JsonConvert.SerializeObject(config) },
         { "Scripts", _jsBuilder.ScriptPaths },
         { "Timestamp", DateTime.Now.Ticks },
+        { "Json", json }
       };
       templateContext.PushGlobal(model);
       var template = Template.Parse(File.ReadAllText(inFile));
@@ -66,7 +73,7 @@ namespace Forkdown.Html.Main {
         var html = template.Render(templateContext);
         File.WriteAllText(outPath.ToString(), html);
       }
-      
+
       var elapsed = (DateTime.Now - start).TotalSeconds;
       _logger.LogInformation(
         "{pages} HTML page(s), including layout files, built in {s:0.00} seconds.",

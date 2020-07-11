@@ -17,11 +17,12 @@ namespace Forkdown.Core.Build.Workers {
             .Where(_ => _.Key)
             .Select(elements => (Element) new Paragraph {
               IsTitle = true,
-              Subs = elements.ToList()
+              Subs = elements.ToList(),
             });
 
           li.Subs.RemoveAt(0);
           li.Subs = li.Subs.Insert(tParas, 0).ToList();
+          li.Subs.First().Attributes = p.Attributes;
         }
         else {
           p.IsTitle = true;

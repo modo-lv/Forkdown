@@ -33,6 +33,8 @@ namespace Forkdown.Core {
     /// Index mapping anchors to the pages they are in. 
     /// </summary>
     public IDictionary<String, Document> InternalLinks = Nil.DStr<Document>();
+    
+    public SinglesIndex SinglesIndex = new SinglesIndex();
 
     private Boolean _initialized;
 
@@ -94,6 +96,7 @@ namespace Forkdown.Core {
           .Select(FromMarkdown.ToForkdown)
       ).ToList();
       this.InternalLinks = _builder.Storage.Get<LinkIndex>();
+      this.SinglesIndex = _builder.Storage.Get<SinglesIndex>();
 
       var elapsed = (DateTime.Now - start).TotalSeconds;
       _logger.LogInformation(

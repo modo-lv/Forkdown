@@ -8,8 +8,42 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build {
+namespace Forkdown.Core.Tests.Build.Basics {
   public class ArticleTests {
+    [Fact]
+    void FirstParagraphSettingsTransferred() {
+      const String input = @"
++ {:setting} First line
+  :w Some more lines
+";
+      var result = new MainBuilder()
+        //.AddWorker<CheckitemTitleSplitWorker>()
+        .AddWorker<SettingsWorker>()
+        .AddWorker<ArticleWorker>()
+        .Build(input);
+        /*
+        .AddWorker<CheckitemTitleSplitWorker>()
+        .AddWorker<LabelWorker>()
+        .AddWorker<ExplicitIdWorker>()
+        .AddWorker<LinkIndexWorker>()
+
+        .AddWorker<SettingsWorker>()
+        .AddWorker<DocumentWorker>()
+
+        .AddWorker<ArticleWorker>()
+        .AddWorker<ReservedLabelsWorker>()
+        .AddWorker<ListItemWorker>()
+        .AddWorker<ImplicitIdWorker>()
+        .AddWorker<CheckItemWorker>()
+        .AddWorker<LinkWorker>()
+        .AddWorker<SinglesIndexWorker>();
+        */
+
+      //var result = MainBuilder.CreateDefault().Build(input);
+      result.FirstSub<Article>().Settings.Should().ContainKey("setting");
+    }
+    
+    
     [Fact]
     void MultipleHeadingsBecomeArticles() {
       const String input = @"# Altar Cave
