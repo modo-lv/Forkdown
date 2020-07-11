@@ -32,6 +32,9 @@ class ForkdownChecklists {
         await this.main.saveProfile()
       })
     })
+    
+    // Singles
+    $("li > .fd--main > article.fd--single").closest("li").addClass("fd--single");
 
     resolve();
   })
