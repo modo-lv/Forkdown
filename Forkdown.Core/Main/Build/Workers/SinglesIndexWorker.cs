@@ -12,7 +12,12 @@ namespace Forkdown.Core.Build.Workers {
   public class SinglesIndexWorker : Worker, IProjectWorker {
 
     public override Element ProcessElement(Element element, Arguments args) {
-      if (element is Article && element.Settings.IsTrue("single")) {
+      var singles = args.Get<Boolean>();
+
+      var isSingle = element.Settings.IsTrue("single") ||
+                     singles && element.Settings.NotFalse("single");
+
+      if (element is Article && isSingle) {
         var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new SinglesIndex());
 
         if (element.ImplicitId.IsBlank())
@@ -21,6 +26,13 @@ namespace Forkdown.Core.Build.Workers {
         
         index.GetOrAdd(Globals.Id(element.Title), Nil.CStr).Add(element.GlobalId);
       }
+
+      if (element.Settings.IsTrue("singles"))
+        singles = true;
+      else if (singles && element.Settings.IsFalse("singles"))
+        singles = false;
+      
+      args.Put(singles);
 
       return element;
     }
