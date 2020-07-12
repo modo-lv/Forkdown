@@ -28,8 +28,7 @@ class ForkdownChecklists {
     )
 
     // CHECKBOXES
-    $(".fd--checkitem > .fd--bullet input[type='checkbox']").each((i, c) => {
-      let main = this.main
+    $(".fd--checkitem > .fd--bullet > input").each((i, c) => {
       let box = $(c)
       let id = box.prop("id")
       if (!id) {
@@ -39,26 +38,37 @@ class ForkdownChecklists {
 
       box.on("change", async () => {
         let checked = this.mark(id)
-        this.markSingles(id, checked);
+        if (box.hasClass("fd--single"))
+          this.markSingles(id, checked);
         await this.main.saveProfile()
       })
-      box.prop("checked", main.profile.isChecked(id))
+      box.prop("checked", this.main.profile.isChecked(id))
     })
 
     resolve();
   })
 
   mark = (id, on = null) => {
-    if (on != null)
-      $('#' + id).prop("checked", on);
+    let box = document.getElementById(id)
+    if (box) {
+      if (on != null) {
+        console.log("Marking " + box.id + " as checked: ", on)
+        $(box).prop("checked", on);
+      }
+      on = $(box).prop("checked") === true
+    }
+    console.log("Saving " + id + " as checked: ", on)
     this.main.profile.toggleCheck(id, on);
-    return $('#' + id).prop("checked")
+    return on
   }
 
   markSingles = (id, on) => {
-    let indexId = $("#" + id).data("fd--single-id")
+    let box = document.getElementById(id)
+    let indexId = $(box).data("fd--single-id")
     for (let a = 0; a < this.index[indexId].length; a++) {
       let boxId = this.index[indexId][a];
+      if (boxId === box.id)
+        continue
       this.mark(boxId, on)
     }
   }
