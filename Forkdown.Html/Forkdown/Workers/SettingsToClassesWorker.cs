@@ -22,9 +22,11 @@ namespace Forkdown.Html.Forkdown.Workers {
           element.Attributes.Classes.Add($"{Globals.Prefix}{element.Settings["columns"]}");
       }
 
-      if (element.IsSingle)
+      if (element.IsSingle) {
         element.Attributes.Classes.Add($"{Globals.Prefix}single");
-      
+        element.Attributes.AddProperty($"data-{Globals.Prefix}single-id", Globals.Id(element.Title));
+      }
+
       if (element.IsCheckItem) {
         element.Attributes.Classes.Add($"{Globals.Prefix}checkitem");
       }

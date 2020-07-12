@@ -70,9 +70,10 @@ li.fd--checkitem {
         border: none;
         background-image: url("assets/icons/check.svg");
       }
+
+      &.fd--single:checked {
+        background-image: url("assets/icons/check-bold.svg");
+      }
     }
-  }
-  &.fd--single > .fd--bullet > input:checked {
-    background-image: url("assets/icons/check-bold.svg");
   }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core {
@@ -16,6 +15,6 @@ namespace Forkdown.Core {
     /// <param name="input">String to convert.</param>
     /// <returns>A syntactically valid global ID.</returns>
     public static String Id(String input) =>
-      Regex.Replace(input.Text().Trim().Replace(" ", "_"), @"[^\w_-]", "").ToLowerInvariant();
+      Regex.Replace(input.Text().Trim(), @"\s", "_").ToLowerInvariant();
   }
 }
