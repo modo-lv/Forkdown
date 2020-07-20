@@ -52,12 +52,12 @@ class ForkdownChecklists {
     let box = document.getElementById(id)
     if (box) {
       if (on != null) {
-        console.log("Marking " + box.id + " as checked: ", on)
+        //console.log("Marking " + box.id + " as checked: ", on)
         $(box).prop("checked", on);
       }
       on = $(box).prop("checked") === true
     }
-    console.log("Saving " + id + " as checked: ", on)
+    //console.log("Saving " + id + " as checked: ", on)
     this.main.profile.toggleCheck(id, on);
     return on
   }

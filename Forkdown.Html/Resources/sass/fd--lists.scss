@@ -1,6 +1,6 @@
 $checkbox-spacing: 0.2rem;
 $checkbox-size: 1.2rem;
-$indent: calc(#{$checkbox-spacing} + #{$checkbox-size});
+$indent: calc(#{$checkbox-size} + (#{$checkbox-spacing} * 2));
 
 main {
   ul, ol {
@@ -12,6 +12,10 @@ main {
       display: flex;
       align-items: flex-start;
 
+      & > .fd--main {
+        align-self: center;
+      }
+
       & + li {
         margin-top: 0.1rem;
       }
@@ -20,24 +24,25 @@ main {
         & > ul, & > ol {
           margin-left: 1rem;
         }
+      }
 
-        .fd--bullet {
-          min-height: $li-bullet;
-          min-width: $li-bullet;
-          height: $li-bullet;
-          width: $li-bullet;
-          text-align: center;
+      .fd--bullet {
+        min-height: $indent;
+        min-width: $indent;
+        height: $indent;
+        width: $indent;
+        text-align: center;
 
-          &::before {
-            content: '•';
-            font-size: 2rem;
-            line-height: $checkbox-size;
-          }
+        &::before {
+          content: '•';
+          font-size: 1.5rem;
+          line-height: $indent;
         }
       }
     }
   }
 }
+
 
 li.fd--checkitem {
   & > .fd--bullet {

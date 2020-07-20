@@ -3,10 +3,22 @@ $label-min-width: calc(1.5rem + (#{$label-spacing} * 2))
 $line-height: 1.6rem
 $font-size-increase: 10%
 
-body, table, input 
-  font-family: 'Baloo 2', 'Tahoma', sans-serif
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&display=swap')
+
+body, table, input, header .tippy-box
+  //font-family: 'Baloo 2', 'Tahoma', sans-serif
+  font-family: 'Roboto Condensed', sans-serif
+
+html, body, table, input
   font-size: $font-size
 
+.tippy-box
+  font-size: inherit
+  line-height: inherit
+
+main article > header .tippy-box
+  font-size: $font-size
+  font-weight: normal
 
 strong 
   font-weight: 600
@@ -15,14 +27,8 @@ strong
 .fd--paragraph 
   display: flex
 
-main
-  li
-    header
-      font-size: calc(#{$font-size} + #{$font-size-increase})
-      & > .fd--paragraph > p
-        line-height: 1.6rem
 
-p 
+p
   margin: 0
   align-self: center
 
@@ -33,13 +39,11 @@ a[href]
   &.fd--internal 
     color: green
 
-
-
 .fd--label
   margin-right: $label-spacing
-  padding: 0 $label-spacing
-  font-size: 80%
-  background: gainsboro
+  padding: 0 $label-spacing 0.1em $label-spacing
+  //font-size: 80%
+  background: silver
   border-radius: 0.25rem
   display: inline-block
   text-align: center
@@ -67,10 +71,6 @@ a[href]
 .fd--warning
   background: rgba(255, 243, 205, 0.5)
   border-radius: 0.25rem
-
-
-.tippy-box[data-theme~="light-border"] 
-  font-size: inherit
 
 
 .fd--global_anchor
