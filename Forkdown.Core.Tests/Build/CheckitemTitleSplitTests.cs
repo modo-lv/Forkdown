@@ -13,7 +13,7 @@ namespace Forkdown.Core.Tests.Build {
 + {:setting} First line
   Some more lines
 ";
-      var result = new MainBuilder().AddWorker<CheckitemTitleSplitWorker>().AddWorker<SettingsWorker>().Build(input);
+      var result = new MainBuilder().AddWorker<LineBreakToParagraphWorker>().AddWorker<SettingsWorker>().Build(input);
       result.FirstSub<Paragraph>().Settings.Should().ContainKey("setting");
     }
     
@@ -21,7 +21,7 @@ namespace Forkdown.Core.Tests.Build {
     void KeepAllElements() {
       const String input = @"* Item
 New line";
-      var result = new MainBuilder().AddWorker<CheckitemTitleSplitWorker>().Build(input);
+      var result = new MainBuilder().AddWorker<LineBreakToParagraphWorker>().Build(input);
       var li = result.FirstSub<ListItem>();
       li.Subs.Count.Should().Be(2);
       li.Subs[1].As<Paragraph>().IsTitle.Should().BeTrue();

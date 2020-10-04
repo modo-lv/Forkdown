@@ -27,5 +27,9 @@ namespace Forkdown.Core.Elements.Attributes {
 
     public Boolean NotFalse(String setting) =>
       !this.IsFalse(setting);
+    
+    public Boolean HasStringValue(String setting) =>
+      !this.GetOr(setting, "").IsOneOf("true", "false", "");
+    
   }
 }

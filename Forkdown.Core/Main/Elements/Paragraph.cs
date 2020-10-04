@@ -4,7 +4,7 @@ using Block = Forkdown.Core.Elements.Types.Block;
 
 namespace Forkdown.Core.Elements {
   public enum ParagraphKind {
-    Normal, Info, Warning, X
+    Normal, Info, Warning, Help
   }
   
   public class Paragraph : Element, Block {

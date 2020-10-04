@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
@@ -16,15 +17,20 @@ namespace Forkdown.Core.Build.Workers {
       var singles = args.Get<Boolean>();
 
       if (element is Article && element.IsCheckItem) {
-        element.IsSingle = element.Settings.IsTrue("single") ||
-                           singles && element.Settings.NotFalse("single");
+        element.IsSingle = element.Settings.NotFalse("single") && (
+          singles || element.Settings.ContainsKey("single")
+        );
 
         if (element.IsSingle) {
           if (element.ImplicitId.IsBlank())
             throw new Exception("Can't build singleton index if elements don't have their IDs set. " +
                                 "Run explicit and implicit ID workers before singleton index builder.");
 
-          index.GetOrAdd(Globals.Id(element.Title), Nil.CStr).Add(element.GlobalId);
+          var singleIds = element.Settings.HasStringValue("single")
+            ? element.Settings["single"].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(_ => _.Trim())
+            : new[] { Globals.Id(element.Title) };
+          
+          singleIds.ForEach(_ => index.GetOrAdd(_, Nil.CStr).Add(element.GlobalId));
         }
 
       }

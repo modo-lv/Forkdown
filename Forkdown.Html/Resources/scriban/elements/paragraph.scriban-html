@@ -3,9 +3,9 @@
 {{- if ($1.Kind != "Normal") -}}
 <span class="fd--meta-label">{{ case $1.Kind
 when "X" 
-}}🔎{{
+}}❔{{
 when "Warning"
-}}⚠️{{
+}}❗{{
 when "Info"
 }}ℹ️{{
 end }}</span>

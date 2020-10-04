@@ -21,7 +21,8 @@ namespace Forkdown.Core.Tests.Markdown {
     
     [Fact]
     void Parse() {
-      const String input = @"x Item";
+      const String input = @"First line
+Second line";
       var result = MarkdownBuilder.DefaultBuild(input);
       result[0].Should().BeOfType<ListBlock>();
       result[0].As<ListBlock>()[0].Should().BeOfType<ListItemBlock>();

@@ -25,7 +25,7 @@ namespace Forkdown.Core.Build.Workers {
       // Implicit labels
       if (element is Paragraph p && p.Subs.FirstOrDefault() is Text tx && tx.Content.StartsWith(":")) {
         if (tx.Content.StartsWith(":x ") || tx.Content.StartsWith(": ")) {
-          p.Kind = ParagraphKind.X;
+          p.Kind = ParagraphKind.Help;
           tx.Content = tx.Content.TrimPrefix(":x").TrimPrefix(":").TrimStart();
         }
         else if (tx.Content.StartsWith(":i ")) {

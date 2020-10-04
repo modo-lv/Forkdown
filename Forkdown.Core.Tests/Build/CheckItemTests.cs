@@ -12,8 +12,8 @@ namespace Forkdown.Core.Tests.Build {
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    void InlineCheckItem(Boolean isExplicit) {
-      var input = isExplicit ? "::CheckItem::{:check}" : "::+ CheckItem::";
+    void CheckItem(Boolean vertical) {
+      var input = vertical ? "- CheckItem" : "+ CheckItem";
       var result = new MainBuilder().AddWorker<SettingsWorker>().AddWorker<CheckItemWorker>().Build(input);
       result.FirstSub<ExplicitInlineContainer>().IsCheckItem.Should().BeTrue();
     }

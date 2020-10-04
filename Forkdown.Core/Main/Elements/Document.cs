@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
+using Forkdown.Core.Elements.Types;
 using Simpler.NetCore.Text;
-using Block = Forkdown.Core.Elements.Types.Block;
 
 namespace Forkdown.Core.Elements {
-  public partial class Document : Element, Block {
+  public partial class Document : BlockContainer {
     /// <summary>
     /// Path of the file that this document was created from, relative to project root.
     /// </summary>

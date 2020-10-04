@@ -12,7 +12,7 @@ namespace Forkdown.Core.Build.Workers {
           par.Kind = ParagraphKind.Info;
         }
         else if (element.Labels.Contains("x")) {
-          par.Kind = ParagraphKind.X;
+          par.Kind = ParagraphKind.Help;
         }
         element.Labels.Remove("i");
         element.Labels.Remove("w");

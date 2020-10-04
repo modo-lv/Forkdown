@@ -18,6 +18,20 @@ namespace Forkdown.Core.Tests.Build {
       .AddWorker<SinglesIndexWorker>();
 
     [Fact]
+    void ExplicitId() {
+      const String input = @"
++ Item 1 {:single=both}
++ Item 2 {:single=both}";
+      _builder.Build(input);
+      var index = _builder.Storage.Get<SinglesIndex>();
+      var entry = index["both"];
+
+      entry.Count.Should().Be(2);
+      entry.Should().Contain("Item⸱1");
+      entry.Should().Contain("Item⸱2");
+    }
+
+    [Fact]
     void WithText() {
       const String input = @"
 + {:single} General

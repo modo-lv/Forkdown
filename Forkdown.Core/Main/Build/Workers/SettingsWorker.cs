@@ -16,7 +16,7 @@ namespace Forkdown.Core.Build.Workers {
         element.Settings = new ElementSettings(
           html.Properties
             .Where(_ => _.Key?.StartsWith(":") ?? false)
-            .ToDictionary(_ => _.Key.Part(1), _ => _.Value)
+            .ToDictionary(_ => _.Key.Part(1), _ => _.Value?.Trim() ?? "")
         );
 
         html.Properties.RemoveAll(_ => _.Key.StartsWith(":"));
