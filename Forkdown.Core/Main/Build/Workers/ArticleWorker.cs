@@ -16,6 +16,7 @@ namespace Forkdown.Core.Build.Workers {
       }
 
       // List item
+      /*
       if (element is ListItem li) {
         Element? heading = li.Subs.FirstOrDefault();
         if (heading is BlockContainer)
@@ -30,6 +31,7 @@ namespace Forkdown.Core.Build.Workers {
 
         return element;
       }
+      */
 
       // Heading
       Article? article = null;

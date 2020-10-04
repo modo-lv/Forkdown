@@ -19,7 +19,7 @@ namespace Forkdown.Core.Tests.Build {
     void TrimSpaces() {
       const String input = @"* Heading {something}";
       var result = _builder.Build(input);
-      result.FirstSub<Article>().ImplicitId.Should().Be("Heading");
+      result.FirstSub<ListItem>().ImplicitId.Should().Be("Heading");
     }
 
     [Fact]
@@ -35,9 +35,7 @@ namespace Forkdown.Core.Tests.Build {
       result
         .FirstSub<ListItem>()
         .FirstSub<ListItem>()
-        .FirstSub<ListItem>()
-        .FirstSub<Article>()
-        .ImplicitId.Should().Be($"xx{ImplicitIdWorker.G}Sub");
+        .FirstSub<ListItem>().ImplicitId.Should().Be($"xx{ImplicitIdWorker.G}Sub");
     }
 
 
@@ -54,7 +52,7 @@ Paragraph.
         .FirstSub<Article>()
         .FirstSub<Article>()
         .FirstSub<Article>()
-        .FirstSub<Article>().ImplicitId.Should().Be(
+        .FirstSub<ListItem>().ImplicitId.Should().Be(
           $"enemies" +
           $"{ImplicitIdWorker.G}Level{ImplicitIdWorker.W}1" +
           $"{ImplicitIdWorker.G}Carbuncle"
@@ -74,8 +72,7 @@ Paragraph
 
       var result = _builder.Build(input);
       result
-        .FirstSub<ListItem>()
-        .FirstSub<Article>().ImplicitId.Should().Be(
+        .FirstSub<ListItem>().ImplicitId.Should().Be(
           $"The{ImplicitIdWorker.W}Floating{ImplicitIdWorker.W}Continent" +
           $"{ImplicitIdWorker.G}Mainland" +
           $"{ImplicitIdWorker.G}Northeast" +
@@ -92,7 +89,6 @@ Paragraph
       _builder.Build(input)
         .FirstSub<Listing>()
         .Subs[2] // 3rd item
-        .FirstSub<Article>()
         .GlobalId.Should().Be($"Heading{ImplicitIdWorker.W}One{ImplicitIdWorker.G}Item{ImplicitIdWorker.R}3");
     }
 
@@ -104,8 +100,7 @@ Paragraph
       var doc = _builder.Build(input);
       doc
         .FirstSub<ListItem>()
-        .FirstSub<ListItem>()
-        .FirstSub<Article>().GlobalId.Should().Be("Heading⸱One␝Item⸱one␝Item⸱two");
+        .FirstSub<ListItem>().GlobalId.Should().Be("Heading⸱One␝Item⸱one␝Item⸱two");
     }
   }
 }

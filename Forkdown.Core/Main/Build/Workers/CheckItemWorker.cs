@@ -1,29 +1,28 @@
-﻿using System.Linq;
+﻿using System;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Elements.Attributes;
-using Simpler.NetCore;
 
 namespace Forkdown.Core.Build.Workers {
   /// <summary>
-  /// Mark elements that should have checkboxes.
-  ///
-  /// Run AFTER <see cref="ListItemWorker"/> to ensure that <see cref="ListItem.BulletChar"/> has been set. 
+  /// Convert appropriate list items into check items.
   /// </summary>
   public class CheckItemWorker : Worker {
 
     public override Element ProcessElement(Element element, Arguments args) {
-      // List item
-      if (element is ListItem li && li.BulletChar == '+') {
-        li.Subs.FirstOrDefault().IfNotNull(e => e!.CheckItem = new CheckItemData());
+      var inList = args.Get<Boolean>();
+
+      if (inList) {
+        if (element is ListItem li) {
+          element = new CheckItem(li);
+        }
+        else {
+          inList = false;
+        }
       }
-      // Explicit syntax
-      else if (element.Settings.IsTrue("check")) {
-        element.CheckItem = new CheckItemData();
+      if (element is Listing list && list.Kind == ListingKind.Checklist) {
+        inList = true;
       }
-      // Implicit syntax
-      else if (element is ExplicitInlineContainer c && c.Title.StartsWith("+ ")) {
-        element.CheckItem = new CheckItemData();
-      }
+
+      args.Put(inList);
       
       return element;
     }

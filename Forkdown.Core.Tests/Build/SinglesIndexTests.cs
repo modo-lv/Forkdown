@@ -3,6 +3,7 @@ using System.Linq;
 using FluentAssertions;
 using Forkdown.Core.Build;
 using Forkdown.Core.Build.Workers;
+using Forkdown.Core.Elements;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -10,8 +11,8 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build {
   public class SinglesIndexTests {
     private readonly MainBuilder _builder = new MainBuilder()
+      .AddWorker<ExplicitIdWorker>()
       .AddWorker<SettingsWorker>()
-      .AddWorker<ArticleWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<CheckItemWorker>()
@@ -35,7 +36,7 @@ namespace Forkdown.Core.Tests.Build {
     void WithText() {
       const String input = @"
 + {:single} General
-  :w Killing all the soldiers before the general will make him flee, making his [Bestiary] {:singles} entry unattainable until [next playthrough](NG+).
+  :w entry unattainable until [next playthrough](NG+).
 ";
       var builder = MainBuilder.CreateDefault();
       var test = FromMarkdown.ToForkdown(input);

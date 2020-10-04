@@ -11,40 +11,6 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build.Basics {
   public class ArticleTests {
     [Fact]
-    void FirstParagraphSettingsTransferred() {
-      const String input = @"
-+ {:setting} First line
-  :w Some more lines
-";
-      var result = new MainBuilder()
-        //.AddWorker<CheckitemTitleSplitWorker>()
-        .AddWorker<SettingsWorker>()
-        .AddWorker<ArticleWorker>()
-        .Build(input);
-        /*
-        .AddWorker<CheckitemTitleSplitWorker>()
-        .AddWorker<LabelWorker>()
-        .AddWorker<ExplicitIdWorker>()
-        .AddWorker<LinkIndexWorker>()
-
-        .AddWorker<SettingsWorker>()
-        .AddWorker<DocumentWorker>()
-
-        .AddWorker<ArticleWorker>()
-        .AddWorker<ReservedLabelsWorker>()
-        .AddWorker<ListItemWorker>()
-        .AddWorker<ImplicitIdWorker>()
-        .AddWorker<CheckItemWorker>()
-        .AddWorker<LinkWorker>()
-        .AddWorker<SinglesIndexWorker>();
-        */
-
-      //var result = MainBuilder.CreateDefault().Build(input);
-      result.FirstSub<Article>().Settings.Should().ContainKey("setting");
-    }
-    
-    
-    [Fact]
     void MultipleHeadingsBecomeArticles() {
       const String input = @"# Altar Cave
 Paragraph.
@@ -59,16 +25,8 @@ Paragraph.
         .FirstSub<Article>()
         .FirstSub<ListItem>().Title.Should().Be("Carbuncle");
     }
-    
-    [Fact]
-    void ListItemBecomesArticle() {
-      const String input = @"* Heading";
-      var result = new MainBuilder().AddWorker<ArticleWorker>().Build(input);
-      var article = result.FirstSub<Article>();
-      article.Title.Should().Be("Heading");
-    }
-    
-    
+
+
     [Fact]
     void CopyAttributes() {
       const String input = @"# Heading {#id .class property=value}";

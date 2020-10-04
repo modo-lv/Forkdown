@@ -3,20 +3,18 @@
 namespace Forkdown.Core.Build {
   public partial class MainBuilder {
     public static MainBuilder CreateDefault() => new MainBuilder()
-      .AddWorker<LineBreakToParagraphWorker>()
-      .AddWorker<LabelWorker>()
+      .AddWorker<LinesToParagraphsWorker>()
       .AddWorker<ExplicitIdWorker>()
       .AddWorker<LinkIndexWorker>()
-
       .AddWorker<SettingsWorker>()
       .AddWorker<DocumentWorker>()
-
       .AddWorker<ArticleWorker>()
-      .AddWorker<ReservedLabelsWorker>()
+      .AddWorker<SemanticParagraphWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<CheckItemWorker>()
       .AddWorker<LinkWorker>()
-      .AddWorker<SinglesIndexWorker>();
+      .AddWorker<SinglesIndexWorker>()
+      .AddWorker<LabelWorker>();
   }
 }

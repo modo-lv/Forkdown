@@ -2,6 +2,9 @@
 using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Build.Workers {
+  /// <summary>
+  /// Must be run after <see cref="ExplicitIdWorker"/>.
+  /// </summary>
   public class LinkIndexWorker : Worker, IProjectWorker {
 
     private Document? _document;

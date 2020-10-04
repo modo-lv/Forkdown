@@ -9,9 +9,6 @@ using Xunit;
 
 namespace Forkdown.Core.Tests.Build.Basics {
   public class ParagraphTests {
-    /// <summary>
-    /// 
-    /// </summary>
     [Fact]
     void LinesBecomeParagraphs() {
       const String input = @"First line.

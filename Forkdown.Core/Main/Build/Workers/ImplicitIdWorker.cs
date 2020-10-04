@@ -25,7 +25,7 @@ namespace Forkdown.Core.Build.Workers {
       else if (element.ExplicitId.NotBlank()) {
         id = element.ExplicitId;
       }
-      else if (element is Article) {
+      else if (element is Article || element is ListItem) {
         id = element.Title.Trim().Replace(' ', W);
         
         if (parentId.NotBlank())

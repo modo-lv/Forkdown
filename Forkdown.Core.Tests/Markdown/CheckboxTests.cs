@@ -11,21 +11,13 @@ namespace Forkdown.Core.Tests.Markdown {
     [Fact]
     void CheckList() {
       const String input = @"{.:class :one :other=false}
-* Test";
++ Test";
       var result = MarkdownBuilder.DefaultBuild(input);
       result[0].As<ListBlock>().GetAttributes().Classes.Should().Contain(":class");
       var props = result[0].As<ListBlock>().GetAttributes().Properties.ToDictionary();
       props[":one"].Should().Be(null);
       props[":other"].Should().Be("false");
     }
-    
-    [Fact]
-    void Parse() {
-      const String input = @"First line
-Second line";
-      var result = MarkdownBuilder.DefaultBuild(input);
-      result[0].Should().BeOfType<ListBlock>();
-      result[0].As<ListBlock>()[0].Should().BeOfType<ListItemBlock>();
-    }
+
   }
 }

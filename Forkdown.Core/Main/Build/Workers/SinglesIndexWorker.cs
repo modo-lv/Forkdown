@@ -16,7 +16,7 @@ namespace Forkdown.Core.Build.Workers {
       var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new SinglesIndex());
       var singles = args.Get<Boolean>();
 
-      if (element is Article && element.IsCheckItem) {
+      if (element is CheckItem) {
         element.IsSingle = element.Settings.NotFalse("single") && (
           singles || element.Settings.ContainsKey("single")
         );

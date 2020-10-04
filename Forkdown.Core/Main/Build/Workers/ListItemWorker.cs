@@ -5,14 +5,8 @@ namespace Forkdown.Core.Build.Workers {
   public class ListItemWorker : Worker {
 
     public override Element ProcessElement(Element element, Arguments args) {
-      switch (element) {
-        case Listing list:
-          args.Put(list.BulletChar);
-          break;
-        case ListItem li: {
-          li.BulletChar = args.GetOr('*');
-          break;
-        }
+      if (element is ListItem li && li.Subs.FirstOrDefault() is { } sub) {
+        sub.MoveAttributesTo(li);
       }
       return element;
     }

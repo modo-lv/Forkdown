@@ -16,15 +16,6 @@ namespace Forkdown.Core.Tests.Build {
       var result = new MainBuilder().AddWorker<LineBreakToParagraphWorker>().AddWorker<SettingsWorker>().Build(input);
       result.FirstSub<Paragraph>().Settings.Should().ContainKey("setting");
     }
-    
-    [Fact]
-    void KeepAllElements() {
-      const String input = @"* Item
-New line";
-      var result = new MainBuilder().AddWorker<LineBreakToParagraphWorker>().Build(input);
-      var li = result.FirstSub<ListItem>();
-      li.Subs.Count.Should().Be(2);
-      li.Subs[1].As<Paragraph>().IsTitle.Should().BeTrue();
-    }
+
   }
 }
