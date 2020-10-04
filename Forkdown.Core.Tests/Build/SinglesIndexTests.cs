@@ -13,6 +13,7 @@ namespace Forkdown.Core.Tests.Build {
     private readonly MainBuilder _builder = new MainBuilder()
       .AddWorker<ExplicitIdWorker>()
       .AddWorker<SettingsWorker>()
+      .AddWorker<ArticleWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<CheckItemWorker>()
@@ -56,7 +57,7 @@ namespace Forkdown.Core.Tests.Build {
 + One
 + Other";
 
-      _builder.Build(input1);
+      var result = _builder.Build(input1);
       _builder.Build(input2);
 
       var index = _builder.Storage.Get<SinglesIndex>();
