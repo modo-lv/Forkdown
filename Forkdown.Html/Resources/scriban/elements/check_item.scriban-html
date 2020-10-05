@@ -1,0 +1,18 @@
+{{-
+$class = "fd--checkitem"
+if ($1.IsNewline)
+  $class = $class + " fd--newline"
+end
+-}}
+<article {{ attrs $1 $class -}}>
+  <header>
+    <div class="fd--checkbox">
+      <input type="checkbox" id="{{ $1.GlobalId }}" />
+    </div>
+    <div class="fd--heading">{{- element $1.Heading -}}</div>
+    <div class="fd--help">{{- element $1.Help -}}</div>
+  </header>
+  <div class="fd--content">
+  {{ elements $1.Content }}
+  </div>
+</article>

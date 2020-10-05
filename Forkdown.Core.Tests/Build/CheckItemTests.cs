@@ -10,15 +10,21 @@ using Xunit;
 
 namespace Forkdown.Core.Tests.Build {
   public class CheckItemTests {
+    [Fact]
+    void CheckItemId() {
+      const String input = @"+ Whatever something";
+      var result = new MainBuilder().AddWorker<ImplicitIdWorker>().AddWorker<CheckItemWorker>().Build(input);
+      result.FirstSub<CheckItem>().GlobalId.Should().Be($"Whatever{ImplicitIdWorker.W}something");
+    }
+    
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
     void CheckItem(Boolean vertical) {
       var input = vertical ? "+ CheckItem" : "- CheckItem";
       var result = new MainBuilder().AddWorker<CheckItemWorker>().Build(input);
-      var checklist = result.FirstSub<Listing>();
-      checklist.IsVertical.Should().Be(vertical);
-      checklist.FirstSub<CheckItem>().Title.Should().Be("CheckItem");
+      result.FirstSub<CheckItem>().Title.Should().Be("CheckItem");
+      result.FirstSub<CheckItem>().IsNewline.Should().Be(vertical);
     }
 
     [Fact]

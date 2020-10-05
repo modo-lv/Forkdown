@@ -3,18 +3,28 @@
 class ForkdownMetaText {
   init = () => {
     let meta = cssClass => {
-      let metas = $("." + cssClass)
-      let icon = metas.first().children(".fd--meta-label").text()
+      let metas = $(".fd--paragraph." + cssClass)
       metas.each((i, meta) => {
-        let main = $(meta).closest("article").children("header").first().find("p, h1, h2, h3, h4, h5, h6").first()
-        let button = $("<span>").addClass(cssClass).addClass("fd--meta").html(icon)
-        let content = $(meta).find("p").html()
+        let button = $(meta).find(".fd--meta-label")
+        let content = $(meta).find("p")
+        let html = content.html()
 
-        main.append(button)
-        $(meta).remove();
+        // Move help button when in list item
+        let parent = $(meta).parent("li").find(".fd--paragraph").first()
+        if (parent.length > 0) {
+          parent.append(meta)
+        }
+        // Move info button when in checkitem
+        else if (cssClass === "fd--info") {
+          parent = $(meta).parent(".fd--content").parent(".fd--checkitem").find("header > .fd--help")
+          if (parent.length > 0)
+            parent.append(meta)
+        }
+        $(meta).replaceWith(button)
 
+        // Collapse to button
         window.tippy(button.get(), {
-          content: content,
+          content: html,
           allowHTML: true,
           interactive: true,
           placement: 'bottom-start',
@@ -24,7 +34,7 @@ class ForkdownMetaText {
         })
       })
     }
-    meta("fd--x")
+    meta("fd--help")
     meta("fd--info")
   }
 }

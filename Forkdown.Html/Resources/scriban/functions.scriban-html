@@ -6,6 +6,10 @@ include 'functions/attributes'
 
 {{- func element
 
+  if ($0 == null)
+    ret
+  end
+
   case $0.Type
     when 'Code'
       include 'elements/code' $0
@@ -23,6 +27,8 @@ include 'functions/attributes'
       include 'elements/article' $0
     when 'ListItem'
       include 'elements/list_item' $0
+    when 'CheckItem'
+      include 'elements/check_item' $0
     when 'Paragraph'
       include 'elements/paragraph' $0
     when 'Emphasis'
@@ -49,15 +55,9 @@ end -}}
 
 
 {{- func subs
-
-  $depth = depth
-  depth = depth + "  "
-  for sub in $0.Subs
-    element sub
-  end
-  depth = $depth
-
+  elements $0.Subs
 end -}}
+
 
 {{- func elements
 

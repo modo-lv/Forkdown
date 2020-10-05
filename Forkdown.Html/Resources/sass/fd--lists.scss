@@ -1,59 +1,66 @@
 $checkbox-spacing: 0.2rem;
 $checkbox-size: 1.2rem;
 $indent: calc(#{$checkbox-size} + (#{$checkbox-spacing} * 2));
+$border: 1px solid black;
 
-main {
-  ul, ol {
-    padding-left: 0;
-    margin: 0;
-    overflow: hidden;
-
-    li {
-      display: flex;
-      align-items: flex-start;
-
-      & > .fd--main {
-        align-self: center;
-      }
-
-      & + li {
-        margin-top: 0.1rem;
-      }
-
-      & > li {
-        & > ul, & > ol {
-          margin-left: 1rem;
-        }
-      }
-
-      .fd--bullet {
-        min-height: $indent;
-        min-width: $indent;
-        height: $indent;
-        width: $indent;
-        text-align: center;
-
-        &::before {
-          content: '•';
-          font-size: 1.5rem;
-          line-height: $indent;
-        }
-      }
-    }
+ul, ol {
+  &:not(.fd--checklist) {
+    padding-left: 1rem;
   }
 }
 
 
-li.fd--checkitem {
-  & > .fd--bullet {
-    margin-top: 0;
-    padding-right: 0.1rem;
+.fd--checkitem {
+  display: inline-flex;
+  flex-direction: column;
+  border: $border;
+  border-radius: 0.5rem;
+  margin: $checkbox-spacing $checkbox-spacing $checkbox-spacing 0;
 
-    &::before {
-      content: none;
+  &.fd--newline {
+    display: flex;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  .fd--content > .fd--paragraph:first-child {
+    border-top: $border;
+  }
+
+  header {
+    display: flex;
+
+    & > div {
+      padding: 0.1rem;
+      display: flex;
+      align-items: center;
     }
 
-    & > input {
+    .fd--heading {
+      border-left: $border;
+      flex-grow: 1;
+      padding-right: $checkbox-spacing;
+      padding-left: $checkbox-spacing;
+    }
+
+    & > .fd--help {
+      padding: 0;
+      align-items: stretch;
+
+      & > * {
+        padding: 0.1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      & > *:first-child {
+        border-left: $border;
+      }
+    }
+
+    .fd--checkbox > input {
       @mixin appearance($val) {
         appearance: $val;
         -webkit-appearance: $val;
@@ -62,12 +69,12 @@ li.fd--checkitem {
       }
 
       @include appearance(none);
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 1rem;
+      height: 1rem;
       display: block;
       margin: 0;
       outline: none;
-      border: 2px solid black;
+      border: 1px dashed black;
       border-radius: 0.25rem;
       background-size: cover;
 

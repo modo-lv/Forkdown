@@ -28,7 +28,7 @@ class ForkdownChecklists {
     )
 
     // CHECKBOXES
-    $(".fd--checkitem > .fd--bullet > input").each((i, c) => {
+    $(".fd--checkbox > input").each((i, c) => {
       let box = $(c)
       let id = box.prop("id")
       if (!id) {

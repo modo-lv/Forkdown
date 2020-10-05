@@ -15,6 +15,10 @@ namespace Forkdown.Core {
     /// <param name="input">String to convert.</param>
     /// <returns>A syntactically valid global ID.</returns>
     public static String Id(String input) =>
-      Regex.Replace(input.Text().Trim(), @"\s", "_").ToLowerInvariant();
+      Regex
+        .Replace(input.Text().Trim(), @"\s", "_")
+        .Replace("'", "_")
+        .Replace("\"", "_")
+        .ToLowerInvariant();
   }
 }

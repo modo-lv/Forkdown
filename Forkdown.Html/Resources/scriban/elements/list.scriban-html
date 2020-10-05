@@ -1,10 +1,10 @@
 {{-
-if $1.IsOrdered
+if $1.Kind == "Ordered"
   $tag = "ol"
 else
   $tag = "ul"
 end
 -}}
-<{{ $tag }} {{ attrs $1 }}>
+<{{- $tag }} {{ attrs $1 -}}>
 {{ subs $1 }}
-</{{ $tag }}>
+</{{- $tag -}}>

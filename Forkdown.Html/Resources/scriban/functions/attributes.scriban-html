@@ -17,8 +17,8 @@ end -}}
 
 
 {{- func attr_class
-   if ($0 != null && ($0 | array.size > 0)) || $extra_classes
-      ret "class=\"" + (array.add $0 $1 | array.join " " | string.strip | html.escape) + "\""
+   if ($0 != null && ($0 | array.size > 0)) || ($1 | string.size) > 0
+      ret "class=\"" + ((array.add $0 $1) | array.join " " | string.strip | html.escape) + "\""
    end
 end -}}
 

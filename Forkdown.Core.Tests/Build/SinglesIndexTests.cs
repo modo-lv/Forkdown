@@ -3,7 +3,6 @@ using System.Linq;
 using FluentAssertions;
 using Forkdown.Core.Build;
 using Forkdown.Core.Build.Workers;
-using Forkdown.Core.Elements;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers

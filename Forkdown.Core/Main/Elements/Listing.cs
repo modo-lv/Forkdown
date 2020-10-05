@@ -12,7 +12,7 @@ namespace Forkdown.Core.Elements {
   }
 
   public class Listing : Element, Block {
-    public ListingKind Kind = ListingKind.Unordered;
+    public readonly ListingKind Kind = ListingKind.Unordered;
 
     public Boolean IsVertical;
     public Boolean IsHorizontal { get => !IsVertical; set => IsVertical = !value; }

@@ -1,0 +1,87 @@
+$label-spacing: 0.25rem;
+$label-min-width: calc(1.5rem + (#{$label-spacing} * 2));
+$line-height: 1.6rem;
+$font-size-increase: 10%;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+body, table, input, header .tippy-box {
+  //font-family: 'Baloo 2', 'Tahoma', sans-serif
+  font-family: "Roboto Condensed", sans-serif
+}
+
+html, body, table, input {
+  font-size: $font-size;
+}
+
+.tippy-box {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+main article > header .tippy-box {
+  font-size: $font-size;
+  font-weight: normal;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.fd--paragraph {
+  display: flex;
+
+  &.fd--inline {
+    display: inline-flex;
+  }
+}
+
+
+p {
+  margin: 0;
+  align-self: center;
+}
+
+a[href] {
+  text-decoration-line: none;
+  color: mediumblue;
+
+  &.fd--internal {
+    color: green;
+  }
+}
+
+.fd--label {
+  margin-right: $label-spacing;
+  padding: 0 0.1em;
+  background: silver;
+  border-radius: 0.25rem;
+  display: inline-block;
+  text-align: center;
+}
+
+.fd--meta-label {
+  cursor: help;
+}
+
+.fd--warning {
+  background: rgba(255, 243, 205, 0.5);
+  border-radius: 0.25rem;
+}
+
+.fd--global_anchor {
+  display: none;
+}
+
+article > header {
+  h1, h2, h3, h4, h5, h6 {
+    display: inline-block;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  .fd--label {
+    margin-right: 0;
+    margin-left: 0.25rem;
+  }
+}

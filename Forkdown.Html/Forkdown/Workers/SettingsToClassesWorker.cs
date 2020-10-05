@@ -15,6 +15,9 @@ namespace Forkdown.Html.Forkdown.Workers {
     /// <inheritdoc />
     public override Element ProcessElement(Element element, Arguments args) {
       element.Attributes.Classes ??= new List<String>();
+      
+      if (element.Settings.IsTrue("-"))
+        element.Attributes.Classes.Add($"{Globals.Prefix}inline");
 
       if (element.Settings.ContainsKey("columns")) {
         element.Attributes.Classes.Add($"{Globals.Prefix}columns");

@@ -15,4 +15,4 @@ main.init()
   .then(meta.init)
   .then(checklists.init)
   .then(menu.init)
-  .then(layout.init);
+  .then(layout.init)

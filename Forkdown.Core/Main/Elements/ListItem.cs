@@ -5,6 +5,5 @@ namespace Forkdown.Core.Elements {
   public class ListItem : BlockContainer {
 
     public override Boolean IsCheckItem => this.FindSub<Article>()?.IsCheckItem ?? false;
-    public String CheckItemId => this.FindSub<Article>()?.GlobalId ?? "";
   }
 }

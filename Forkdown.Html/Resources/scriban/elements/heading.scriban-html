@@ -1,4 +1,4 @@
-{{depth}}<h {{- $1.Level -}}{{ attrs $1 -}}>
+<h {{- $1.Level}} {{ attrs $1 -}}>
 {{-
 subs $1 
 labels $1
