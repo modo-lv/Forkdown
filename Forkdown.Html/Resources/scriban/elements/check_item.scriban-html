@@ -4,15 +4,24 @@ if ($1.IsNewline)
   $class = $class + " fd--newline"
 end
 -}}
-<article {{ attrs $1 $class -}}>
-  <header>
-    <div class="fd--checkbox">
-      <input type="checkbox" id="{{ $1.GlobalId }}" />
-    </div>
-    <div class="fd--heading">{{- element $1.Heading -}}</div>
-    <div class="fd--help">{{- element $1.Help -}}</div>
-  </header>
-  <div class="fd--content">
-  {{ elements $1.Content }}
-  </div>
-</article>
+<table {{ attrs $1 $class -}}>
+  <thead>
+    <tr>
+      <th class="fd--checkbox">
+        <input type="checkbox" id="{{ $1.GlobalId }}" />
+      </th>
+      <th class="fd--heading">
+        {{ if ($1.GlobalId != "") }} <a id="{{- $1.GlobalId | html.escape -}}"></a> {{ end }}
+        {{- element $1.Heading -}}
+      </th>
+      <th class="fd--help fd--none"></th>
+    </tr>
+  </thead>
+  {{- if ($1.Content | array.size) > 0 -}}
+    <tbody>
+      <td class="fd--content" colspan="3">
+        {{ elements $1.Content }}
+      </td>
+    </tbody>
+  {{- end -}}
+</table>

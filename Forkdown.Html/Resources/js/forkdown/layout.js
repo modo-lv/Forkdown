@@ -34,7 +34,7 @@ class ForkdownLayout {
    * Scroll to and focus on the requested element, if any.
    */
   focusAnchor = () => {
-    let anchor = window.location.hash
+    let anchor = "[id='" + window.location.hash.substr(1) + "']"
     let main = $("main")
     if (anchor !== "") {
       let mainTop = main.offset().top
@@ -52,7 +52,7 @@ class ForkdownLayout {
    * @returns {Promise}
    */
   processMasonry = () =>
-    this.processMasonryColumns($(".fd--columns, .fd--columns > .fd--main").children(".fd--column").get().reverse())
+    this.processMasonryColumns($(".fd--columns, article.fd--columns > .fd--main").children(".fd--column").get())
 
   /**
    * @param {Array<HTMLElement>} columns
@@ -68,7 +68,7 @@ class ForkdownLayout {
       let column = $(columns[a])
       let grid = column.closest(".fd--columns > .fd--main, .fd--columns");
       if (this.masonryIsOn()) {
-        grid.css("grid-auto-rows", ".5rem")
+        grid.css("grid-auto-rows", "10px")
         let rowHeight = grid.css('grid-auto-rows').replace('px', '') * 1;
         let rowGap = grid.css('grid-row-gap').replace('px', '') * 1;
         if (Number.isNaN(rowGap))

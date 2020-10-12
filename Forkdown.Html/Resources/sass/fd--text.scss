@@ -17,6 +17,7 @@ html, body, table, input {
 .tippy-box {
   font-size: inherit;
   line-height: inherit;
+  white-space: normal;
 }
 
 main article > header .tippy-box {
@@ -44,7 +45,7 @@ p {
 
 a[href] {
   text-decoration-line: none;
-  color: mediumblue;
+  color: navy;
 
   &.fd--internal {
     color: green;

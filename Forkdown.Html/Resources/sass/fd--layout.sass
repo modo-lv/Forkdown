@@ -10,7 +10,8 @@ $li-bullet: calc(1.25rem + #{$body-padding})
 * 
   box-sizing: border-box
 
-
+.fd--none
+  display: none
 
 body 
   margin: 0
@@ -66,18 +67,17 @@ main
   position: relative
   &:focus 
     outline-width: 0
-  
 
 
-article:focus 
+article:focus
   outline: none
 
 
 $min-col-width: $globals--min-column-width
 $min-col-width-small: calc((#{$min-col-width} / 2) - #{$inner-padding})
 
-.fd--column 
-  min-width: $min-col-width 
+.fd--column
+  min-width: $min-col-width
 
 section.fd--columns, main.fd--columns, article.fd--columns > .fd--main
   display: grid

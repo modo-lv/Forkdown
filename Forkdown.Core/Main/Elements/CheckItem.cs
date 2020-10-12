@@ -8,8 +8,7 @@ namespace Forkdown.Core.Elements {
     public override String Title => this.Heading?.Title ?? "";
 
     public Element Heading => this.Subs.FirstOrDefault() ?? new Paragraph();
-    public IList<Element> Content => this.Subs.SkipWhile(_ => _ == this.Heading).Where(_ => _ != this.Help).ToList();
-    public Paragraph? Help => this.Subs.OfType<Paragraph>().FirstOrDefault(_ => _.Kind == ParagraphKind.Help);
+    public IList<Element> Content => this.Subs.SkipWhile(_ => _ == this.Heading).ToList();
     
     public Boolean IsNewline = false;
 

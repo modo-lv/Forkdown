@@ -1,91 +1,20 @@
-$checkbox-spacing: 0.2rem;
-$checkbox-size: 1.2rem;
-$indent: calc(#{$checkbox-size} + (#{$checkbox-spacing} * 2));
-$border: 1px solid black;
-
 ul, ol {
+  margin: 0;
+
   &:not(.fd--checklist) {
-    padding-left: 1rem;
+    padding-left: 1.5rem;
   }
 }
 
 
-.fd--checkitem {
-  display: inline-flex;
-  flex-direction: column;
-  border: $border;
-  border-radius: 0.5rem;
-  margin: $checkbox-spacing $checkbox-spacing $checkbox-spacing 0;
-
-  &.fd--newline {
-    display: flex;
-  }
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  .fd--content > .fd--paragraph:first-child {
-    border-top: $border;
-  }
-
-  header {
-    display: flex;
-
-    & > div {
-      padding: 0.1rem;
-      display: flex;
-      align-items: center;
-    }
-
-    .fd--heading {
-      border-left: $border;
-      flex-grow: 1;
-      padding-right: $checkbox-spacing;
-      padding-left: $checkbox-spacing;
-    }
-
-    & > .fd--help {
-      padding: 0;
-      align-items: stretch;
-
-      & > * {
-        padding: 0.1rem;
-        display: flex;
-        align-items: center;
-      }
-
-      & > *:first-child {
-        border-left: $border;
-      }
-    }
-
-    .fd--checkbox > input {
-      @mixin appearance($val) {
-        appearance: $val;
-        -webkit-appearance: $val;
-        -moz-appearance: $val;
-        -ms-progress-appearance: $val;
-      }
-
-      @include appearance(none);
-      width: 1rem;
-      height: 1rem;
-      display: block;
-      margin: 0;
-      outline: none;
-      border: 1px dashed black;
-      border-radius: 0.25rem;
-      background-size: cover;
-
-      &:checked {
-        border: none;
-        background-image: url("assets/icons/check.svg");
-      }
-
-      &.fd--single:checked {
-        background-image: url("assets/icons/check-bold.svg");
-      }
+article {
+  ul, ol {
+    &:last-of-type {
+      // Having an extra margin at the bottom of an article messes with the grid layout,
+      // creating unnecessary spacing.
+      // This should be covered by a global "margin: 0", but leave this in in case that changes.
+      margin-bottom: 0
     }
   }
 }
+

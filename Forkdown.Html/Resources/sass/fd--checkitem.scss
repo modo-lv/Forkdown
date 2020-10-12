@@ -1,0 +1,95 @@
+$border: 1px solid gray;
+$checkbox-spacing: 0.2rem;
+$checkbox-size: 1.2rem;
+$para-item-spacing: 0.5rem;
+$border-radius: 0.5rem;
+
+.fd--paragraph + .fd--checkitem,
+.fd--checkitem + .fd--paragraph {
+  margin-top: $para-item-spacing;
+}
+
+main li {
+  margin-top: $para-item-spacing;
+}
+
+.fd--checkitem {
+  display: inline-table;
+  margin: $checkbox-spacing $checkbox-spacing $checkbox-spacing 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+  text-align: left;
+
+  &.fd--newline {
+    display: table;
+  }
+
+  th, td {
+    border: $border;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  tbody > tr > td {
+    padding: $checkbox-spacing;
+  }
+
+  thead > tr > th {
+    //padding: 0.1rem;
+    font-weight: inherit;
+    padding: $checkbox-spacing;
+
+    &.fd--heading {
+      font-size: 110%;
+      //font-weight: bold;
+      padding-right: $checkbox-spacing;
+      padding-left: $checkbox-spacing;
+      border-left: 0;
+    }
+
+    &.fd--help {
+      width: 1px;
+      white-space: nowrap;
+      background-color: #DDD;
+    }
+
+    &.fd--checkbox {
+      background-color: #DDD;
+      white-space: nowrap;
+      width: 1px;
+      padding: 0.1rem;
+
+      & > input {
+        @mixin appearance($val) {
+          appearance: $val;
+          -webkit-appearance: $val;
+          -moz-appearance: $val;
+          -ms-progress-appearance: $val;
+        }
+
+        @include appearance(none);
+        width: 1.25rem;
+        height: 1.25rem;
+        display: block;
+        outline: none;
+        box-shadow: 2px 2px 2px #888, inset 0 2px 3px #fff;
+        margin: 1px;
+        margin-bottom: 0;
+        background-size: cover;
+        background-color: white;
+
+        &:checked {
+          background-image: url("assets/icons/check.svg");
+          box-shadow: none;
+          background-color: transparent;
+          margin-left: 2px;
+          margin-right: 0;
+        }
+
+        &.fd--single:checked {
+          background-image: url("assets/icons/check-bold.svg");
+        }
+      }
+    }
+  }
+}

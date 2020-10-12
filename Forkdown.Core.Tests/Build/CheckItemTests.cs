@@ -30,7 +30,6 @@ namespace Forkdown.Core.Tests.Build {
     [Fact]
     void FullCheckItem() {
       const String input = @"+ Heading
-  :? Help
   Content";
       var result = new MainBuilder()
         .AddWorker<LinesToParagraphsWorker>()
@@ -39,7 +38,6 @@ namespace Forkdown.Core.Tests.Build {
         .Build(input)
         .FirstSub<CheckItem>();
       result.Heading.As<Paragraph>().Title.Should().Be("Heading");
-      result.Help.As<Paragraph>().Title.Should().Be("Help");
       result.Content.First().As<Paragraph>().Title.Should().Be("Content");
     }
   }

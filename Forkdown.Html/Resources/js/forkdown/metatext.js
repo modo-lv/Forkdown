@@ -9,16 +9,20 @@ class ForkdownMetaText {
         let content = $(meta).find("p")
         let html = content.html()
 
-        // Move help button when in list item
+        // List item
         let parent = $(meta).parent("li").find(".fd--paragraph").first()
         if (parent.length > 0) {
           parent.append(meta)
         }
-        // Move info button when in checkitem
-        else if (cssClass === "fd--info") {
-          parent = $(meta).parent(".fd--content").parent(".fd--checkitem").find("header > .fd--help")
-          if (parent.length > 0)
-            parent.append(meta)
+        // Check item
+        else {
+          let content = $(meta).parent(".fd--content")
+          parent = content.parent("tr").parent("tbody").parent(".fd--checkitem").find("> thead th.fd--help")
+          if (parent.length > 0) {
+            parent.removeClass("fd--none").append(meta)
+          }
+          if (content.children().length < 1)
+            content.addClass("fd--none")
         }
         $(meta).replaceWith(button)
 
