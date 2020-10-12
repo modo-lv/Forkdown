@@ -15,9 +15,17 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 0;
 }
 
-article:not(.fd--checkitem) > header {
+article > header {
   border-bottom: 1px dashed gray;
   margin-bottom: 0.5rem;
+
+  & > .fd--meta-label {
+    margin-left: 0.5rem;
+    &:first-of-type {
+      padding-left: 0.5rem;
+      border-left: 1px dashed gray;
+    }
+  }
 }
 
 

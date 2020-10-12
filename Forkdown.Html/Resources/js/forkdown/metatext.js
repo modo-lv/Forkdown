@@ -14,13 +14,17 @@ class ForkdownMetaText {
         if (parent.length > 0) {
           parent.append(meta)
         }
+        // Header item
+        let header = $(meta).parent(".fd--main").parent("article").find("> header")
+        if (header.length > 0) {
+          header.append(meta)
+        }
         // Check item
-        else {
+        let help = $(meta).parent("td").parent("tr").parent("tbody").parent(".fd--checkitem")
+          .find("> thead th.fd--help")
+        if (help.length > 0) {
           let content = $(meta).parent(".fd--content")
-          parent = content.parent("tr").parent("tbody").parent(".fd--checkitem").find("> thead th.fd--help")
-          if (parent.length > 0) {
-            parent.removeClass("fd--none").append(meta)
-          }
+          help.removeClass("fd--none").append(meta)
           if (content.children().length < 1)
             content.addClass("fd--none")
         }
