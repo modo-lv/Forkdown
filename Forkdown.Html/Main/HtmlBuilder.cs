@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
 using Microsoft.Extensions.Logging;
@@ -46,30 +47,37 @@ namespace Forkdown.Html.Main {
         TemplateLoader = new ScribanTemplateLoader(_inPath),
         MemberRenamer = _ => _.Name
       };
-      
+
       var json = new ScriptObject();
       json.Import(typeof(Json), null, member => member.Name);
-      
+
       var model = new ScriptObject {
         { "Project", this._project },
 //        { "HtmlConfigJson", JsonConvert.SerializeObject(config) },
         { "Scripts", _jsBuilder.ScriptPaths },
         { "Timestamp", DateTime.Now.Ticks },
-        { "Json", json }
+        { "Json", json },
+        { "MainMenu", layout["main_menu"] },
+        { "Footer", layout["footer"] },
       };
       templateContext.PushGlobal(model);
       var template = Template.Parse(File.ReadAllText(inFile));
 
-      foreach (Document doc in this._project.Pages) {
+      var docs = this._project.Pages.Append(
+        new Document { ProjectFilePath = "components/settings.md" }
+      );
+
+      foreach (Document doc in docs) {
         var outFile = doc.ProjectFilePath.TrimSuffix(".md") + ".html";
         Path outPath = _outPath.Combine(outFile);
         outPath.Parent().CreateDirectories();
         this._logger.LogDebug("Rendering {page}...", outFile);
 
+        model.Add("ComponentName", doc.ProjectFilePath.StartsWith("components/")
+          ? outFile.TrimPrefix("components/").TrimSuffix(".html")
+          : "");
         model.Add("Document", doc);
         model.Add("PathToRoot", "../".Repeat(doc.Depth).TrimSuffix("/"));
-        model.Add("MainMenu", layout["main_menu"]);
-        model.Add("Footer", layout["footer"]);
         var html = template.Render(templateContext);
         File.WriteAllText(outPath.ToString(), html);
       }

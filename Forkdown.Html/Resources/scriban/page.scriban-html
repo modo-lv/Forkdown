@@ -7,8 +7,14 @@
 {{ include 'header' }}
 
 <main {{ attrs Document }}>
-{{ element Document }}
+{{-
+if (ComponentName != "") 
+  include "components/" + ComponentName
+else -}}
+  {{ element Document }}
+{{- end -}}
 </main>
+
 
 {{ include 'footer' }}
   </div>

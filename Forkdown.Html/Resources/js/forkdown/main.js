@@ -80,7 +80,7 @@ class ForkdownMain {
 
   profilesUpdated() {
     this.profileIds = this.profiles.map(p => p.id)
-    this.profile = this.profiles.find(p => p.id == this.profileId)
+    this.profile = this.profiles.find(p => p.id === this.profileId)
     if (!this.profile && this.profiles.length > 0) {
       this.profile = this.profiles[0]
       this.profileId = this.profile.id

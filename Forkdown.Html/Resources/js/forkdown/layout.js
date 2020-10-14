@@ -34,7 +34,10 @@ class ForkdownLayout {
    * Scroll to and focus on the requested element, if any.
    */
   focusAnchor = () => {
-    let anchor = "[id='" + window.location.hash.substr(1) + "']"
+    let id = window.location.hash.substr(1)
+    if (!id)
+      return
+    let anchor = "[id='" + id + "']"
     let main = $("main")
     if (anchor !== "") {
       let mainTop = main.offset().top

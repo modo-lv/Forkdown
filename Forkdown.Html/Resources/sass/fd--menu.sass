@@ -6,7 +6,6 @@ $border: 1px 0 0 0 $color, 0 1px 0 0 $color, 1px 1px 0 0 $color,1px 0 0 0 $color
 .body > header 
   max-height: calc(100vh * 0.25)
   display: flex
-  flex-direction: row-reverse
   line-height: normal
 
   ul
@@ -23,10 +22,9 @@ $border: 1px 0 0 0 $color, 0 1px 0 0 $color, 1px 1px 0 0 $color,1px 0 0 0 $color
     font-size: 1.25rem
     border: 1px solid $color
     border-right: 0
-    border-left: 0
     display: flex
     align-items: center
-  
+
   
   nav 
     display: flex
@@ -44,21 +42,18 @@ $border: 1px 0 0 0 $color, 0 1px 0 0 $color, 1px 1px 0 0 $color,1px 0 0 0 $color
       overflow: auto
       flex-wrap: wrap
       border-bottom: 1px solid silver
-      border-right: 1px solid silver
-      //padding-right: 1px
-      //padding-bottom: 1px
-      & > li 
+      & > li
         padding: $padding
         box-shadow: $border
         font-weight: bold
         cursor: pointer
-        &:first-child
-          border-top-left-radius: 0.5rem
-        
+
         &.fd--scripted 
           flex-grow: 1
           display: flex
-          //justify-content: center
+
+        &:last-child
+          border-right: none
         
   .tippy-box 
     max-height: 80vh

@@ -10,9 +10,11 @@ let checklists = new ForkdownChecklists(main)
 let layout = new ForkdownLayout();
 let menu = new ForkdownMenu();
 let meta = new ForkdownMetaText();
+let settings = new ForkdownSettings(main);
 
 main.init()
   .then(meta.init)
   .then(checklists.init)
   .then(menu.init)
   .then(layout.init)
+  .then(settings.init)

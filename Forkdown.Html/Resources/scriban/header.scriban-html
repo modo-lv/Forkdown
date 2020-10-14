@@ -1,5 +1,5 @@
 ﻿<header>
-  <h1><a href="{{ PathToRoot }}/pages/index.html" class="fd--internal">{{ Project.Name | html.escape }}</a></h1>
+  <h1><a href="{{ PathToRoot }}/pages/index.html" class="fd--internal" title="{{ Project.Name | html.escape }}">🏠</a></h1>
   <nav>
     <ul {{ attrs MainMenu }}>
 {{ 
@@ -11,4 +11,5 @@ end
 }}
     </ul>
   </nav>
+  <h1><a href="{{ PathToRoot }}/components/settings.html" title="Settings">⚙️</a></h1>
 </header>
