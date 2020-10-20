@@ -15,17 +15,16 @@ class ForkdownChecklists {
    *
    */
   init = () => new Promise(resolve => {
-    // Singleton index
-    this.index = $("#fd--singles-index").data("index")
     // Singles
-    $("li > .fd--main > article.fd--single").each((i, a) => {
-        $(a)
-          .closest("li")
-          .find("> .fd--bullet > input")
-          .data("fd--single-id", $(a).data("fd--single-id"))
-          .addClass("fd--single")
-      }
-    )
+    this.index = $("#fd--singles-index").data("index")
+    if (this.index.length < 1)
+      throw new Error("No singles index!")
+
+    for (const key in this.index) {
+      this.index[key].forEach(id => {
+        $(document.getElementById(id)).data("fd--single-id", key)
+      })
+    }
 
     // CHECKBOXES
     $(".fd--checkbox > input").each((i, c) => {
@@ -38,7 +37,7 @@ class ForkdownChecklists {
 
       box.on("change", async () => {
         let checked = this.mark(id)
-        if (box.hasClass("fd--single"))
+        if (box.data("fd--single-id"))
           this.markSingles(id, checked);
         await this.main.saveProfile()
       })
@@ -52,12 +51,12 @@ class ForkdownChecklists {
     let box = document.getElementById(id)
     if (box) {
       if (on != null) {
-        //console.log("Marking " + box.id + " as checked: ", on)
+        console.log("Marking " + box.id + " as checked: ", on)
         $(box).prop("checked", on);
       }
       on = $(box).prop("checked") === true
     }
-    //console.log("Saving " + id + " as checked: ", on)
+    console.log("Saving " + id + " as checked: ", on)
     this.main.profile.toggleCheck(id, on);
     return on
   }
