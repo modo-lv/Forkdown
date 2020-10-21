@@ -24,7 +24,7 @@ namespace Forkdown.Core {
       item = InternalLink(item);
       if (this.ContainsKey(item.Key))
         throw new DuplicateAnchorException($"Cannot add anchor {item.Key} from {item.Value.ProjectFileId} since it" +
-                                           $" already exists in {this[item.Key].ProjectFileId}");
+                                           $" already exists in a document (`{this[item.Key].ProjectFileId}`)");
       if (item.Key.NotBlank())
         this._.Add(item);
     }

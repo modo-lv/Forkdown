@@ -8,7 +8,7 @@ namespace Forkdown.Core.Elements {
   public enum ListingKind {
     Unordered,
     Ordered,
-    Checklist,
+    ItemList,
   }
 
   public class Listing : Element, Block {
@@ -24,11 +24,11 @@ namespace Forkdown.Core.Elements {
         this.Kind = ListingKind.Ordered;
       else switch (mdo.BulletType) {
         case '+':
-          this.Kind = ListingKind.Checklist;
+          this.Kind = ListingKind.ItemList;
           this.IsVertical = true;
           break;
         case '-':
-          this.Kind = ListingKind.Checklist;
+          this.Kind = ListingKind.ItemList;
           this.IsVertical = false;
           break;
       }

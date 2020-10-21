@@ -13,10 +13,10 @@ namespace Forkdown.Core.Build {
 
     public T GetOr<T>(T fallback) => (T) this.GetOrAdd("", fallback)!;
 
-    public T Get<T>() where T : notnull => (T) this.GetOrAdd("", default(T))!;
+    public T Get<T>(String key = "") where T : notnull => (T) this.GetOrAdd(key, default(T))!;
 
     public void Put<T>(T value) => this[""] = value;
-    
+
     public void Put<T>(String key, T value) => this[key] = value;
 
   }

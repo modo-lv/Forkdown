@@ -1,71 +1,9 @@
 {{-
 
 include 'functions/attributes'
+include 'functions/elements'
 
 -}}
-
-{{- func element
-
-  if ($0 == null)
-    ret
-  end
-
-  case $0.Type
-    when 'Code'
-      include 'elements/code' $0
-    when 'CodeBlock'
-      include 'elements/code_block' $0
-    when 'Document'
-      include 'elements/document' $0
-    when 'Heading'
-      include 'elements/heading' $0
-    when 'LineBreak'
-      include 'elements/line_break' $0
-    when 'Listing'
-      include 'elements/list' $0
-    when 'Article'
-      include 'elements/article' $0
-    when 'ListItem'
-      include 'elements/list_item' $0
-    when 'CheckItem'
-      include 'elements/check_item' $0
-    when 'Paragraph'
-      include 'elements/paragraph' $0
-    when 'Emphasis'
-      include 'elements/emphasis' $0
-    when 'Link'
-      include 'elements/link' $0
-    when 'Separator'
-      include 'elements/separator' $0
-    when "Text"
-      include 'elements/text' $0
-    when 'ExplicitContainer'
-      include 'elements/block' $0
-    when 'Table'
-      include 'elements/table' $0
-    when 'TableRow'
-      include 'elements/table_row' $0
-    when 'TableCell'
-      include 'elements/table_cell' $0
-    else
-      include 'elements/placeholder' $0
-  end
-
-end -}}
-
-
-{{- func subs
-  elements $0.Subs
-end -}}
-
-
-{{- func elements
-
-for el in $0
-  element el
-end
-
-end -}}
 
 
 {{- func labels

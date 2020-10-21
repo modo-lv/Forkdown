@@ -11,23 +11,26 @@ namespace Forkdown.Core.Build.Workers {
     public const Char G = '␝'; // Group separator
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
-    
+
     private readonly IDictionary<String, Int32> _times = new Dictionary<String, Int32>();
 
     public override Element ProcessElement(Element element, Arguments args) {
-      String parentId = args.Get();
+      var parentId = args.Get<String>();
 
       var id = parentId;
-      
+
       if (element is Document dEl) {
         id = dEl.ProjectFileId;
       }
       else if (element.ExplicitId.NotBlank()) {
         id = element.ExplicitId;
       }
-      else if (element is Article || element is ListItem) {
-        id = element.Title.Trim().Replace(' ', W);
-        
+      else if (
+        element is IdScope ||
+        (element is Item || element is ListItem) && !(element.Subs.FirstOrDefault() is IdScope)
+      ) {
+        id = element.TitleText.Trim().Replace(' ', W);
+
         if (parentId.NotBlank())
           id = $"{parentId}{G}{id}";
         if (id.NotBlank())

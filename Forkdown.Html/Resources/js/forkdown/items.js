@@ -1,6 +1,6 @@
 'use strict'
 
-class ForkdownChecklists {
+class ForkdownItems {
   /**
    *
    * @param {ForkdownMain} main

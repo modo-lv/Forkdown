@@ -4,6 +4,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-weight: bold;
   font-family: $heading-font;
+  border-bottom: 1px dashed gray;
 }
 
 .body > header * {
@@ -15,7 +16,7 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 0;
 }
 
-article > header {
+article:not(.fd--item) > header {
   border-bottom: 1px dashed gray;
   margin-bottom: 0.5rem;
 
@@ -33,10 +34,15 @@ article > header {
   $heading-size: 1.1rem;
   $size-increase: 0.1rem;
   $spacing-increase: 0.2rem;
+  $space: calc(0.5rem + (6 - #{$level}) * #{$spacing-increase});
 
   h#{$level} {
     font-size: calc(#{$heading-size} + (6 - #{$level}) * #{$size-increase});
-    padding-top: calc(0.5rem + (6 - #{$level}) * #{$spacing-increase});
+    padding-top: $space;
+  }
+
+  .fd--item.fd--heading.fd--h#{$level} {
+    margin-top: $space;
   }
 }
 

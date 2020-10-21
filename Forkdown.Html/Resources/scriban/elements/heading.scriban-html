@@ -1,6 +1,9 @@
 <h {{- $1.Level}} {{ attrs $1 -}}>
 {{-
-subs $1 
 labels $1
+subs $1 
 -}}
+{{- if ($1.ExplicitId != "") -}}
+<a id="{{ $1.ExplicitId | html.escape }}"></a>
+{{- end -}}
 </h {{- $1.Level -}}>

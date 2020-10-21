@@ -9,24 +9,17 @@ class ForkdownMetaText {
         let content = $(meta).find("p")
         let html = content.html()
 
-        // List item
-        let parent = $(meta).parent("li").find(".fd--paragraph").first()
-        if (parent.length > 0) {
-          parent.append(meta)
-        }
-        // Header item
-        let header = $(meta).parent(".fd--main").parent("article").find("> header")
-        if (header.length > 0) {
-          header.append(meta)
-        }
         // Check item
-        let help = $(meta).parent("td").parent("tr").parent("tbody").parent(".fd--checkitem")
-          .find("> thead th.fd--help")
-        if (help.length > 0) {
+        let header = $(meta).parent(".fd--content").parent(".fd--item")
+          .find("> header")
+        if (header.length > 0) {
+          let help = header.find("> .fd--meta")
+          if (help.length < 1)
+            help = $("<div>").addClass("fd--meta").appendTo(header)
           let content = $(meta).parent(".fd--content")
-          help.removeClass("fd--none").append(meta)
+          help.append(meta)
           if (content.children().length < 1)
-            content.addClass("fd--none")
+            content.remove()
         }
         $(meta).replaceWith(button)
 

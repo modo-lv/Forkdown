@@ -27,11 +27,19 @@ namespace Forkdown.Html.Forkdown.Workers {
 
       if (element.IsSingle) {
         element.Attributes.Classes.Add($"{Globals.Prefix}single");
-        element.Attributes.AddProperty($"data-{Globals.Prefix}single-id", Globals.Id(element.Title));
+        element.Attributes.AddProperty($"data-{Globals.Prefix}single-id", Globals.Id(element.TitleText));
       }
 
-      if (element.IsCheckItem) {
-        element.Attributes.Classes.Add($"{Globals.Prefix}checkitem");
+      if (element is Item i) {
+        if (i.IsCheckitem)
+          element.Attributes.Classes.Add($"{Globals.Prefix}checkitem");
+        if (i.IsHeading) {
+          element.Attributes.Classes.Add($"{Globals.Prefix}heading");
+          element.Attributes.Classes.Add($"{Globals.Prefix}h{((Heading) i.Title).Level}");
+        }
+        if (i.IsNewline) {
+          element.Attributes.Classes.Add($"{Globals.Prefix}newline");
+        }
       }
 
       switch (element) {

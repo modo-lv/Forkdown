@@ -13,8 +13,8 @@ namespace Forkdown.Core.Tests.Build {
     [Fact]
     void CheckItemId() {
       const String input = @"+ Whatever something";
-      var result = new MainBuilder().AddWorker<ImplicitIdWorker>().AddWorker<CheckItemWorker>().Build(input);
-      result.FirstSub<CheckItem>().GlobalId.Should().Be($"Whatever{ImplicitIdWorker.W}something");
+      var result = new MainBuilder().AddWorker<ImplicitIdWorker>().AddWorker<ItemWorker>().Build(input);
+      result.FirstSub<Item>().GlobalId.Should().Be($"Whatever{ImplicitIdWorker.W}something");
     }
     
     [Theory]
@@ -22,9 +22,9 @@ namespace Forkdown.Core.Tests.Build {
     [InlineData(false)]
     void CheckItem(Boolean vertical) {
       var input = vertical ? "+ CheckItem" : "- CheckItem";
-      var result = new MainBuilder().AddWorker<CheckItemWorker>().Build(input);
-      result.FirstSub<CheckItem>().Title.Should().Be("CheckItem");
-      result.FirstSub<CheckItem>().IsNewline.Should().Be(vertical);
+      var result = new MainBuilder().AddWorker<ItemWorker>().Build(input);
+      result.FirstSub<Item>().TitleText.Should().Be("CheckItem");
+      result.FirstSub<Item>().IsNewline.Should().Be(vertical);
     }
 
     [Fact]
@@ -34,11 +34,11 @@ namespace Forkdown.Core.Tests.Build {
       var result = new MainBuilder()
         .AddWorker<LinesToParagraphsWorker>()
         .AddWorker<SemanticParagraphWorker>()
-        .AddWorker<CheckItemWorker>()
+        .AddWorker<ItemWorker>()
         .Build(input)
-        .FirstSub<CheckItem>();
-      result.Heading.As<Paragraph>().Title.Should().Be("Heading");
-      result.Content.First().As<Paragraph>().Title.Should().Be("Content");
+        .FirstSub<Item>();
+      result.Title.As<Paragraph>().TitleText.Should().Be("Heading");
+      result.Contents.First().As<Paragraph>().TitleText.Should().Be("Content");
     }
   }
 }

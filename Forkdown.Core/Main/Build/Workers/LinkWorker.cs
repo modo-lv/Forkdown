@@ -8,7 +8,7 @@ namespace Forkdown.Core.Build.Workers {
     public override Element ProcessElement(Element element, Arguments args) {
       if (element is Link link) {
         if (link.Target == "@") {
-          link.Target = $"@{link.Title}";
+          link.Target = $"@{link.TitleText}";
         }
         if (this.Builder!.Config is { } config) {
           var index = this.Builder!.Storage.GetOr(typeof(LinkIndexWorker), null) as LinkIndex;

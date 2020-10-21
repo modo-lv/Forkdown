@@ -16,7 +16,7 @@ namespace Forkdown.Core.Tests.Build {
       var para = result.FirstSub<Paragraph>();
       para.Labels.Should().BeEquivalentTo("a", "b", "c");
       para.FirstSub<Text>().Content.Should().Be("Text");
-      para.FirstSub<Text>().Title.Should().Be("Text");
+      para.FirstSub<Text>().TitleText.Should().Be("Text");
     }
   }
 }

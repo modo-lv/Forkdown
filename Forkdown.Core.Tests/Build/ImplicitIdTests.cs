@@ -11,9 +11,20 @@ namespace Forkdown.Core.Tests.Build {
   public class ImplicitIdTests {
     private static MainBuilder _builder => new MainBuilder()
       .AddWorker<ExplicitIdWorker>()
-      .AddWorker<ArticleWorker>()
       .AddWorker<ListItemWorker>()
+      .AddWorker<IdScopeWorker>()
       .AddWorker<ImplicitIdWorker>();
+
+    [Fact]
+    void NestedWithHeading() {
+      const String input = @"+ # Heading
+  + One
+  + Other";
+      var result = _builder.Build(input);
+      result.FirstSub<ListItem>()
+        .FirstSub<ListItem>()
+        .GlobalId.Should().Be($"Heading{ImplicitIdWorker.G}One");
+    }
 
     [Fact]
     void TrimSpaces() {
@@ -49,9 +60,9 @@ Paragraph.
 
       var result = _builder.Build(input);
       result
-        .FirstSub<Article>()
-        .FirstSub<Article>()
-        .FirstSub<Article>()
+        .FirstSub<IdScope>()
+        .FirstSub<IdScope>()
+        .FirstSub<IdScope>()
         .FirstSub<ListItem>().ImplicitId.Should().Be(
           $"enemies" +
           $"{ImplicitIdWorker.G}Level{ImplicitIdWorker.W}1" +

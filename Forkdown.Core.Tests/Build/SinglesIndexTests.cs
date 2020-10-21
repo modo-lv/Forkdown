@@ -12,10 +12,10 @@ namespace Forkdown.Core.Tests.Build {
     private readonly MainBuilder _builder = new MainBuilder()
       .AddWorker<ExplicitIdWorker>()
       .AddWorker<SettingsWorker>()
-      .AddWorker<ArticleWorker>()
+      .AddWorker<IdScopeWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<ListItemWorker>()
-      .AddWorker<CheckItemWorker>()
+      .AddWorker<ItemWorker>()
       .AddWorker<SinglesIndexWorker>();
 
     [Fact]
@@ -49,12 +49,12 @@ namespace Forkdown.Core.Tests.Build {
 
     [Fact]
     void Implicit() {
-      const String input1 = @"# Heading {:singles}
-+ One
-+ Other";
-      const String input2 = @"# Heading 2 {:singles}
-+ One
-+ Other";
+      const String input1 = @"+ # Heading {:singles}
+  + One
+  + Other";
+      const String input2 = @"+ # Heading 2 {:singles}
+  + One
+  + Other";
 
       var result = _builder.Build(input1);
       _builder.Build(input2);

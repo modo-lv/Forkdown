@@ -1,0 +1,21 @@
+{{- if ($1.IsNewline && !$1.IsHeading) -}}
+<br />
+{{- end -}}
+<article {{ attrs $1 "fd--item" }}>
+  <header>
+    {{- if ($1.IsCheckitem) -}}
+    <div class="fd--checkbox">
+      <input type="checkbox" id="{{ $1.GlobalId }}" />
+    </div>
+    {{- end -}}
+    <div class="fd--title">
+      {{ if ($1.ExplicitId != "") }} <a id="{{- $1.ExplicitId | html.escape -}}"></a> {{- end }}
+      {{- element $1.Title -}}
+    </div>
+  </header>
+  {{- if ($1.Contents | array.size) > 0 -}}
+  <div class="fd--content">
+    {{ elements $1.Contents }}
+  </div>
+  {{- end -}}
+</article>

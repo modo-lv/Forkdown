@@ -28,6 +28,10 @@ class ForkdownLayout {
     $(window).on("resize", this.processMasonry)
     $(window).on("hashchange", window.tippy.hideAll)
     $(window).on("hashchange", this.focusAnchor)
+
+    $("main").on("scroll", () => {
+      console.log($("main").scrollTop())
+    })
   }
 
   /**

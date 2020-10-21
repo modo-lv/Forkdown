@@ -13,11 +13,6 @@ namespace Forkdown.Core.Elements {
   public abstract partial class Element {
     public IList<Element> Subs = Nil.L<Element>();
 
-    /// <summary>
-    /// The first line of the element's text content.
-    /// </summary>
-    public virtual String Title => Element.TitleOf(this);
-
     public String Type => this.GetType().Name;
 
     public ElementSettings Settings = new ElementSettings();
@@ -27,8 +22,6 @@ namespace Forkdown.Core.Elements {
     public ISet<String> Labels = Nil.SStr;
 
     public CheckItemData? CheckItem = null;
-    
-    public virtual Boolean IsCheckItem => this.CheckItem != null;
 
     public Boolean IsSingle;
 
@@ -38,7 +31,7 @@ namespace Forkdown.Core.Elements {
     public String GlobalId => this.ExplicitId.NonBlank(this.ImplicitId)!;
 
     /// <summary>
-    /// ID calculated from the item's (including its parents') <see cref="Title"/> and location in the document. 
+    /// ID calculated from the item's (including its parents') <see cref="TitleText"/> and location in the document. 
     /// </summary>
     public String ImplicitId = "";
 
@@ -52,7 +45,8 @@ namespace Forkdown.Core.Elements {
     /// </summary>
     public IList<String> ExplicitIds = Nil.LStr;
 
-    
+    public String TitleText => TitleTextOf(this);
+
     
     protected Element() {}
 
@@ -84,7 +78,7 @@ namespace Forkdown.Core.Elements {
     /// Move HTML attributes and Forkdown settings from this element to another.
     /// </summary>
     /// <param name="element">Target element.</param>
-    public void MoveAttributesTo(Element element) {
+    public virtual void MoveAttributesTo(Element element) {
       element.Attributes = this.Attributes;
       element.Settings = this.Settings;
       element.ExplicitIds = this.ExplicitIds;
@@ -92,5 +86,13 @@ namespace Forkdown.Core.Elements {
       this.Settings = new ElementSettings();
       this.ExplicitIds = Nil.LStr;
     }
+    
+    public Element CopyAttribuesFrom(Element element) {
+      element.Attributes.CopyTo(this.Attributes);
+      this.Settings = new ElementSettings(element.Settings);
+      this.ExplicitIds = element.ExplicitIds;
+      return this;
+    }
+    
   }
 }

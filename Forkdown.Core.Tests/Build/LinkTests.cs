@@ -36,10 +36,7 @@ namespace Forkdown.Core.Tests.Build {
     void ExplicitExternalTitle() {
       const String input = @"# [External](@)";
       var result = MainBuilder.CreateDefault().Build(input)
-        .FirstSub<Article>()
-        .Subs[0] // Header
-        .Subs[0] // Heading
-        .Subs[0].As<Link>(); // Link
+        .FirstSub<Link>();
 
       result.Target.Should().Be("@External");
       result.IsExternal.Should().Be(true);

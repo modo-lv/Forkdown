@@ -6,7 +6,7 @@ if (!projectName)
   throw new Error("Forkdown script can't function without a valid project name.");
 
 let main = new ForkdownMain({ projectConfig: { name: projectName } })
-let checklists = new ForkdownChecklists(main)
+let checklists = new ForkdownItems(main)
 let layout = new ForkdownLayout();
 let menu = new ForkdownMenu();
 let meta = new ForkdownMetaText();

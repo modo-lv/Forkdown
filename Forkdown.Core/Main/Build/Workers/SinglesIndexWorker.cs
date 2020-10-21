@@ -16,7 +16,7 @@ namespace Forkdown.Core.Build.Workers {
       var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new SinglesIndex());
       var singles = args.Get<Boolean>();
 
-      if (element is CheckItem) {
+      if (element is Item check && check.IsCheckitem) {
         element.IsSingle = element.Settings.NotFalse("single") && (
           singles || element.Settings.ContainsKey("single")
         );
@@ -28,7 +28,7 @@ namespace Forkdown.Core.Build.Workers {
 
           var singleIds = element.Settings.HasStringValue("single")
             ? element.Settings["single"].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(_ => _.Trim())
-            : new[] { Globals.Id(element.Title) };
+            : new[] { Globals.Id(check.TitleText) };
           
           singleIds.ForEach(_ => index.GetOrAdd(_, Nil.CStr).Add(element.GlobalId));
         }

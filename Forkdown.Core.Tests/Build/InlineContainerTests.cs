@@ -12,7 +12,7 @@ namespace Forkdown.Core.Tests.Build {
     void InlineContainer() {
       const String input = @"::Content::";
       var result = new MainBuilder().Build(input);
-      result.FirstSub<ExplicitInlineContainer>().Title.Should().Be("Content");
+      result.FirstSub<ExplicitInlineContainer>().TitleText.Should().Be("Content");
     }
   }
 }

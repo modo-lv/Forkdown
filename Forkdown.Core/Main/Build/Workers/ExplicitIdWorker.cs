@@ -11,7 +11,7 @@ namespace Forkdown.Core.Build.Workers {
         var ids = element.Attributes.Id.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
         element.ExplicitIds = ids
-          .Select(_ => Globals.Id(_.Replace(":id", element.Title)))
+          .Select(_ => Globals.Id(_.Replace(":id", element.TitleText)))
           .ToList();
       }
       return element;

@@ -1,4 +1,5 @@
 ﻿using Forkdown.Core.Elements;
+using MoreLinq.Extensions;
 using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Build.Workers {
@@ -10,11 +11,14 @@ namespace Forkdown.Core.Build.Workers {
     private Document? _document;
 
     public override Element ProcessElement(Element element, Arguments args) {
-      if (element is Document doc)
-        this._document = doc;
+      switch (element) {
+        case IdScope _: return element;
+        case Document doc: this._document = doc;
+          break;
+      }
 
       var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new LinkIndex());
-      element.ExplicitIds.ForEach(_ =>
+      CollectionExtensions.ForEach(element.ExplicitIds, _ =>
         index.Add(_, this._document!)
       );
       
