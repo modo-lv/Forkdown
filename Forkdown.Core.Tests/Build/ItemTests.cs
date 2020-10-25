@@ -9,9 +9,18 @@ using Xunit;
 // ReSharper disable ArrangeTypeMemberModifiers
 
 namespace Forkdown.Core.Tests.Build {
-  public class CheckItemTests {
+  public class ItemTests {
     [Fact]
-    void CheckItemId() {
+    void InSection() {
+      const String input = @":::
++ Test
+:::";
+      var result = new MainBuilder().AddWorker<ItemWorker>().Build(input);
+      result.FirstSub<Item>().IsCheckitem.Should().BeTrue();
+    }
+    
+    [Fact]
+    void ItemId() {
       const String input = @"+ Whatever something";
       var result = new MainBuilder().AddWorker<ImplicitIdWorker>().AddWorker<ItemWorker>().Build(input);
       result.FirstSub<Item>().GlobalId.Should().Be($"Whatever{ImplicitIdWorker.W}something");
@@ -38,7 +47,7 @@ namespace Forkdown.Core.Tests.Build {
         .Build(input)
         .FirstSub<Item>();
       result.Title.As<Paragraph>().TitleText.Should().Be("Heading");
-      result.Contents.First().As<Paragraph>().TitleText.Should().Be("Content");
+      result.Content.First().As<Paragraph>().TitleText.Should().Be("Content");
     }
   }
 }

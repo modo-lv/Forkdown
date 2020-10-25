@@ -11,11 +11,13 @@ namespace Forkdown.Core.Elements {
   public class Item : BlockContainer {
 
     public Element Title => this.Subs.FirstOrDefault() ?? new Paragraph();
-    public IEnumerable<Element> Contents => this.Subs.SkipWhile(_ => _ == this.Title);
-    
+
+    public IEnumerable<Element> Content => this.Subs.SkipWhile(_ => _ == this.Title);
+
     public Boolean IsNewline = false;
 
-    public Boolean IsHeading => this.Title is Heading;
+    public Boolean HasHeading => this.Title is Heading;
+    public Boolean IsHeading = false;
 
     public readonly Boolean IsCheckitem;
 
@@ -30,17 +32,24 @@ namespace Forkdown.Core.Elements {
       this.IsSingle = replaceElement.IsSingle;
       this.Settings = replaceElement.Settings;
 
-      this.IsCheckitem = !(this.Subs.FirstOrDefault() is Heading);
-      if (this.Title is Paragraph p && p.Subs.FirstOrDefault() is Text t && t.Content.StartsWith(":- ")) {
+      if (this.Settings.IsTrue("-"))
+        this.IsCheckitem = false;
+      else if (this.Settings.IsTrue("+"))
+        this.IsCheckitem = true;
+      else if (this.Title is Paragraph p && p.Subs.FirstOrDefault() is Text t && t.Content.StartsWith(":- ")) {
         t.Content = t.Content.TrimPrefix(":- ");
         this.IsCheckitem = false;
       }
+      else {
+        this.IsCheckitem = !(replaceElement is Heading || this.Subs.FirstOrDefault() is Heading);
+      }
     }
-    
-    public static Item Wrap(IList<Element> elements) {
+
+    public static Item FromTitleElement(Element element) {
       var item = new Item();
-      elements.FirstOrDefault()?.MoveAttributesTo(item);
-      item.Subs = elements;
+      element.MoveAttributesTo(item);
+      item.Subs.Add(element);
+      item.IsHeading = element is Heading;
       return item;
     }
   }

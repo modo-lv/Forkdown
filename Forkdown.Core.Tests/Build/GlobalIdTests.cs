@@ -24,8 +24,8 @@ More text {#id}";
       const String input = @"# Heading {#id,heading}";
 
       var doc = MainBuilder.CreateDefault().Build(input);
-      doc.FirstSub<Heading>().ExplicitId.Should().Be("id");
-      doc.FirstSub<Heading>().ExplicitIds.Should().Contain("heading");
+      doc.FirstSub<Item>().ExplicitId.Should().Be("id");
+      doc.FirstSub<Item>().ExplicitIds.Should().Contain("heading");
     }
   }
 }

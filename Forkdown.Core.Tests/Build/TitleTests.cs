@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using Forkdown.Core.Build;
+using Forkdown.Core.Elements;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
@@ -23,7 +24,7 @@ namespace Forkdown.Core.Tests.Build {
     void HeadingWithLinkTitle() {
       const String input = @"# Heading with [link](link)";
       var result = MainBuilder.CreateDefault().Build(input);
-      result.Subs[0].TitleText.Should().Be("Heading with link");
+      result.FirstSub<Item>().TitleText.Should().Be("Heading with link");
     }
   }
 }

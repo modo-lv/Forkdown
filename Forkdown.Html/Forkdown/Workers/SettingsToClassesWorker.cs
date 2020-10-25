@@ -31,10 +31,14 @@ namespace Forkdown.Html.Forkdown.Workers {
       }
 
       if (element is Item i) {
+        element.Attributes.Classes.Add($"{Globals.Prefix}item");
         if (i.IsCheckitem)
           element.Attributes.Classes.Add($"{Globals.Prefix}checkitem");
-        if (i.IsHeading) {
-          element.Attributes.Classes.Add($"{Globals.Prefix}heading");
+        if (i.HasHeading || i.IsHeading) {
+          if (i.IsHeading)
+            element.Attributes.Classes.Add($"{Globals.Prefix}is-heading");
+          else if (i.HasHeading)
+            element.Attributes.Classes.Add($"{Globals.Prefix}has-heading");
           element.Attributes.Classes.Add($"{Globals.Prefix}h{((Heading) i.Title).Level}");
         }
         if (i.IsNewline) {

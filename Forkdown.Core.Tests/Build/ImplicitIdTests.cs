@@ -11,8 +11,8 @@ namespace Forkdown.Core.Tests.Build {
   public class ImplicitIdTests {
     private static MainBuilder _builder => new MainBuilder()
       .AddWorker<ExplicitIdWorker>()
+      .AddWorker<HeadingItemWorker>()
       .AddWorker<ListItemWorker>()
-      .AddWorker<IdScopeWorker>()
       .AddWorker<ImplicitIdWorker>();
 
     [Fact]
@@ -60,9 +60,9 @@ Paragraph.
 
       var result = _builder.Build(input);
       result
-        .FirstSub<IdScope>()
-        .FirstSub<IdScope>()
-        .FirstSub<IdScope>()
+        .FirstSub<Item>()
+        .FirstSub<Item>()
+        .FirstSub<Item>()
         .FirstSub<ListItem>().ImplicitId.Should().Be(
           $"enemies" +
           $"{ImplicitIdWorker.G}Level{ImplicitIdWorker.W}1" +

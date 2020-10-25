@@ -4,7 +4,6 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-weight: bold;
   font-family: $heading-font;
-  border-bottom: 1px dashed gray;
 }
 
 .body > header * {
@@ -16,19 +15,6 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 0;
 }
 
-article:not(.fd--item) > header {
-  border-bottom: 1px dashed gray;
-  margin-bottom: 0.5rem;
-
-  & > .fd--meta-label {
-    margin-left: 0.5rem;
-    &:first-of-type {
-      padding-left: 0.5rem;
-      border-left: 1px dashed gray;
-    }
-  }
-}
-
 
 @mixin heading($level) {
   $heading-size: 1.1rem;
@@ -38,10 +24,9 @@ article:not(.fd--item) > header {
 
   h#{$level} {
     font-size: calc(#{$heading-size} + (6 - #{$level}) * #{$size-increase});
-    padding-top: $space;
   }
 
-  .fd--item.fd--heading.fd--h#{$level} {
+  main .fd--h#{$level} {
     margin-top: $space;
   }
 }

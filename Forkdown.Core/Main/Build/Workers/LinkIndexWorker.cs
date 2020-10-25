@@ -11,11 +11,8 @@ namespace Forkdown.Core.Build.Workers {
     private Document? _document;
 
     public override Element ProcessElement(Element element, Arguments args) {
-      switch (element) {
-        case IdScope _: return element;
-        case Document doc: this._document = doc;
-          break;
-      }
+      if (element is Document doc)
+        this._document = doc;
 
       var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new LinkIndex());
       CollectionExtensions.ForEach(element.ExplicitIds, _ =>

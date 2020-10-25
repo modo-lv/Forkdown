@@ -17,10 +17,12 @@ class ForkdownLayout {
       this.defaultColumnWidth = $(column).css("min-width").replace('px', '') * 1
       column.remove()
     }
+
     { // Wrap columns in divs
-      let items = $("article.fd--columns > .fd--main > *, section.fd--columns > *, main.fd--columns > *")
+      let items = $("section.fd--columns > *:not(br)")
       items.wrap("<div class='fd--column'></div>")
     }
+
 
     this.processMasonry()
       .then(ForkdownLayout.showMain)
@@ -28,7 +30,6 @@ class ForkdownLayout {
     $(window).on("resize", this.processMasonry)
     $(window).on("hashchange", window.tippy.hideAll)
     $(window).on("hashchange", this.focusAnchor)
-
     $("main").on("scroll", () => {
       console.log($("main").scrollTop())
     })

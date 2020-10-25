@@ -25,10 +25,7 @@ namespace Forkdown.Core.Build.Workers {
       else if (element.ExplicitId.NotBlank()) {
         id = element.ExplicitId;
       }
-      else if (
-        element is IdScope ||
-        (element is Item || element is ListItem) && !(element.Subs.FirstOrDefault() is IdScope)
-      ) {
+      else if (element is Item || element is ListItem) {
         id = element.TitleText.Trim().Replace(' ', W);
 
         if (parentId.NotBlank())

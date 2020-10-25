@@ -45,7 +45,7 @@ namespace Forkdown.Core.Elements {
     /// </summary>
     public IList<String> ExplicitIds = Nil.LStr;
 
-    public String TitleText => TitleTextOf(this);
+    public virtual String TitleText => TitleTextOf(this);
 
     
     protected Element() {}

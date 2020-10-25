@@ -12,7 +12,7 @@ namespace Forkdown.Core.Tests.Build {
     private readonly MainBuilder _builder = new MainBuilder()
       .AddWorker<ExplicitIdWorker>()
       .AddWorker<SettingsWorker>()
-      .AddWorker<IdScopeWorker>()
+      .AddWorker<HeadingItemWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<ItemWorker>()

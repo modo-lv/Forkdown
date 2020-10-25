@@ -7,7 +7,7 @@ namespace Forkdown.Core.Build {
       .AddWorker<ExplicitIdWorker>()
       .AddWorker<LinkIndexWorker>()
       .AddWorker<SettingsWorker>()
-      .AddWorker<IdScopeWorker>()
+      .AddWorker<HeadingItemWorker>()
       .AddWorker<DocumentWorker>()
       .AddWorker<SemanticParagraphWorker>()
       .AddWorker<ListItemWorker>()

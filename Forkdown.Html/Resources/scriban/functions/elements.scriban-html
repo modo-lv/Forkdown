@@ -33,8 +33,8 @@
       include 'elements/separator' $0
     when "Text"
       include 'elements/text' $0
-    when 'ExplicitContainer'
-      include 'elements/block' $0
+    when 'Section'
+      include 'elements/section' $0
     when 'Table'
       include 'elements/table' $0
     when 'TableRow'

@@ -1,7 +1,7 @@
-{{- if ($1.IsNewline && !$1.IsHeading) -}}
-<br />
+{{ if ($1.IsNewline) }}
+<br class="fd--newline" />
 {{- end -}}
-<article {{ attrs $1 "fd--item" }}>
+<article {{ attrs $1 $extra }} {{- if ($1.ExplicitId != "") }} id="{{- $1.ExplicitId | html.escape -}}"{{- end -}}>
   <header>
     {{- if ($1.IsCheckitem) -}}
     <div class="fd--checkbox">
@@ -9,13 +9,13 @@
     </div>
     {{- end -}}
     <div class="fd--title">
-      {{ if ($1.ExplicitId != "") }} <a id="{{- $1.ExplicitId | html.escape -}}"></a> {{- end }}
       {{- element $1.Title -}}
     </div>
+    <div class="fd--spacer"></div>
   </header>
-  {{- if ($1.Contents | array.size) > 0 -}}
+  {{- if ($1.Content | array.size) > 0 -}}
   <div class="fd--content">
-    {{ elements $1.Contents }}
+    {{ elements $1.Content }}
   </div>
   {{- end -}}
 </article>

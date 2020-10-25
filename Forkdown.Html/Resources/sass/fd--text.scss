@@ -32,6 +32,10 @@ strong {
 .fd--paragraph {
   display: flex;
 
+  & + .fd--paragraph {
+    margin-top: 0.2em;
+  }
+
   &.fd--inline {
     display: inline-flex;
   }

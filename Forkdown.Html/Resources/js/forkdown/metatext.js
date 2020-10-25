@@ -3,36 +3,40 @@
 class ForkdownMetaText {
   init = () => {
     let meta = cssClass => {
-      let metas = $(".fd--paragraph." + cssClass)
-      metas.each((i, meta) => {
-        let button = $(meta).find(".fd--meta-label")
-        let content = $(meta).find("p")
-        let html = content.html()
+      let metaTexts = $(".fd--paragraph." + cssClass)
+      metaTexts.each((i, metaText) => {
+        let button = $(metaText).find(".fd--meta-label")
+        let html = $(metaText).find("p").html()
 
         // Check item
-        let header = $(meta).parent(".fd--content").parent(".fd--item")
+        let content = $(metaText).parent(".fd--content")
+        let header = content.parent(".fd--item")
           .find("> header")
         if (header.length > 0) {
-          let help = header.find("> .fd--meta")
-          if (help.length < 1)
-            help = $("<div>").addClass("fd--meta").appendTo(header)
-          let content = $(meta).parent(".fd--content")
-          help.append(meta)
+          let metaNode = header.find(".fd--meta")
+          if (metaNode.length < 1) {
+            let placement = header.parent(".fd--item").hasClass("fd--is-heading")
+              ? $("> .fd--spacer", header)
+              : $("> .fd--title", header)
+            metaNode = $("<div>").addClass("fd--meta").insertAfter(placement)
+          }
+          metaNode.append(metaText)
+          $(metaText).replaceWith(button)
+
           if (content.children().length < 1)
             content.remove()
-        }
-        $(meta).replaceWith(button)
 
-        // Collapse to button
-        window.tippy(button.get(), {
-          content: html,
-          allowHTML: true,
-          interactive: true,
-          placement: 'bottom-start',
-          theme: 'light-border',
-          trigger: 'click' + (cssClass === "fd--info" ? ' mouseenter focus' : ''),
-          maxWidth: 350,
-        })
+          // Collapse to button
+          window.tippy(button.get(), {
+            content: html,
+            allowHTML: true,
+            interactive: true,
+            placement: 'bottom-start',
+            theme: 'light-border',
+            trigger: 'click' + (cssClass === "fd--info" ? ' mouseenter focus' : ''),
+            maxWidth: 350,
+          })
+        }
       })
     }
     meta("fd--help")
