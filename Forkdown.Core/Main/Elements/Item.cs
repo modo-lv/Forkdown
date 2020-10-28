@@ -36,8 +36,8 @@ namespace Forkdown.Core.Elements {
         this.IsCheckitem = false;
       else if (this.Settings.IsTrue("+"))
         this.IsCheckitem = true;
-      else if (this.Title is Paragraph p && p.Subs.FirstOrDefault() is Text t && t.Content.StartsWith(":- ")) {
-        t.Content = t.Content.TrimPrefix(":- ");
+      else if (this.Title is Paragraph p && p.Subs.FirstOrDefault() is Text t && t.Content.StartsWith(":# ")) {
+        t.Content = t.Content.TrimPrefix(":# ");
         this.IsCheckitem = false;
       }
       else {

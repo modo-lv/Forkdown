@@ -1,7 +1,9 @@
-$checkbox-spacing: 0.15rem;
+$checkbox-spacing: 0.25rem;
 $bg-meta: #DDD;
 $border: 1px solid gray;
 $border-header: 1px dashed gray;
+$title-height: 1.5rem;
+$checkbox-border-width: 1px;
 
 @mixin appearance($val) {
   appearance: $val;
@@ -21,8 +23,8 @@ br.fd--newline {
 .fd--item {
   display: inline-flex;
   flex-direction: column;
-  margin: $checkbox-spacing;
-  margin-right: calc(#{$checkbox-spacing} * 2);
+  vertical-align: top;
+  margin: $checkbox-spacing / 2;
 
   & > header {
     display: flex;
@@ -36,21 +38,6 @@ br.fd--newline {
     }
 
     & > {
-      .fd--title {
-        border: $border;
-        display: flex;
-        align-items: center;
-        padding: $checkbox-spacing;
-
-        &:nth-last-child(3) {
-          border-right: 0;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-          margin: 0.2em;
-        }
-      }
-
       .fd--checkbox {
         border: $border;
         border-right: none;
@@ -63,13 +50,11 @@ br.fd--newline {
         & > input {
           @include appearance(none);
 
-          $size: 1.5rem;
-          width: $size;
-          height: $size;
+          height: $title-height;
+          width: $title-height;
           display: block;
           outline: none;
-          //box-shadow: 2px 2px 2px #888, inset 0 2px 3px #fff;
-          border: 1px outset silver;
+          border: $checkbox-border-width outset silver;
           background-size: cover;
           background-color: white;
 
@@ -83,6 +68,22 @@ br.fd--newline {
           &.fd--single:checked {
             background-image: url("assets/icons/check-bold.svg");
           }
+        }
+      }
+
+      .fd--title {
+        border: $border;
+        display: flex;
+        align-items: center;
+        min-height: calc(#{$title-height} + #{$checkbox-border-width * 2});
+        padding: 0 $checkbox-spacing;
+
+        &:nth-last-child(3) {
+          border-right: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          margin: 0.2em;
         }
       }
 
@@ -111,7 +112,18 @@ br.fd--newline {
   .fd--content {
     border: $border;
     border-top: none;
+    padding: $checkbox-spacing / 2;
+    & > .fd--paragraph {
+      margin: $checkbox-spacing / 2;
+      & + .fd--paragraph {
+        margin-top: 0.2em;
+      }
+    }
+  }
+
+  &:not(.fd--checkitem):not(.fd--is-heading):not(.fd--has-heading) > header:nth-last-child(2) > .fd--title:first-child {
     padding: $checkbox-spacing;
+    font-size: 110%;
   }
 
   &.fd--is-heading {
@@ -131,6 +143,7 @@ br.fd--newline {
         & > .fd--title {
           border: none;
           padding-left: 0;
+
           & > {
             h1, h2, h3, h4, h5, h6 {
               margin-left: 0;
@@ -152,10 +165,6 @@ br.fd--newline {
 
       .fd--content {
         padding: 0;
-
-        & > .fd--item {
-          margin-left: 0;
-        }
       }
     }
 
