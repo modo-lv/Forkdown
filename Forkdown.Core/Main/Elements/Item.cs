@@ -38,6 +38,8 @@ namespace Forkdown.Core.Elements {
         this.IsCheckitem = true;
       else if (this.Title is Paragraph p && p.Subs.FirstOrDefault() is Text t && t.Content.StartsWith(":# ")) {
         t.Content = t.Content.TrimPrefix(":# ");
+        if (t.Content.IsBlank())
+          this.Title.Subs.RemoveAt(0);
         this.IsCheckitem = false;
       }
       else {
