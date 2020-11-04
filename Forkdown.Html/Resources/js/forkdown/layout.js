@@ -30,9 +30,6 @@ class ForkdownLayout {
     $(window).on("resize", this.processMasonry)
     $(window).on("hashchange", window.tippy.hideAll)
     $(window).on("hashchange", this.focusAnchor)
-    $("main").on("scroll", () => {
-      console.log($("main").scrollTop())
-    })
   }
 
   /**
@@ -106,7 +103,7 @@ class ForkdownLayout {
    * Use during page load to hide the layout shuffling as things are moved into masonry positions
    */
   static hideMain() {
-    ForkdownLayout.MainHider.innerText = ForkdownLayout.MainHider.innerText || "main > * { visibility: hidden; } main { overflow: hidden }"
+    //ForkdownLayout.MainHider.innerText = ForkdownLayout.MainHider.innerText || "main > * { visibility: hidden; } main { overflow: hidden }"
     document.head.appendChild(ForkdownLayout.MainHider)
   }
 

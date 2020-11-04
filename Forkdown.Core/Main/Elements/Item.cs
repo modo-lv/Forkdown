@@ -41,6 +41,8 @@ namespace Forkdown.Core.Elements {
         if (t.Content.IsBlank())
           this.Title.Subs.RemoveAt(0);
         this.IsCheckitem = false;
+
+        
       }
       else {
         this.IsCheckitem = !(replaceElement is Heading || this.Subs.FirstOrDefault() is Heading);

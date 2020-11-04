@@ -41,7 +41,7 @@ class ForkdownSettings {
         let id = Math.max(...this.main.profileIds) + 1
         this.main.addProfile(new ForkdownProfile({
           id: id,
-          name: name
+          projectName: name
         }))
         this.main.profileId = id
         this.main.profilesUpdated()

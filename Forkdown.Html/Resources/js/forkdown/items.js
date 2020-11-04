@@ -2,11 +2,17 @@
 
 class ForkdownItems {
   /**
-   *
-   * @param {ForkdownMain} main
+   * @typedef {function(): ForkdownProfile} ActiveProfile
    */
-  constructor(main) {
-    this.main = main
+  /**
+   * @param {{
+   *   profile: ActiveProfile,
+   *   storage: ForkdownStorage
+   * }} dummy
+   */
+  constructor({profile, storage} = {}) {
+    this.storage = storage
+    this.profile = profile
     this.index = {}
   }
 
@@ -14,7 +20,7 @@ class ForkdownItems {
   /**
    *
    */
-  init = () => new Promise(resolve => {
+  init = async () => {
     // Singles
     this.index = $("#fd--singles-index").data("index")
     if (this.index.length < 1)
@@ -39,13 +45,11 @@ class ForkdownItems {
         let checked = this.mark(id)
         if (box.data("fd--single-id"))
           this.markSingles(id, checked);
-        await this.main.saveProfile()
+        await this.storage.saveProfile(this.profile())
       })
-      box.prop("checked", this.main.profile.isChecked(id))
+      box.prop("checked", this.profile().isChecked(id))
     })
-
-    resolve();
-  })
+  }
 
   mark = (id, on = null) => {
     let box = document.getElementById(id)
@@ -57,7 +61,7 @@ class ForkdownItems {
       on = $(box).prop("checked") === true
     }
     console.log("Saving " + id + " as checked: ", on)
-    this.main.profile.toggleCheck(id, on);
+    this.profile().toggleCheck(id, on);
     return on
   }
 
@@ -70,15 +74,5 @@ class ForkdownItems {
         continue
       this.mark(boxId, on)
     }
-  }
-
-  /**
-   *
-   * @param {HTMLElement} container
-   */
-  static totals(container) {
-    let total = $(".fd--checkitem > input[type='checkbox']")
-    let checked = ("*[checked]", total);
-    console.log(checked, "/", total);
   }
 }

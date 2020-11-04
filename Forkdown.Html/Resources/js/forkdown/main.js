@@ -2,14 +2,19 @@
 
 /**
  * Main Forkdown class, primarily responsible for holding and persisting user profile data.
+ *
  */
 class ForkdownMain {
-  constructor({projectConfig}) {
+  /**
+   *
+   * @param {ForkdownProjectConfig} projectConfig
+   */
+  constructor({config}) {
     this.profileIds = []
     this.profileId = 0
 
-    this.projectConfig = projectConfig
-    this.dbName = "forkdown:" + this.projectConfig.name
+    this.config = config
+    this.dbName = "forkdown:" + this.config.name
     this.profiles = []
     this.profile = {}
 
