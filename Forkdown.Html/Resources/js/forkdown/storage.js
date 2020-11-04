@@ -24,16 +24,6 @@ class ForkdownStorage {
 
   /**
    *
-   * @param {ForkdownProfile} profile
-   * @return {Promise<any>}
-   */
-  saveProfile = async (profile) => {
-    this.db.setItem(`profile[${profile.id}]`, profile)
-  }
-
-
-  /**
-   *
    * @param {RegExp} match
    * @return {Promise<any>}
    */
@@ -74,4 +64,12 @@ class ForkdownStorage {
     }
     return Promise.allSettled(saves)
   }
+
+  /**
+   * Delete an item from storage.
+   * @param {String} key
+   * @return {Promise<*>}
+   */
+  removeItem = async (key) =>
+    this.db.removeItem(key)
 }

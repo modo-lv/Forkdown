@@ -1,12 +1,12 @@
+'use strict'
+
 class ForkdownScroll {
   /**
-   *
-   * @param {ForkdownMain} main
+   * @param {ForkdownProfileSet} profileSet
    */
-  constructor({main = null}) {
-    if (!(main instanceof ForkdownMain))
-      throw new Error("Cannot initialize without ForkdownMain.")
-    this.main = main
+  constructor({ profileSet }) {
+    /** @type {function:ForkdownProfile} **/
+    this.profile = () => profileSet.activeProfile
   }
 
   init = async () => {
@@ -14,10 +14,15 @@ class ForkdownScroll {
     if (id.length < 1)
       return
 
-    let anchor = document.getElementById(id)
+    let main = $("main")
 
-    $("main").on("scroll", (e) => {
-      $(e.target).scrollTop
-    })
+    let pos = this.profile().scrollPosition
+    if (pos.id === id) {
+      main.scrollTop(pos.position)
+    }
+
+    main.on("scroll", (e) =>
+      this.profile().saveScrollPosition(id, $(e.target).scrollTop())
+    )
   }
 }

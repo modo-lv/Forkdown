@@ -2,7 +2,7 @@ class ForkdownSite {
   /**
    *
    * @param {ForkdownConfig} config
-   * @param {ForkdownProfiles} profiles
+   * @param {ForkdownProfileSet} profiles
    */
   constructor({config, profiles}) {
     this.config = config

@@ -9,7 +9,7 @@ class ForkdownMenu {
   /**
    * Init
    */
-  init = async  () => {
+  init = async () => {
     $("nav > ul > li").get().forEach(li => {
       $(li).addClass("fd--scripted")
       let content = $(li).find("ul").html()
@@ -26,13 +26,13 @@ class ForkdownMenu {
       })
     })
 
-    return this;
+    return this
   }
 
 
   /**
-   * Hide the main content.
-   * Use during page load to hide the layout shuffling as things are moved into masonry positions
+   * Hide the main menu (sub) items.
+   * Use during page load to collapse the menu entries to their headings.
    */
   static hideMain() {
     ForkdownMenu.MenuHider.innerText = ForkdownMenu.MenuHider.innerText || "nav > ul > li > ul { display: none; }"
