@@ -9,6 +9,10 @@ class ForkdownItems {
     this.index = {}
   }
 
+  /**
+   *
+   * @return {ForkdownProfile}
+   */
   profile = () => this.profileSet.activeProfile
 
   /**

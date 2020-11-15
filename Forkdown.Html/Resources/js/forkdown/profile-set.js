@@ -25,8 +25,7 @@ class ForkdownProfileSet {
         this.profiles = [ new ForkdownProfile({
           id: 1,
           name: "Default",
-          profileSet: this,
-        }) ]
+        }, this) ]
         this.activeProfile = this.profiles[0]
         return this.saveAllProfiles()
       }

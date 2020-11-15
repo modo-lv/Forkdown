@@ -46,6 +46,7 @@ namespace Forkdown.Html {
       }
       catch (Exception ex) {
         logger.LogCritical(ex, "");
+        Environment.Exit(1);
       }
     }
   }

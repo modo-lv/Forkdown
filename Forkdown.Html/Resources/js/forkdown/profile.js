@@ -31,6 +31,11 @@ class ForkdownProfile {
 
   save = async () => this.profiles().saveProfile(this)
 
+  /**
+   *
+   * @param {String} id
+   * @return {Boolean}
+   */
   isChecked = (id) => {
     return this.items[id] && this.items[id].isChecked
   }

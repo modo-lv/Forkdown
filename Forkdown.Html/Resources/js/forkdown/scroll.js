@@ -24,5 +24,6 @@ class ForkdownScroll {
     main.on("scroll", (e) =>
       this.profile().saveScrollPosition(id, $(e.target).scrollTop())
     )
+    main.trigger("scroll")
   }
 }
