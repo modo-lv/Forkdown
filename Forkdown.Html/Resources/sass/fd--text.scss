@@ -1,3 +1,5 @@
+@import "fd--globals";
+
 $label-spacing: 0.25rem;
 $label-min-width: calc(1.5rem + (#{$label-spacing} * 2));
 $line-height: 1.6rem;
@@ -31,9 +33,18 @@ strong {
 
 .fd--paragraph {
   display: flex;
+}
+
+main .fd--paragraph {
+  margin-top: $paragraph-spacing;
+  margin-bottom: $paragraph-spacing;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   & + .fd--paragraph {
-    margin-top: 0.2em;
+    margin-top: calc(#{$paragraph-spacing} / 2);
   }
 
   &.fd--inline {

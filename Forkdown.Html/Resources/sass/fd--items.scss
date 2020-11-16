@@ -1,4 +1,5 @@
-$checkbox-spacing: 0.25rem;
+@import "fd--globals";
+
 $bg-meta: #DDD;
 $border: 1px solid gray;
 $border-header: 1px dashed gray;
@@ -24,7 +25,8 @@ br.fd--newline {
   display: inline-flex;
   flex-direction: column;
   vertical-align: top;
-  margin: $checkbox-spacing / 2;
+  margin-right: $item-spacing;
+  margin-top: $item-spacing;
 
   & > header {
     display: flex;
@@ -76,14 +78,14 @@ br.fd--newline {
         display: flex;
         align-items: center;
         min-height: calc(#{$title-height} + #{$checkbox-border-width * 2});
-        padding: 0 $checkbox-spacing;
+        padding: 0 $paragraph-spacing / 2;
+
+        & > .fd--paragraph:first-child {
+          margin-top: 0;
+        }
 
         &:nth-last-child(3) {
           border-right: 0;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-          margin: 0.2em;
         }
       }
 
@@ -96,7 +98,7 @@ br.fd--newline {
         padding: 0;
 
         & > .fd--meta-label {
-          margin: 0 $checkbox-spacing;
+          margin: 0 $item-spacing;
         }
       }
 
@@ -112,18 +114,20 @@ br.fd--newline {
   .fd--content {
     border: $border;
     border-top: none;
-    padding: $checkbox-spacing / 2;
-    & > .fd--paragraph {
-      margin: $checkbox-spacing / 2;
-      & + .fd--paragraph {
-        margin-top: 0.2em;
-      }
-    }
   }
 
-  &:not(.fd--checkitem):not(.fd--is-heading):not(.fd--has-heading) > header:nth-last-child(2) > .fd--title:first-child {
-    padding: $checkbox-spacing;
-    font-size: 110%;
+  &:not(.fd--is-heading) > {
+    .fd--content {
+      padding: $item-spacing / 2;
+
+      & > .fd--paragraph:first-child {
+        margin-top: 0;
+      }
+
+      & > .fd--item {
+        margin: $item-spacing / 2;
+      }
+    }
   }
 
   &.fd--is-heading {
@@ -137,7 +141,6 @@ br.fd--newline {
 
       header {
         padding-left: 0;
-        margin-bottom: $checkbox-spacing;
         border-bottom: $border-header;
 
         & > .fd--title {
@@ -161,10 +164,6 @@ br.fd--newline {
           border: none;
         }
 
-      }
-
-      .fd--content {
-        padding: 0;
       }
     }
 

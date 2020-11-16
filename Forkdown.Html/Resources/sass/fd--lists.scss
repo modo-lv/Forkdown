@@ -1,3 +1,7 @@
+@import "fd--globals";
+
+$list-spacing: $paragraph-spacing;
+
 ul, ol {
   margin: 0;
 
@@ -6,15 +10,31 @@ ul, ol {
   }
 }
 
-
-article {
+main {
   ul, ol {
-    &:last-of-type {
-      // Having an extra margin at the bottom of an article messes with the grid layout,
-      // creating unnecessary spacing.
-      // This should be covered by a global "margin: 0", but leave this in in case that changes.
-      margin-bottom: 0
+    li + li {
+      margin-top: $list-spacing;
+    }
+  }
+
+  .fd--paragraph + {
+    ul, ol {
+      margin-top: $list-spacing;
+      margin-bottom: $list-spacing;
+    }
+  }
+
+  article {
+    ul, ol {
+      &:last-of-type {
+        // Having an extra margin at the bottom of an article messes with the grid layout,
+        // creating unnecessary spacing.
+        // This should be covered by a global "margin: 0", but leave this in in case that changes.
+        margin-bottom: 0
+      }
     }
   }
 }
+
+
 
