@@ -20,6 +20,8 @@ namespace Forkdown.Core {
   public partial class Project {
     /// <inheritdoc cref="BuildConfig"/>
     public BuildConfig Config = new BuildConfig();
+    
+    public LabelsConfig LabelsConfig = new LabelsConfig();
 
     /// <inheritdoc cref="BuildConfig.Name"/>
     public String Name => this.Config.Name;
@@ -66,8 +68,10 @@ namespace Forkdown.Core {
 
       // Settings
       this.Config = BuildConfig.From(_args.MainConfigFile);
+      this.LabelsConfig = LabelsConfig.From(_args.LabelsConfigFile);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
       _builder.Config = this.Config;
+      _builder.LabelsConfig = this.LabelsConfig;
 
       _initialized = true;
       return this;

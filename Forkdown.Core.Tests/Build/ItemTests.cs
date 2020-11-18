@@ -29,11 +29,10 @@ namespace Forkdown.Core.Tests.Build {
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    void CheckItem(Boolean vertical) {
-      var input = vertical ? "+ CheckItem" : "- CheckItem";
+    void CheckItem(Boolean isCheckItem) {
+      var input = isCheckItem ? "+ CheckItem" : "- Normal";
       var result = new MainBuilder().AddWorker<ItemWorker>().Build(input);
-      result.FirstSub<Item>().TitleText.Should().Be("CheckItem");
-      result.FirstSub<Item>().IsNewline.Should().Be(vertical);
+      result.FirstSub<Item>().IsCheckitem.Should().Be(isCheckItem);
     }
 
     [Fact]
@@ -42,7 +41,7 @@ namespace Forkdown.Core.Tests.Build {
   Content";
       var result = new MainBuilder()
         .AddWorker<LinesToParagraphsWorker>()
-        .AddWorker<SemanticParagraphWorker>()
+        .AddWorker<MetaTextWorker>()
         .AddWorker<ItemWorker>()
         .Build(input)
         .FirstSub<Item>();

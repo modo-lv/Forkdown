@@ -34,7 +34,7 @@ br.fd--newline {
     padding: 0;
 
     &:nth-last-child(2) > {
-      .fd--title, .fd--meta {
+      .fd--title, .fd--labels, .fd--meta {
         border-bottom: $border-header;
       }
     }
@@ -47,7 +47,6 @@ br.fd--newline {
         padding: 0;
         display: flex;
         justify-content: center;
-        align-items: center;
 
         & > input {
           @include appearance(none);
@@ -76,29 +75,43 @@ br.fd--newline {
       .fd--title {
         border: $border;
         display: flex;
-        align-items: center;
         min-height: calc(#{$title-height} + #{$checkbox-border-width * 2});
         padding: 0 $paragraph-spacing / 2;
+        border-right: 0;
 
-        & > .fd--paragraph:first-child {
+        & > p:first-child {
           margin-top: 0;
+
+          & > p {
+            flex-shrink: 0;
+          }
         }
 
-        &:nth-last-child(3) {
-          border-right: 0;
+        &:nth-last-child(2) {
+          border-right: $border;
+        }
+      }
+
+      .fd--labels {
+        border-bottom:$border;
+        border-top: $border;
+        border-left: $border-header;
+        background: $bg-meta;
+
+        &:nth-last-child(2) {
+          border-right: $border;
         }
       }
 
       .fd--meta {
         display: flex;
-        align-items: center;
         border: $border;
         border-left: $border-header;
         background: $bg-meta;
         padding: 0;
 
         & > .fd--meta-label {
-          margin: 0 $item-spacing;
+          margin: 0 $item-spacing / 2;
         }
       }
 
@@ -111,7 +124,7 @@ br.fd--newline {
 
   }
 
-  .fd--content {
+  & > .fd--content {
     border: $border;
     border-top: none;
   }
@@ -120,7 +133,7 @@ br.fd--newline {
     .fd--content {
       padding: $item-spacing / 2;
 
-      & > .fd--paragraph:first-child {
+      & > p:first-child {
         margin-top: 0;
       }
 
@@ -128,6 +141,14 @@ br.fd--newline {
         margin: $item-spacing / 2;
       }
     }
+  }
+
+  &:not(.fd--is-heading):not(.fd--has-heading) > .fd--content > p {
+    max-width: $paragraph-max-width;
+  }
+
+  &.fd--has-heading > header > .fd--title {
+    padding: $paragraph-spacing / 4 $paragraph-spacing;
   }
 
   &.fd--is-heading {
@@ -146,6 +167,8 @@ br.fd--newline {
         & > .fd--title {
           border: none;
           padding-left: 0;
+          padding-right: $paragraph-spacing;
+          padding-bottom: $paragraph-spacing / 2;
 
           & > {
             h1, h2, h3, h4, h5, h6 {
@@ -155,9 +178,11 @@ br.fd--newline {
           }
         }
 
-        & > .fd--meta {
-          border: none;
-          border-left: $border-header;
+        & > {
+          .fd--labels, .fd--meta {
+            border: none;
+            border-left: $border-header;
+          }
         }
 
         & > .fd--spacer {

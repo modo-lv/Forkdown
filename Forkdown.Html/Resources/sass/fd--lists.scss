@@ -17,7 +17,7 @@ main {
     }
   }
 
-  .fd--paragraph + {
+  p + {
     ul, ol {
       margin-top: $list-spacing;
       margin-bottom: $list-spacing;

@@ -11,6 +11,10 @@ using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements {
   public abstract partial class Element {
+    public enum Metadata {
+      Normal, Info, Warning, Help
+    }
+  
     public IList<Element> Subs = Nil.L<Element>();
 
     public String Type => this.GetType().Name;
@@ -19,7 +23,7 @@ namespace Forkdown.Core.Elements {
 
     public HtmlAttributes Attributes = new HtmlAttributes();
 
-    public ISet<String> Labels = Nil.SStr;
+    public IList<Label> Labels = Nil.L<Label>();
 
     public CheckItemData? CheckItem = null;
 
@@ -44,6 +48,7 @@ namespace Forkdown.Core.Elements {
     /// All project-unique identifiers for this element. 
     /// </summary>
     public IList<String> ExplicitIds = Nil.LStr;
+    public Metadata Kind = Metadata.Normal;
 
     public virtual String TitleText => TitleTextOf(this);
 

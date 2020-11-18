@@ -20,6 +20,9 @@ html, body, table, input {
   font-size: inherit;
   line-height: inherit;
   white-space: normal;
+  & > .tippy-content p:first-child {
+    margin-top: 0;
+  }
 }
 
 main article > header .tippy-box {
@@ -31,11 +34,7 @@ strong {
   font-weight: 600;
 }
 
-.fd--paragraph {
-  display: flex;
-}
-
-main .fd--paragraph {
+main p {
   margin-top: $paragraph-spacing;
   margin-bottom: $paragraph-spacing;
 
@@ -43,7 +42,7 @@ main .fd--paragraph {
     margin-bottom: 0;
   }
 
-  & + .fd--paragraph {
+  & + p {
     margin-top: calc(#{$paragraph-spacing} / 2);
   }
 
@@ -63,21 +62,30 @@ a[href] {
   color: navy;
 
   &.fd--internal {
-    color: green;
+    color: #050;
   }
 }
 
+.fd--labels {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-shrink: 1;
+  gap: 0.1rem;
+  padding: 0.1rem;
+}
+
 .fd--label {
-  margin-right: $label-spacing;
-  padding: 0 0.1em;
-  background: silver;
-  border-radius: 0.25rem;
-  display: inline-block;
+  display: inline-flex;
   text-align: center;
+
+  text-decoration: none !important;
+  cursor: help;
+  text-shadow: 1px 1px #323232;
 }
 
 .fd--meta-label {
   cursor: help;
+  text-shadow: 1px 1px #323232;
 }
 
 .fd--warning {
@@ -87,17 +95,4 @@ a[href] {
 
 .fd--global_anchor {
   display: none;
-}
-
-article > header {
-  h1, h2, h3, h4, h5, h6 {
-    display: inline-block;
-  }
-}
-
-h1, h2, h3, h4, h5, h6 {
-  .fd--label {
-    margin-right: 0;
-    margin-left: 0.25rem;
-  }
 }

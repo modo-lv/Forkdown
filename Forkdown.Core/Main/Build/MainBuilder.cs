@@ -15,6 +15,7 @@ namespace Forkdown.Core.Build {
     public readonly BuilderStorage Storage = new BuilderStorage();
     public readonly IList<Type> Workers = new List<Type>();
     public BuildConfig? Config = null;
+    public LabelsConfig? LabelsConfig = null;
     private readonly ICollection<String> _finishedDocs = new Collection<String>();
 
     public Document Build(String markdown, ProjectPath? file = null) =>

@@ -2,19 +2,11 @@
 
 include 'functions/attributes'
 include 'functions/elements'
+include 'functions/labels'
 
 -}}
 
 
-{{- func labels
-  if ($0.Labels.Count > 0)
-    }}<span class="fd--labels">{{
-    for $label in $0.Labels
-      }}<span class="fd--label">{{$label}}</span>{{
-    end
-    }}</span>{{
-  end
-end -}}
 
 
 {{- func global_anchor

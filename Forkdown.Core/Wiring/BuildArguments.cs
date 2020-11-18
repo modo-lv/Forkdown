@@ -17,11 +17,14 @@ namespace Forkdown.Core.Wiring {
     /// </summary>
     public readonly FileInfo MainConfigFile;
 
+    public readonly FileInfo LabelsConfigFile;
+
 
     /// Constructor 
     public BuildArguments(String projectRoot) {
       this.ProjectRoot = Path.Get(Path.Get(projectRoot).FullPath);
       this.MainConfigFile = this.ProjectRoot.File("forkdown.main.config.yaml");
+      this.LabelsConfigFile = this.ProjectRoot.File("forkdown.main.labels.yaml");
     }
 
   }

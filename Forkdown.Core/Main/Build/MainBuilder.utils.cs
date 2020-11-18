@@ -4,17 +4,18 @@ namespace Forkdown.Core.Build {
   public partial class MainBuilder {
     public static MainBuilder CreateDefault() => new MainBuilder()
       .AddWorker<LinesToParagraphsWorker>()
+      .AddWorker<LabelWorker>()
+      .AddWorker<SettingsWorker>()
+      
       .AddWorker<ExplicitIdWorker>()
       .AddWorker<LinkIndexWorker>()
-      .AddWorker<SettingsWorker>()
       .AddWorker<HeadingItemWorker>()
       .AddWorker<DocumentWorker>()
-      .AddWorker<SemanticParagraphWorker>()
+      .AddWorker<MetaTextWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<ItemWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<LinkWorker>()
-      .AddWorker<SinglesIndexWorker>()
-      .AddWorker<LabelWorker>();
+      .AddWorker<SinglesIndexWorker>();
   }
 }

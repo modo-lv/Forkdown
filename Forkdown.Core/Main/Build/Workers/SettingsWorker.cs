@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Elements.Attributes;
+using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
@@ -12,14 +13,11 @@ namespace Forkdown.Core.Build.Workers {
     public override Element ProcessElement(Element element, Arguments args) {
       var html = element.Attributes;
       if (html.Properties != null) {
-        // ReSharper disable once RedundantCast
-        element.Settings = new ElementSettings(
-          html.Properties
-            .Where(_ => _.Key?.StartsWith(":") ?? false)
-            .ToDictionary(_ => _.Key.Part(1), _ => _.Value?.Trim() ?? "")
-        );
-
-        html.Properties.RemoveAll(_ => _.Key.StartsWith(":"));
+        var settings = html.Properties.Where(_ => _.Key?.StartsWith(":") ?? false).ToHashSet();
+        settings.ForEach(_ => {
+          element.Settings[_.Key.Part(1)] = _.Value?.Trim() ?? "";
+          html.Properties.Remove(_);
+        });
       }
 
       return element;

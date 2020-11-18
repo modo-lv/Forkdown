@@ -42,7 +42,7 @@ class ForkdownSettings {
       return
 
     let newProfile = await this.profileSet.newProfile({
-      profile: new ForkdownProfile({ name: name }),
+      profile: new ForkdownProfile({ name: name }, this.profileSet),
       save: true
     })
     return this.switchToProfile({ id: newProfile.id })

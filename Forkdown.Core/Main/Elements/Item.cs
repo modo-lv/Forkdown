@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements.Types;
+using Simpler.NetCore;
+using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements {
@@ -23,11 +25,12 @@ namespace Forkdown.Core.Elements {
 
     public Item() { }
 
-    public Item(Element replaceElement) {
+    public Item(Element replaceElement, ListingKind listKind) {
       this.ExplicitIds = replaceElement.ExplicitIds;
       this.Attributes = replaceElement.Attributes;
-      this.Labels = replaceElement.Labels;
       this.Subs = replaceElement.Subs;
+      this.Labels = this.Title?.Labels ?? this.Labels;
+      this.Title.IfNotNull(t => t!.Labels = Nil.L<Label>());
       this.ImplicitId = replaceElement.ImplicitId;
       this.IsSingle = replaceElement.IsSingle;
       this.Settings = replaceElement.Settings;
@@ -36,16 +39,11 @@ namespace Forkdown.Core.Elements {
         this.IsCheckitem = false;
       else if (this.Settings.IsTrue("+"))
         this.IsCheckitem = true;
-      else if (this.Title is Paragraph p && p.Subs.FirstOrDefault() is Text t && t.Content.StartsWith(":# ")) {
-        t.Content = t.Content.TrimPrefix(":# ");
-        if (t.Content.IsBlank())
-          this.Title.Subs.RemoveAt(0);
+      else if (this.Settings.IsTrue("#") || this.Settings.IsTrue(" ")) {
         this.IsCheckitem = false;
-
-        
       }
       else {
-        this.IsCheckitem = !(replaceElement is Heading || this.Subs.FirstOrDefault() is Heading);
+        this.IsCheckitem = listKind == ListingKind.CheckItems;
       }
     }
 
@@ -54,6 +52,8 @@ namespace Forkdown.Core.Elements {
       element.MoveAttributesTo(item);
       item.Subs.Add(element);
       item.IsHeading = element is Heading;
+      item.Labels = item.Title?.Labels ?? item.Labels;
+      item.Title.IfNotNull(t => t!.Labels = Nil.L<Label>());
       return item;
     }
   }

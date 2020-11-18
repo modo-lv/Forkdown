@@ -3,28 +3,29 @@
 class ForkdownMetaText {
   init = () => {
     let meta = cssClass => {
-      let metaTexts = $(".fd--paragraph." + cssClass)
+      let metaTexts = $("." + cssClass)
       metaTexts.each((i, metaText) => {
-        let button = $(metaText).find(".fd--meta-label")
-        let html = $(metaText).find("p").html()
+        let container = $(metaText).parent(".fd--content")
+        let button = $(metaText).find("> .fd--meta-label")
+        let content = $(metaText)
+        content[0].removeChild(button[0])
+        let html = content[0].outerHTML
 
         // Check item
-        let content = $(metaText).parent(".fd--content")
-        let header = content.parent(".fd--item")
-          .find("> header")
+        let item = container.parent(".fd--item")
+        let header = item.find("> header")
         if (header.length > 0) {
           let metaNode = header.find(".fd--meta")
           if (metaNode.length < 1) {
-            let placement = header.parent(".fd--item").hasClass("fd--is-heading")
-              ? $("> .fd--spacer", header)
-              : $("> .fd--title", header)
-            metaNode = $("<div>").addClass("fd--meta").insertAfter(placement)
+            let spacer = $("> .fd--spacer", header)
+            metaNode = $("<div>").addClass("fd--meta")
+            metaNode.insertBefore(spacer)
           }
           metaNode.append(metaText)
           $(metaText).replaceWith(button)
 
-          if (content.children().length < 1)
-            content.remove()
+          if (container.children().length < 1)
+            container.remove()
 
           // Collapse to button
           window.tippy(button.get(), {

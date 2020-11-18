@@ -1,16 +1,17 @@
 {{ if ($1.IsNewline) }}
 <br class="fd--newline" />
 {{- end -}}
-<article {{ attrs $1 $extra }} {{- if ($1.ExplicitId != "") }} id="{{- $1.ExplicitId | html.escape -}}"{{- end -}}>
+<article {{ attrs $1 }} {{- if (!$1.IsCheckitem && $1.ExplicitId != "") }} id="{{- $1.ExplicitId | html.escape -}}" {{- end -}}>
   <header>
     {{- if ($1.IsCheckitem) -}}
     <div class="fd--checkbox">
-      <input type="checkbox" id="{{ $1.GlobalId }}" />
+      <input type="checkbox" id="{{ $1.GlobalId | html.escape }}" />
     </div>
     {{- end -}}
     <div class="fd--title">
       {{- element $1.Title -}}
     </div>
+    {{ labels $1 }}
     <div class="fd--spacer"></div>
   </header>
   {{- if ($1.Content | array.size) > 0 -}}

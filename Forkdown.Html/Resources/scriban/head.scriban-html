@@ -20,12 +20,11 @@
 
   {{
   for script in Scripts 
-    if (script | string.ends_with "menu.js")
+    if (script | string.ends_with "menu.js") || (script | string.ends_with "site.js")
       }}<script src="{{ PathToRoot }}/{{ script }}?{{ Timestamp }}"></script>{{
     else
       }}<script src="{{ PathToRoot }}/{{ script }}?{{ Timestamp }}" defer></script>{{
     end
   end
   }}
-  <script>ForkdownMenu.hideMain()</script>
 </head>

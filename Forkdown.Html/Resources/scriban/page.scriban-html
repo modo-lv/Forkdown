@@ -3,7 +3,7 @@
 <html>
 {{ include 'head' }}
 <body data-project-name="{{ Project.Name | html.escape }}" data-html-config="{{ HtmlConfigJson | html.escape }}">
-  <div class="body">
+  <div id="fd--body">
 {{ include 'header' }}
 
 <main {{ attrs Document }}>
@@ -18,7 +18,7 @@ else -}}
 
 {{ include 'footer' }}
   </div>
-
+  <div id="fd--loading">⏳</div>
   <div id="fd--singles-index" data-index="{{ Json.Serialize(Project.SinglesIndex) | html.escape }}"></div>
 </body>
 </html>

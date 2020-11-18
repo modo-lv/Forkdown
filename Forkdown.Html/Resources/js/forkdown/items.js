@@ -53,10 +53,10 @@ class ForkdownItems {
     let box = document.getElementById(id)
     if (box) {
       if (on != null) {
-        console.debug("Marking " + box.id + " as checked: ", on)
+        console.debug("Setting " + box.id + " to checked: ", on)
         $(box).prop("checked", on);
       }
-      on = $(box).prop("checked") === true
+      on = $(box).prop("checked")
     }
     console.debug("Saving " + id + " as checked: ", on)
     this.profile().toggleCheck(id, on);

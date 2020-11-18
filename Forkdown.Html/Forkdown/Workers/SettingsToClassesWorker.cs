@@ -46,10 +46,11 @@ namespace Forkdown.Html.Forkdown.Workers {
         }
       }
 
+      if (element.Kind != Element.Metadata.Normal)
+        element.Attributes.Classes.Add($"{Globals.Prefix}{element.Kind.ToString().ToLowerInvariant()}");
+
       switch (element) {
         case Paragraph p:
-          if (p.Kind != ParagraphKind.Normal)
-            p.Attributes.Classes.Add($"{Globals.Prefix}{p.Kind.ToString().ToLowerInvariant()}");
           if (p.IsTitle)
             p.Attributes.Classes.Add($"{Globals.Prefix}title");
           break;
