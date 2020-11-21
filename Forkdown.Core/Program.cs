@@ -15,7 +15,11 @@ namespace Forkdown.Core {
     }
 
     public static T Service<T>() => Program.Services.GetRequiredService<T>();
-
-    public static ILogger<T> Logger<T>() => Program.Service<ILogger<T>>();
+    
+    public static ILogger<T> Logger<T>() {
+      if (_services != null)
+        return Program.Service<ILogger<T>>();
+      return LoggerFactory.Create(_ => _.AddConsole()).CreateLogger<T>();
+    }
   }
 }

@@ -14,8 +14,6 @@ namespace Forkdown.Html.Forkdown.Workers {
 
     /// <inheritdoc />
     public override Element ProcessElement(Element element, Arguments args) {
-      element.Attributes.Classes ??= new List<String>();
-      
       if (element.Settings.IsTrue("-"))
         element.Attributes.Classes.Add($"{Globals.Prefix}inline");
 
@@ -27,7 +25,7 @@ namespace Forkdown.Html.Forkdown.Workers {
 
       if (element.IsSingle) {
         element.Attributes.Classes.Add($"{Globals.Prefix}single");
-        element.Attributes.AddProperty($"data-{Globals.Prefix}single-id", Globals.Id(element.TitleText));
+        element.Attributes.Properties.Add($"data-{Globals.Prefix}single-id", Globals.Id(element.TitleText));
       }
 
       if (element is Item i) {

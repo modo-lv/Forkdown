@@ -66,14 +66,6 @@ a[href] {
   }
 }
 
-.fd--labels {
-  display: flex;
-  flex-direction: row-reverse;
-  flex-shrink: 1;
-  gap: 0.1rem;
-  padding: 0.1rem;
-}
-
 .fd--label {
   display: inline-flex;
   text-align: center;

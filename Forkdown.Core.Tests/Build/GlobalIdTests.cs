@@ -15,17 +15,17 @@ namespace Forkdown.Core.Tests.Build {
 
 More text {#id}";
       FluentActions.Invoking(() =>
-        MainBuilder.CreateDefault().Build(input)
+        ForkdownBuild.Default.Build(input)
       ).Should().Throw<DuplicateAnchorException>();
     }
 
     [Fact]
     void HandleMultiple() {
-      const String input = @"# Heading {#id,heading}";
+      const String input = @"Heading {#id,heading}";
 
-      var doc = MainBuilder.CreateDefault().Build(input);
-      doc.FirstSub<Item>().ExplicitId.Should().Be("id");
-      doc.FirstSub<Item>().ExplicitIds.Should().Contain("heading");
+      var doc = ForkdownBuild.Default.Build(input);
+      doc.FirstSub<Paragraph>().ExplicitId.Should().Be("id");
+      doc.FirstSub<Paragraph>().ExplicitIds.Should().Contain("heading");
     }
   }
 }

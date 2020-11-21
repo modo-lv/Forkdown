@@ -10,8 +10,6 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build {
   public class SinglesIndexTests {
     private readonly MainBuilder _builder = new MainBuilder()
-      .AddWorker<ExplicitIdWorker>()
-      .AddWorker<SettingsWorker>()
       .AddWorker<HeadingItemWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<ListItemWorker>()

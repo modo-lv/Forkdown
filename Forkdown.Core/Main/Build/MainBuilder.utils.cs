@@ -5,10 +5,7 @@ namespace Forkdown.Core.Build {
     public static MainBuilder CreateDefault() => new MainBuilder()
       .AddWorker<LinesToParagraphsWorker>()
       .AddWorker<LabelWorker>()
-      .AddWorker<SettingsWorker>()
       
-      .AddWorker<ExplicitIdWorker>()
-      .AddWorker<LinkIndexWorker>()
       .AddWorker<HeadingItemWorker>()
       .AddWorker<DocumentWorker>()
       .AddWorker<MetaTextWorker>()

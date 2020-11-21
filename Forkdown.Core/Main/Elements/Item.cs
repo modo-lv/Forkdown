@@ -33,7 +33,6 @@ namespace Forkdown.Core.Elements {
       this.Title.IfNotNull(t => t!.Labels = Nil.L<Label>());
       this.ImplicitId = replaceElement.ImplicitId;
       this.IsSingle = replaceElement.IsSingle;
-      this.Settings = replaceElement.Settings;
 
       if (this.Settings.IsTrue("-"))
         this.IsCheckitem = false;

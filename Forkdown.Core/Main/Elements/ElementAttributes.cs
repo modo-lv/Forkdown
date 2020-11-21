@@ -10,27 +10,21 @@ using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements {
   public class ElementAttributes {
-    public String Id = "";
-
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
-    public ISet<String> Classes = Nil.SStr;
+    public readonly ISet<String> Classes = Nil.SStr;
 
-    public IDictionary<String, String> Properties = Nil.DStr<String>();
+    public readonly IDictionary<String, String> Properties = Nil.DStr<String>();
 
-    public String ClassesString => this.Classes.StringJoin(" ") ?? "";
+    public readonly ElementSettings Settings = new ElementSettings();
 
-    public String PropertiesString => this.Properties.Select(_ => $"{_.Key}=\"{_.Value}\"").StringJoin(" ");
-
-   
-    
     public ElementAttributes() { }
 
-    public ElementAttributes(HtmlAttributes attrs, ElementSettings settings) {
-      this.Id = attrs.Id.Text();
+    public ElementAttributes(HtmlAttributes attrs, Element element) {
+      element.ExplicitIds = new List<String> { attrs.Id };
       this.Classes = attrs.Classes?.ToHashSet() ?? Nil.SStr;
       attrs.Properties?.ForEach(_ => {
         if (_.Key.StartsWith(":"))
-          settings[_.Key.Part(1)] = _.Value;
+          this.Settings[_.Key.Substring(1)] = _.Value;
         else
           this.Properties.Add(_);
       });

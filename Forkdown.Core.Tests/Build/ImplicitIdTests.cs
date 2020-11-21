@@ -10,7 +10,6 @@ using Xunit;
 namespace Forkdown.Core.Tests.Build {
   public class ImplicitIdTests {
     private static MainBuilder _builder => new MainBuilder()
-      .AddWorker<ExplicitIdWorker>()
       .AddWorker<HeadingItemWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<ImplicitIdWorker>();

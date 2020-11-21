@@ -11,7 +11,8 @@ namespace Forkdown.Core.Build.Workers {
           link.Target = $"@{link.TitleText}";
         }
         if (this.Builder!.Config is { } config) {
-          var index = this.Builder!.Storage.GetOr(typeof(LinkIndexWorker), null) as LinkIndex;
+          // FIXME
+          var index = (LinkIndex)null!; // this.Builder!.Storage.GetOr(typeof(LinkIndexWorker), null) as LinkIndex;
           if (link.IsExternal || (!index?.ContainsKey(Globals.Id(link.Target)) ?? true)) {
             if (link.Target.StartsWith("@"))
               link.Target = link.Target.Part(1);

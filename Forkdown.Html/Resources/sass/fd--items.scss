@@ -93,6 +93,12 @@ br.fd--newline {
       }
 
       .fd--labels {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        flex-shrink: 1;
+        gap: 0.1rem;
+        padding: 0.1rem;
         border-bottom:$border;
         border-top: $border;
         border-left: $border-header;
@@ -105,10 +111,10 @@ br.fd--newline {
 
       .fd--meta {
         display: flex;
+        align-items: center;
         border: $border;
         border-left: $border-header;
         background: $bg-meta;
-        padding: 0;
 
         & > .fd--meta-label {
           margin: 0 $item-spacing / 2;

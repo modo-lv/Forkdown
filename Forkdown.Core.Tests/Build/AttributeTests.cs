@@ -9,14 +9,10 @@ using Xunit;
 
 namespace Forkdown.Core.Tests.Build {
   public class AttributesTests {
-    private static MainBuilder Builder => new MainBuilder()
-      .AddWorker<SettingsWorker>()
-      .AddWorker<DocumentWorker>();
-
     [Fact]
     void Settings() {
       const String input = @"[xxx]{:setting}";
-      var result = Builder.Build(input);
+      var result = new ForkdownBuild().Build(input);
       result.FirstSub<Link>().Settings.IsTrue("setting").Should().BeTrue();
     }
   }

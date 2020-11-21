@@ -19,13 +19,11 @@ namespace Forkdown.Core.Elements {
 
     public String Type => this.GetType().Name;
 
-    public ElementSettings Settings = new ElementSettings();
+    public ElementSettings Settings => this.Attributes.Settings;
 
-    public HtmlAttributes Attributes = new HtmlAttributes();
+    public ElementAttributes Attributes = new ElementAttributes();
 
     public IList<Label> Labels = Nil.L<Label>();
-
-    public CheckItemData? CheckItem = null;
 
     public Boolean IsSingle;
 
@@ -56,7 +54,7 @@ namespace Forkdown.Core.Elements {
     protected Element() {}
 
     protected Element(IMarkdownObject mdo) : this() {
-      this.Attributes = mdo.GetAttributes();
+      this.Attributes = new ElementAttributes(mdo.GetAttributes(), this);
     }
 
 
@@ -85,19 +83,10 @@ namespace Forkdown.Core.Elements {
     /// <param name="element">Target element.</param>
     public virtual void MoveAttributesTo(Element element) {
       element.Attributes = this.Attributes;
-      element.Settings = this.Settings;
       element.ExplicitIds = this.ExplicitIds;
-      this.Attributes = new HtmlAttributes();
-      this.Settings = new ElementSettings();
+      this.Attributes = new ElementAttributes();
       this.ExplicitIds = Nil.LStr;
     }
-    
-    public Element CopyAttribuesFrom(Element element) {
-      element.Attributes.CopyTo(this.Attributes);
-      this.Settings = new ElementSettings(element.Settings);
-      this.ExplicitIds = element.ExplicitIds;
-      return this;
-    }
-    
+
   }
 }
