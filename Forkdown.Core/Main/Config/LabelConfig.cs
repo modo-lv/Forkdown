@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Forkdown.Core.Config {
-  public partial class LabelConfig {
+  public class LabelConfig {
     public String Key;
 
     public String Name;

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Forkdown.Core;
-using Microsoft.Extensions.Logging;
 
 namespace Forkdown.Html.Main {
   /// <summary>
@@ -14,7 +13,7 @@ namespace Forkdown.Html.Main {
     private readonly SassBuilder _sassBuilder;
 
     /// <inheritdoc cref="HtmlProject" />
-    public HtmlProject(Project project, ILogger<HtmlProject> logger, JsBuilder jsBuilder,
+    public HtmlProject(Project project, JsBuilder jsBuilder,
       HtmlBuilder htmlBuilder, AssetBuilder assetBuilder, SassBuilder sassBuilder) {
       _project = project;
       _jsBuilder = jsBuilder;

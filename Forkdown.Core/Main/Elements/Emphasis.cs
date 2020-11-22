@@ -5,7 +5,7 @@ using Markdig.Syntax.Inlines;
 
 namespace Forkdown.Core.Elements {
   public class Emphasis : Element, Types.Inline {
-    public Boolean IsStrong = false;
+    public Boolean IsStrong;
 
     public Emphasis(EmphasisInline emphasis) : base(emphasis) =>
       this.IsStrong = emphasis.DelimiterCount > 1;

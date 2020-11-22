@@ -25,7 +25,7 @@ namespace Forkdown.Core.Elements {
       return (el.Subs.FirstOrDefault() is Inline inline && inline != null
                ? TitleTextOf(el, true)
                : el.Subs.Take(1)
-                 .Select(_ => TitleTextOf(_, false))
+                 .Select(_ => TitleTextOf(_, contentFound: false))
                  .FirstOrDefault())
              ?? "";
     }
