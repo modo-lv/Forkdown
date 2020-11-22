@@ -4,15 +4,10 @@ include 'functions/attributes'
 include 'functions/elements'
 include 'functions/labels'
 
+func global_anchor
+  if $0.ExplicitId != ""
+    }}<a id="{{ $0.ExplicitId }}" class="fd--global_anchor"></a>{{
+  end
+end 
+
 -}}
-
-
-
-
-{{- func global_anchor
-
-if $0.ExplicitId != ""
-  }}<a id="{{ $0.ExplicitId }}" class="fd--global_anchor"></a>{{
-end
-
-end -}}

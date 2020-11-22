@@ -58,6 +58,7 @@ namespace Forkdown.Core.Build {
         Tables.TableRow tr => new TableRow(tr),
         Tables.TableCell tc => new TableCell(tc),
         EmphasisInline e => new Emphasis(e),
+        HtmlBlock b => new Html(b),
         _ => new Placeholder(mdo),
       };
 

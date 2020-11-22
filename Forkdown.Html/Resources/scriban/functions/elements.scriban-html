@@ -5,8 +5,6 @@
   end
 
   case $0.Type
-    when 'IdScope'
-      subs $0
     when 'Code'
       include 'elements/code' $0
     when 'CodeBlock'
@@ -41,6 +39,8 @@
       include 'elements/table_row' $0
     when 'TableCell'
       include 'elements/table_cell' $0
+    when 'Html'
+      $0.Content
     else
       include 'elements/placeholder' $0
   end
