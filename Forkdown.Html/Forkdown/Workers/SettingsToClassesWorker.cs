@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Forkdown.Core;
-using Forkdown.Core.Build;
+﻿using Forkdown.Core;
 using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
@@ -11,9 +8,8 @@ namespace Forkdown.Html.Forkdown.Workers {
   /// Decorates an element with CSS classes according to its settings. 
   /// </summary>
   public class SettingsToClassesWorker : Worker {
-
     /// <inheritdoc />
-    public override Element ProcessElement(Element element, Arguments args) {
+    public override TElement BuildElement<TElement>(TElement element) {
       if (element.Settings.IsTrue("-"))
         element.Attributes.Classes.Add($"{Globals.Prefix}inline");
 
@@ -38,9 +34,6 @@ namespace Forkdown.Html.Forkdown.Workers {
           else if (i.HasHeading)
             element.Attributes.Classes.Add($"{Globals.Prefix}has-heading");
           element.Attributes.Classes.Add($"{Globals.Prefix}h{((Heading) i.Title).Level}");
-        }
-        if (i.IsNewline) {
-          element.Attributes.Classes.Add($"{Globals.Prefix}newline");
         }
       }
 

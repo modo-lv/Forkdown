@@ -14,9 +14,9 @@ namespace Forkdown.Core.Tests.Build {
     void NoFalseExternalLinks() {
       const String input = @"[Link] {#link}";
       var config = new BuildConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
-      var result = new MainBuilder { Config = config }
+      var result = new ForkdownBuild().WithConfig(config)
         .AddWorker<LinkWorker>()
-        .Build(input);
+        .Run(input);
       result.FirstSub<Link>().Target.Should().Be("Link");
     }
 
@@ -24,16 +24,16 @@ namespace Forkdown.Core.Tests.Build {
     void ExternalLinksWithIndex() {
       const String input = @"[Link]";
       var config = new BuildConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
-      var result = new MainBuilder { Config = config }
+      var result = new ForkdownBuild().WithConfig(config)
         .AddWorker<LinkWorker>()
-        .Build(input);
+        .Run(input);
       result.FirstSub<Link>().Target.Should().Be("test://Link");
     }
 
     [Fact]
     void ExplicitExternalTitle() {
       const String input = @"# [External](@)";
-      var result = MainBuilder.CreateDefault().Build(input)
+      var result = ForkdownBuild.Default.Run(input)
         .FirstSub<Link>();
 
       result.Target.Should().Be("@External");

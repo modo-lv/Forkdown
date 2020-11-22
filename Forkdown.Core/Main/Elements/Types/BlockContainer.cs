@@ -1,5 +1,4 @@
-﻿using System;
-using Markdig.Syntax;
+﻿using Markdig.Syntax;
 
 namespace Forkdown.Core.Elements.Types {
   /// <summary>

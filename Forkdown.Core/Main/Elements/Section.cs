@@ -1,5 +1,4 @@
 ﻿using Forkdown.Core.Elements.Types;
-using Markdig.Extensions.CustomContainers;
 using Markdig.Syntax;
 
 // ReSharper disable NotAccessedField.Global

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Elements.Types;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
@@ -12,12 +11,23 @@ namespace Forkdown.Core.Build.Workers {
     public const Char R = '␞'; // Record separator
     public const Char W = '⸱'; // Word separator
 
-    private readonly IDictionary<String, Int32> _times = new Dictionary<String, Int32>();
+    private IDictionary<String, Int32> _times = new Dictionary<String, Int32>();
 
-    public override Element ProcessElement(Element element, Arguments args) {
-      var parentId = args.Get<String>();
+    public ImplicitIdWorker() {
+      this.RunsAfter<LinesToParagraphsWorker>();
+      this.RunsAfter<DocumentAttributesWorker>();
+      this.RunsAfter<ExplicitIdWorker>();
+      this.RunsAfter<HeadingItemWorker>();
+      this.RunsAfter<ListItemWorker>();
+    }
 
-      var id = parentId;
+    public override TElement BuildTree<TElement>(TElement root) {
+      this._times = Nil.DStr<Int32>();
+      return (TElement) this.BuildElement(root, root.GlobalId);
+    }
+
+    protected Element BuildElement(Element element, String parentId = "") {
+      String id = parentId;
 
       if (element is Document dEl) {
         id = dEl.ProjectFileId;
@@ -37,7 +47,8 @@ namespace Forkdown.Core.Build.Workers {
         element.ImplicitId = id;
       }
 
-      args.Put(id);
+      element.Subs = element.Subs.Select(el => this.BuildElement(el, id)).ToList();
+
       return element;
     }
   }

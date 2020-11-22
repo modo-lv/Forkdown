@@ -11,9 +11,9 @@ namespace Forkdown.Html.Wiring {
   public static class HtmlDependencies {
     public static readonly Action<IServiceCollection> Config = svc => {
       // Add HTML workers to the page builder.
-      svc.RemoveAll(typeof(MainBuilder));
+      svc.RemoveAll(typeof(ForkdownBuild));
       svc.AddSingleton(
-        MainBuilder.CreateDefault()
+        ForkdownBuild.Default
           .AddWorker<InternalLinkWorker>()
           .AddWorker<SettingsToClassesWorker>()
       );

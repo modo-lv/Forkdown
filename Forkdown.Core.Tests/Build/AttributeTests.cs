@@ -12,7 +12,7 @@ namespace Forkdown.Core.Tests.Build {
     [Fact]
     void Settings() {
       const String input = @"[xxx]{:setting}";
-      var result = new ForkdownBuild().Build(input);
+      var result = new ForkdownBuild().AddWorker<LinesToParagraphsWorker>().Run(input);
       result.FirstSub<Link>().Settings.IsTrue("setting").Should().BeTrue();
     }
   }

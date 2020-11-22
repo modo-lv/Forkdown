@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Forkdown.Core.Elements;
+﻿using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Build.Workers {
-  /// <summary>
-  /// Create items from headings
-  /// </summary>
   public class HeadingItemWorker : Worker {
+    public HeadingItemWorker() {
+      this.RunsAfter<LinesToParagraphsWorker>();
+    }
 
-    public override Element ProcessElement(Element element, Arguments args) {
+    public override TElement BuildElement<TElement>(TElement element) {
       { // Headings can't contain other headings & list item headings don't become items.
         if (element is Heading || element is ListItem)
           return element;
@@ -55,6 +53,5 @@ namespace Forkdown.Core.Build.Workers {
 
       return element;
     }
-
   }
 }

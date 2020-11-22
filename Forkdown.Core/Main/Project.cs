@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Forkdown.Core.Build;
+using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
 using Forkdown.Core.Wiring;
@@ -17,7 +18,7 @@ namespace Forkdown.Core {
   /// <summary>
   /// Main Forkdown project class.
   /// </summary>
-  public partial class Project {
+  public class Project {
     /// <inheritdoc cref="BuildConfig"/>
     public BuildConfig Config = new BuildConfig();
     
@@ -44,11 +45,11 @@ namespace Forkdown.Core {
     /// Constructor
     private readonly ILogger<Project> _logger;
     private readonly BuildArguments _args;
-    private readonly MainBuilder _builder;
-    public Project(ILogger<Project> logger, BuildArguments args, MainBuilder builder) {
+    private readonly ForkdownBuild _build;
+    public Project(ILogger<Project> logger, BuildArguments args, ForkdownBuild build) {
       _logger = logger;
       _args = args;
-      _builder = builder;
+      _build = build;
     }
 
     /// <summary>
@@ -70,8 +71,6 @@ namespace Forkdown.Core {
       this.Config = BuildConfig.From(_args.MainConfigFile);
       this.LabelsConfig = LabelsConfig.From(_args.LabelsConfigFile);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
-      _builder.Config = this.Config;
-      _builder.LabelsConfig = this.LabelsConfig;
 
       _initialized = true;
       return this;
@@ -80,7 +79,7 @@ namespace Forkdown.Core {
     public Document Build(Path file) => this.Build(this.PathTo(file));
     public Document Build(ProjectPath file) {
       _logger.LogDebug("Loading {doc}...", file.RelPathString());
-      return _builder.Build(File.ReadAllText(file.FullPathString()), file);
+      return _build.Run(File.ReadAllText(file.FullPathString()), file);
     }
 
     /// <summary>
@@ -94,13 +93,16 @@ namespace Forkdown.Core {
 
       _logger.LogInformation("Finding and loading pages...");
 
-      this.Pages = _builder.Build(
+      this.Pages = _build.SetContext(new BuildContext {
+        Config = this.Config,
+        LabelsConfig = this.LabelsConfig
+      }).Run(
         this.PathTo("pages")
           .Files("*.md", true)
           .Select(FromMarkdown.ToForkdown)
       ).ToList();
-      this.InternalLinks = _builder.Storage.Get<LinkIndex>();
-      this.SinglesIndex = _builder.Storage.Get<SinglesIndex>();
+      this.InternalLinks = (LinkIndex)_build.Storage.For<LinkIndexWorker>();
+      this.SinglesIndex = (SinglesIndex)_build.Storage.For<SinglesIndexWorker>();
 
       var elapsed = (DateTime.Now - start).TotalSeconds;
       _logger.LogInformation(

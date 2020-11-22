@@ -5,7 +5,6 @@ using System.Linq;
 using Forkdown.Core;
 using Forkdown.Core.Elements;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Scriban;
 using Scriban.Runtime;
 using Simpler.NetCore.Text;

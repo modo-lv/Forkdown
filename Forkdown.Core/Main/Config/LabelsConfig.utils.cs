@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Logging;
 using Simpler.NetCore.Collections;
-using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Config {
   public partial class LabelsConfig {

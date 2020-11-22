@@ -9,17 +9,14 @@ using Xunit;
 
 namespace Forkdown.Core.Tests.Build {
   public class ImplicitIdTests {
-    private static MainBuilder _builder => new MainBuilder()
-      .AddWorker<HeadingItemWorker>()
-      .AddWorker<ListItemWorker>()
-      .AddWorker<ImplicitIdWorker>();
+    private static ForkdownBuild _build => new ForkdownBuild().AddWorker<ImplicitIdWorker>();
 
     [Fact]
     void NestedWithHeading() {
       const String input = @"+ # Heading
   + One
   + Other";
-      var result = _builder.Build(input);
+      var result = _build.Run(input);
       result.FirstSub<ListItem>()
         .FirstSub<ListItem>()
         .GlobalId.Should().Be($"Heading{ImplicitIdWorker.G}One");
@@ -28,7 +25,7 @@ namespace Forkdown.Core.Tests.Build {
     [Fact]
     void TrimSpaces() {
       const String input = @"* Heading {something}";
-      var result = _builder.Build(input);
+      var result = _build.Run(input);
       result.FirstSub<ListItem>().ImplicitId.Should().Be("Heading");
     }
 
@@ -41,7 +38,7 @@ namespace Forkdown.Core.Tests.Build {
     * Sub
 ";
 
-      var result = _builder.Build(input);
+      var result = _build.Run(input);
       result
         .FirstSub<ListItem>()
         .FirstSub<ListItem>()
@@ -57,7 +54,7 @@ Paragraph.
 ### Level 1
 * [Carbuncle]()";
 
-      var result = _builder.Build(input);
+      var result = _build.Run(input);
       result
         .FirstSub<Item>()
         .FirstSub<Item>()
@@ -80,7 +77,7 @@ Paragraph
 * [Killer Bee]
 ";
 
-      var result = _builder.Build(input);
+      var result = _build.Run(input);
       result
         .FirstSub<ListItem>().ImplicitId.Should().Be(
           $"The{ImplicitIdWorker.W}Floating{ImplicitIdWorker.W}Continent" +
@@ -96,7 +93,7 @@ Paragraph
 * Item
 * Item
 * Item";
-      _builder.Build(input)
+      _build.Run(input)
         .FirstSub<Listing>()
         .Subs[2] // 3rd item
         .GlobalId.Should().Be($"Heading{ImplicitIdWorker.W}One{ImplicitIdWorker.G}Item{ImplicitIdWorker.R}3");
@@ -107,7 +104,7 @@ Paragraph
       const String input = @"# Heading One
 * Item one
   * Item two";
-      var doc = _builder.Build(input);
+      var doc = _build.Run(input);
       doc
         .FirstSub<ListItem>()
         .FirstSub<ListItem>().GlobalId.Should().Be("Heading⸱One␝Item⸱one␝Item⸱two");

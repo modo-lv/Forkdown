@@ -1,33 +1,31 @@
 ﻿using System;
 using FluentAssertions;
 using Forkdown.Core.Build;
-using Forkdown.Core.Build.Builders;
 using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
-using Simpler.NetCore;
 using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
 namespace Forkdown.Core.Tests.Build {
   public class LinkIndexTests {
-    private readonly ForkdownBuild _builder = new ForkdownBuild()
-      .AddBuilder<LinkIndexBuilder>();
+    private readonly ForkdownBuild _build = new ForkdownBuild()
+      .AddWorker<LinkIndexWorker>();
 
-    private LinkIndex _index => _builder.Results[typeof(LinkIndexBuilder)].Value.As<LinkIndex>();
+    private LinkIndex _index => (LinkIndex)_build.Storage.For<LinkIndexWorker>();
 
     [Fact]
     void MultipleDocuments() {
-      _builder.Build(@"Text {#text}");
-      _builder.Build(@"[Link] {#link}");
+      _build.Run(@"Text {#text}");
+      _build.Run(@"[Link] {#link}");
       _index.Should().ContainKeys("text", "link");
     }
 
     [Fact]
     void ExplicitIdImplicitClass() {
       const String input = @"[Class] {#id,:id}";
-      var doc = _builder.Build(input);
-      _builder.Build("");
+      var doc = _build.Run(input);
+      _build.Run("");
       var links = _index;
       links.Count.Should().Be(2);
       links["id"].Should().Be(doc);
@@ -41,7 +39,7 @@ namespace Forkdown.Core.Tests.Build {
 ## [Class Anchor](xxx) {#:id}
 ## **ID Anchor** {#:id}
 ";
-      var doc = _builder.Build(input);
+      var doc = _build.Run(input);
       var links = _index;
       links.Count.Should().Be(2);
       links["class_anchor"].Should().Be(doc);
@@ -54,7 +52,7 @@ namespace Forkdown.Core.Tests.Build {
 # Heading {#h-Anchor}
 Paragraph {#pAnchor}
 ";
-      var doc = _builder.Build(input);
+      var doc = _build.Run(input);
       doc.FirstSub<Heading>().ExplicitId.Should().Be("h-anchor");
       doc.FirstSub<Paragraph>()!.ExplicitId.Should().Be("panchor");
       var anchors = _index;

@@ -7,13 +7,13 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build.Basics {
+namespace Forkdown.Core.Tests.Build {
   public class ParagraphTests {
     [Fact]
     void LinesBecomeParagraphs() {
       const String input = @"First line.
 Second line.";
-      var result = new MainBuilder().AddWorker<LinesToParagraphsWorker>().Build(input);
+      var result = new ForkdownBuild().AddWorker<LinesToParagraphsWorker>().Run(input);
       var paras = result.Subs;
       paras.Should().AllBeOfType<Paragraph>().And.HaveCount(2);
       paras[0].FirstSub<Text>().Content.Should().Be("First line.");

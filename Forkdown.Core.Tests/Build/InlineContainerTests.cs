@@ -11,7 +11,7 @@ namespace Forkdown.Core.Tests.Build {
     [Fact]
     void InlineContainer() {
       const String input = @"::Content::";
-      var result = new MainBuilder().Build(input);
+      var result = new ForkdownBuild().Run(input);
       result.FirstSub<ExplicitInlineContainer>().TitleText.Should().Be("Content");
     }
   }

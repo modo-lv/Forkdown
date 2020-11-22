@@ -1,25 +1,24 @@
 ﻿using Forkdown.Core;
-using Forkdown.Core.Build;
 using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Html.Forkdown.Workers {
   /// <summary>
-  /// Change internal link keyword targets to the corresponding HTML files.
+  /// Sets the <see cref="Link.Target"/> field of internal links to the relative URL in HTML output.  
   /// </summary>
   public class InternalLinkWorker : Worker {
-    private LinkIndex _index => this.Builder!.Storage.Get<LinkIndex>();
-
     /// <inheritdoc />
-    public override Element ProcessElement(Element element, Arguments args) {
+    public override TElement BuildElement<TElement>(TElement element) {
+      var index = (LinkIndex)this.Storage.For<LinkIndexWorker>();
       if (element is Link link && link.IsInternal)
       {
         var target = Globals.Id(link.Target);
-        if (_index.ContainsKey(target))
-          link.Target = $"{_index[target].ProjectFilePath.TrimSuffix(".md")}.html#{target}";
+        if (index.ContainsKey(target))
+          link.Target = $"{index[target].ProjectFilePath.TrimSuffix(".md")}.html#{target}";
       }
       return element;
+
     }
   }
 }

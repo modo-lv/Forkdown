@@ -1,10 +1,18 @@
-﻿using Forkdown.Core.Build.Builders;
+﻿using Forkdown.Core.Build.Workers;
 
 namespace Forkdown.Core.Build {
   public partial class ForkdownBuild {
     public static ForkdownBuild Default => new ForkdownBuild()
-      .AddBuilder<LinesToParagraphsBuilder>()
-      .AddBuilder<DocumentAttributesBuilder>()
-      .AddBuilder<LinkIndexBuilder>();
+      .AddWorker<LinesToParagraphsWorker>()
+      .AddWorker<DocumentAttributesWorker>()
+      .AddWorker<LinkIndexWorker>()
+      .AddWorker<LinkWorker>()
+      .AddWorker<HeadingItemWorker>()
+      .AddWorker<ImplicitIdWorker>()
+      .AddWorker<ItemWorker>()
+      .AddWorker<LabelWorker>()
+      .AddWorker<ListItemWorker>()
+      .AddWorker<MetaTextWorker>()
+      .AddWorker<SinglesIndexWorker>();
   }
 }

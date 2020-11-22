@@ -1,19 +1,23 @@
 ﻿using Forkdown.Core.Elements;
-using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
   public class LinkWorker : Worker {
+    public LinkWorker() {
+      this.RunsAfter<LinesToParagraphsWorker>();
+      this.RunsAfter<DocumentAttributesWorker>();
+      this.RunsAfter<ExplicitIdWorker>();
+      this.RunsAfter<LinkIndexWorker>();
+    }
 
-    public override Element ProcessElement(Element element, Arguments args) {
+    public override TElement BuildElement<TElement>(TElement element) {
       if (element is Link link) {
         if (link.Target == "@") {
           link.Target = $"@{link.TitleText}";
         }
-        if (this.Builder!.Config is { } config) {
-          // FIXME
-          var index = (LinkIndex)null!; // this.Builder!.Storage.GetOr(typeof(LinkIndexWorker), null) as LinkIndex;
-          if (link.IsExternal || (!index?.ContainsKey(Globals.Id(link.Target)) ?? true)) {
+        if (this.Config is { } config) {
+          var index = (LinkIndex)this.Storage.For<LinkIndexWorker>();
+          if (link.IsExternal || !index.ContainsKey(Globals.Id(link.Target))) {
             if (link.Target.StartsWith("@"))
               link.Target = link.Target.Part(1);
             link.Target = config.ExternalLinks.UrlFor(link.Target);
@@ -22,6 +26,7 @@ namespace Forkdown.Core.Build.Workers {
       }
 
       return element;
+
     }
   }
 }

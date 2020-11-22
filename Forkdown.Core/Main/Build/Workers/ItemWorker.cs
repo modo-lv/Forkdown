@@ -4,14 +4,13 @@ using Forkdown.Core.Elements.Types;
 using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Build.Workers {
-  /// <summary>
-  /// Convert appropriate list items into check items.
-  /// </summary>
-  public class ItemWorker : Worker, IDocumentWorker {
-    // Full-document worker so that its looking further down the tree and modifying elements doesn't mess
-    // with the processing order.
+  public class ItemWorker : Worker {
+    public ItemWorker() {
+      this.RunsAfter<ListItemWorker>();
+      this.RunsAfter<LinesToParagraphsWorker>();
+    }
 
-    public override Element ProcessElement(Element element, Arguments args) {
+    public override TElement BuildElement<TElement>(TElement element) {
       if (element is BlockContainer &&
           element.Subs.Any(_ => _ is Listing l && l.Kind.IsOneOf(ListingKind.Items, ListingKind.CheckItems))) 
       {

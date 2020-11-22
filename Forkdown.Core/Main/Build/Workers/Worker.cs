@@ -1,23 +1,43 @@
-﻿using Forkdown.Core.Elements;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Forkdown.Core.Config;
+using Forkdown.Core.Elements;
+using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Build.Workers {
-  public interface IDocumentWorker { }
-  public interface IProjectWorker {}
-  
   public abstract class Worker {
-    public MainBuilder? Builder = null;
 
-    public Result Process(Element element, Arguments args) =>
-      new Result(this.ProcessElement(element, args), args);
+    public BuildContext? Context;
 
-    /// <summary>
-    /// Process an element.
-    ///
-    /// Will be called on every element in a tree, starting from the root.
-    /// </summary>
-    /// <param name="element">Element to process</param>
-    /// <param name="args">Arguments passed from parent element to sub-elements.</param>
-    /// <returns></returns>
-    public abstract Element ProcessElement(Element element, Arguments args);
+   
+    public readonly ISet<Type> MustRunAfter = Nil.S<Type>();
+
+
+    protected LabelsConfig? LabelsConfig => this.Context!.LabelsConfig;
+    protected BuildConfig? Config => this.Context!.Config;
+    protected WorkerStorage Storage => this.Context!.Storage;
+    public T Stored<T>(T initValue) => (T)this.Storage.For(this, initValue);
+
+
+
+    public virtual Worker RunsAfter<T>() where T : Worker {
+      this.MustRunAfter.Add(typeof(T));
+      return this;
+    }
+
+
+
+    public virtual TElement BuildElement<TElement>(TElement element) where TElement : Element =>
+      throw new NotImplementedException();
+
+
+    public virtual TElement BuildTree<TElement>(TElement root) where TElement : Element {
+      var result = this.BuildElement(root);
+      result.Subs = root.Subs.Select(this.BuildTree).ToList();
+      return result;
+    }
+
   }
+
 }

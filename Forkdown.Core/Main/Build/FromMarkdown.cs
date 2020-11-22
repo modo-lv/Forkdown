@@ -44,7 +44,7 @@ namespace Forkdown.Core.Build {
         MarkdownDocument _ => new Document(),
         HeadingBlock h => new Heading(h),
         ListBlock l => new Listing(l),
-        ListItemBlock _ => new ListItem(),
+        ListItemBlock li => new ListItem(li),
         ParagraphBlock p => new Paragraph(p),
         CustomContainer c => new Section(c),
         CustomContainerInline c => new ExplicitInlineContainer(c),

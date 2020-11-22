@@ -9,21 +9,16 @@ using Xunit;
 
 namespace Forkdown.Core.Tests.Build {
   public class SinglesIndexTests {
-    private readonly MainBuilder _builder = new MainBuilder()
-      .AddWorker<HeadingItemWorker>()
-      .AddWorker<ImplicitIdWorker>()
-      .AddWorker<ListItemWorker>()
-      .AddWorker<ItemWorker>()
-      .AddWorker<SinglesIndexWorker>();
+    private readonly ForkdownBuild _build = new ForkdownBuild().AddWorker<SinglesIndexWorker>();
+    private SinglesIndex _index => (SinglesIndex)_build.Storage.For<SinglesIndexWorker>();
 
     [Fact]
     void ExplicitId() {
       const String input = @"
 + Item 1 {:single=both}
 + Item 2 {:single=both}";
-      _builder.Build(input);
-      var index = _builder.Storage.Get<SinglesIndex>();
-      var entry = index["both"];
+      _build.Run(input);
+      var entry = _index["both"];
 
       entry.Count.Should().Be(2);
       entry.Should().Contain("Item⸱1");
@@ -36,12 +31,10 @@ namespace Forkdown.Core.Tests.Build {
 + {:single} General
   :w entry unattainable until [next playthrough](NG+).
 ";
-      var builder = MainBuilder.CreateDefault();
-      var test = FromMarkdown.ToForkdown(input);
-      var result = builder.Build(input);
-      var index = builder.Storage.Get<SinglesIndex>();
+      FromMarkdown.ToForkdown(input);
+      _build.Run(input);
 
-      index.Should().ContainKey("general");
+      _index.Should().ContainKey("general");
     }
 
 
@@ -54,12 +47,11 @@ namespace Forkdown.Core.Tests.Build {
   + One
   + Other";
 
-      var result = _builder.Build(input1);
-      _builder.Build(input2);
+      _build.Run(input1);
+      _build.Run(input2);
 
-      var index = _builder.Storage.Get<SinglesIndex>();
-      var one = index["one"];
-      var two = index["other"];
+      var one = _index["one"];
+      var two = _index["other"];
 
       one.Count.Should().Be(2);
       two.Count.Should().Be(2);
@@ -74,10 +66,10 @@ namespace Forkdown.Core.Tests.Build {
       const String input1 = @"+ Bob the Blob {:single}";
       const String input2 = @"+ Bob the Blob {:single}";
 
-      _builder.Build(input1);
-      _builder.Build(input2);
+      _build.Run(input1);
+      _build.Run(input2);
 
-      var index = _builder.Storage.Get<SinglesIndex>()["bob_the_blob"];
+      var index = _index["bob_the_blob"];
       index.Count.Should().Be(2);
       index.All(_ => _ == "Bob⸱the⸱Blob").Should().BeTrue();
     }

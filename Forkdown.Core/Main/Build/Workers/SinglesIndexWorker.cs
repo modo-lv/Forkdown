@@ -5,42 +5,49 @@ using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
-  /// <summary>
-  /// Build an index of linked singleton elements.
-  ///
-  /// Should be run last or near the end, to make sure elements have their final IDs and titles.
-  /// </summary>
-  public class SinglesIndexWorker : Worker, IProjectWorker {
+  public class SinglesIndexWorker : Worker {
+    private SinglesIndex? _index;
+    
+    public SinglesIndexWorker() {
+      this.RunsAfter<ListItemWorker>();
+      this.RunsAfter<ItemWorker>();
+      this.RunsAfter<ExplicitIdWorker>();
+      this.RunsAfter<ImplicitIdWorker>();
+    }
 
-    public override Element ProcessElement(Element element, Arguments args) {
-      var index = this.Builder!.Storage.GetOrAdd(this.GetType(), new SinglesIndex());
-      var singles = args.Get<Boolean>();
+    public override TElement BuildTree<TElement>(TElement root) {
+      _index = this.Stored(new SinglesIndex());
+      return (TElement) _build(root);
+    }
 
-      if (element is Item check && check.IsCheckitem) {
-        element.IsSingle = element.Settings.NotFalse("single") && (
-          singles || element.Settings.ContainsKey("single")
+    private Element _build(Element el, Boolean singles = false) {
+      if (el is Item check && check.IsCheckitem) {
+        el.IsSingle = el.Settings.NotFalse("single") && (
+          singles || el.Settings.ContainsKey("single")
         );
 
-        if (element.IsSingle) {
-          if (element.ImplicitId.IsBlank())
+        if (el.IsSingle) {
+          if (el.ImplicitId.IsBlank())
             throw new Exception("Can't build singleton index if elements don't have their IDs set. " +
                                 "Run explicit and implicit ID workers before singleton index builder.");
 
-          var singleIds = element.Settings.HasStringValue("single")
-            ? element.Settings["single"].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(_ => _.Trim())
+          var singleIds = el.Settings.HasStringValue("single")
+            ? el.Settings["single"].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(_ => _.Trim())
             : new[] { Globals.Id(check.TitleText) };
-          
-          singleIds.ForEach(_ => index.GetOrAdd(_, Nil.CStr).Add(element.GlobalId));
+
+          singleIds.ForEach(_ => _index!.GetOrAdd(_, Nil.CStr).Add(el.GlobalId));
         }
 
       }
-      if (element.Settings.IsTrue("singles"))
+      if (el.Settings.IsTrue("singles"))
         singles = true;
-      else if (singles && element.Settings.IsFalse("singles"))
+      else if (singles && el.Settings.IsFalse("singles"))
         singles = false;
-      args.Put(singles);
 
-      return element;
+      el.Subs = el.Subs.Select(e => _build(e, singles)).ToList();
+
+      return el;
     }
   }
+
 }

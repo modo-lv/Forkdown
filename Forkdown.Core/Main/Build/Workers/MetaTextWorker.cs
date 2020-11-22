@@ -1,14 +1,8 @@
-﻿using System.Linq;
-using Forkdown.Core.Elements;
-using Forkdown.Core.Elements.Attributes;
-using Simpler.NetCore.Text;
+﻿using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
-  /// <summary>
-  /// Process help, info and warning paragraphs.
-  /// </summary>
   public class MetaTextWorker : Worker {
-    public override Element ProcessElement(Element element, Arguments args) {
+    public override TElement BuildElement<TElement>(TElement element) {
       element.Kind = element.Settings switch {
         {} s when s.IsTrue("!") || s.IsTrue("warn") => Element.Metadata.Warning,
         {} s when s.IsTrue("i") => Element.Metadata.Info,

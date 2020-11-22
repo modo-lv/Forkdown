@@ -16,14 +16,14 @@ namespace Forkdown.Core.Tests.Build {
 
   Another paragraph
 ";
-      var result = MainBuilder.CreateDefault().Build(input);
+      var result = ForkdownBuild.Default.Run(input);
       result.Subs[0].TitleText.Should().Be("Wicked");
     }
     
     [Fact]
     void HeadingWithLinkTitle() {
       const String input = @"# Heading with [link](link)";
-      var result = MainBuilder.CreateDefault().Build(input);
+      var result = ForkdownBuild.Default.Run(input);
       result.FirstSub<Item>().TitleText.Should().Be("Heading with link");
     }
   }

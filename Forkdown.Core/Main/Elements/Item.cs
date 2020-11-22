@@ -4,7 +4,6 @@ using System.Linq;
 using Forkdown.Core.Elements.Types;
 using Simpler.NetCore;
 using Simpler.NetCore.Collections;
-using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Elements {
   /// <summary>
@@ -16,10 +15,8 @@ namespace Forkdown.Core.Elements {
 
     public IEnumerable<Element> Content => this.Subs.SkipWhile(_ => _ == this.Title);
 
-    public Boolean IsNewline = false;
-
     public Boolean HasHeading => this.Title is Heading;
-    public Boolean IsHeading = false;
+    public Boolean IsHeading;
 
     public readonly Boolean IsCheckitem;
 

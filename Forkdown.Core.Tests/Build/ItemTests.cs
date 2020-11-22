@@ -15,14 +15,14 @@ namespace Forkdown.Core.Tests.Build {
       const String input = @":::
 + Test
 :::";
-      var result = new MainBuilder().AddWorker<ItemWorker>().Build(input);
+      var result = new ForkdownBuild().AddWorker<ItemWorker>().Run(input);
       result.FirstSub<Item>().IsCheckitem.Should().BeTrue();
     }
     
     [Fact]
     void ItemId() {
       const String input = @"+ Whatever something";
-      var result = new MainBuilder().AddWorker<ImplicitIdWorker>().AddWorker<ItemWorker>().Build(input);
+      var result = new ForkdownBuild().AddWorker<ItemWorker>().AddWorker<ImplicitIdWorker>().Run(input);
       result.FirstSub<Item>().GlobalId.Should().Be($"Whatever{ImplicitIdWorker.W}something");
     }
     
@@ -31,7 +31,7 @@ namespace Forkdown.Core.Tests.Build {
     [InlineData(false)]
     void CheckItem(Boolean isCheckItem) {
       var input = isCheckItem ? "+ CheckItem" : "- Normal";
-      var result = new MainBuilder().AddWorker<ItemWorker>().Build(input);
+      var result = new ForkdownBuild().AddWorker<ItemWorker>().Run(input);
       result.FirstSub<Item>().IsCheckitem.Should().Be(isCheckItem);
     }
 
@@ -39,11 +39,9 @@ namespace Forkdown.Core.Tests.Build {
     void FullCheckItem() {
       const String input = @"+ Heading
   Content";
-      var result = new MainBuilder()
-        .AddWorker<LinesToParagraphsWorker>()
-        .AddWorker<MetaTextWorker>()
+      var result = new ForkdownBuild()
         .AddWorker<ItemWorker>()
-        .Build(input)
+        .Run(input)
         .FirstSub<Item>();
       result.Title.As<Paragraph>().TitleText.Should().Be("Heading");
       result.Content.First().As<Paragraph>().TitleText.Should().Be("Content");

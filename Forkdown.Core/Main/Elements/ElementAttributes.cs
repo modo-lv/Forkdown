@@ -20,7 +20,8 @@ namespace Forkdown.Core.Elements {
     public ElementAttributes() { }
 
     public ElementAttributes(HtmlAttributes attrs, Element element) {
-      element.ExplicitIds = new List<String> { attrs.Id };
+      if (attrs.Id.NotBlank())
+        element.ExplicitIds = new[] { attrs.Id };
       this.Classes = attrs.Classes?.ToHashSet() ?? Nil.SStr;
       attrs.Properties?.ForEach(_ => {
         if (_.Key.StartsWith(":"))

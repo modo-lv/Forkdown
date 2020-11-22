@@ -16,8 +16,4 @@
       <ProjectReference Include="..\Forkdown.Core\Forkdown.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Elements" />
-    </ItemGroup>
-
 </Project>

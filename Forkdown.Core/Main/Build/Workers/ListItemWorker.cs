@@ -3,10 +3,13 @@ using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
   public class ListItemWorker : Worker {
-
-    public override Element ProcessElement(Element element, Arguments args) {
-      if (element is ListItem li && li.Subs.FirstOrDefault() is { } sub) {
-        sub.MoveAttributesTo(li);
+    public ListItemWorker() {
+      this.RunsAfter<LabelWorker>();
+    }
+    
+    public override TElement BuildElement<TElement>(TElement element) {
+      if (element is ListItem li && li.Subs.Any()) {
+        li.Subs.First().MoveAttributesTo(li);
       }
       return element;
     }
