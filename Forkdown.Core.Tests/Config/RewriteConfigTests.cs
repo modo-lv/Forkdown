@@ -10,19 +10,19 @@ namespace Forkdown.Core.Tests.Config {
     [Fact]
     void Load() {
       const String input = @"
-externalLinks:
+external_links:
   rewrites:
     - pattern: X
       rewrite: Y
     - [ 'A', 'B' ]
 ";
 
-      var result = ExternalLinkRewriteConfig.From(input);
+      var result = MainConfig.FromYaml(input).ExternalLinks;
 
-      result[0].Key.IsMatch("^X$").Should().BeTrue();
-      result[0].Value.Should().Be("Y");
-      result[1].Key.IsMatch("^A$").Should().BeTrue();
-      result[1].Value.Should().Be("B");
+      result.Rewrites[0].Key.IsMatch("^X$").Should().BeTrue();
+      result.Rewrites[0].Value.Should().Be("Y");
+      result.Rewrites[1].Key.IsMatch("^A$").Should().BeTrue();
+      result.Rewrites[1].Value.Should().Be("B");
     }
   }
 }

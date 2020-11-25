@@ -19,7 +19,7 @@ namespace Forkdown.Core.Elements {
     private Element? _icon;
 
     /// <summary>
-    /// Element title to display as the default tooltip / alt-text for images.
+    /// Item title to display as the default tooltip / alt-text for images.
     /// </summary>
     private String? _title;
     public String Title {

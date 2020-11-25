@@ -32,7 +32,7 @@ namespace Forkdown.Core.Build.Workers {
           .Where(_ => !_.StartsWith(":"))
           .Select(key => {
             var result = new Label(key);
-            var lc = this.LabelsConfig?.All.GetOr(key, null!);
+            var lc = this.Config?.Labels?.All.GetOr(key, null!);
             if (lc != null) {
               result.Name = lc!.Name.NonBlank() ?? result.Name;
               result.Icon = lc!.Icon;

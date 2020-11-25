@@ -14,8 +14,7 @@ namespace Forkdown.Core.Build.Workers {
     public readonly ISet<Type> MustRunAfter = Nil.S<Type>();
 
 
-    protected LabelsConfig? LabelsConfig => this.Context!.LabelsConfig;
-    protected BuildConfig? Config => this.Context!.Config;
+    protected MainConfig? Config => this.Context!.Config;
     protected WorkerStorage Storage => this.Context!.Storage;
     public T Stored<T>(T initValue) => (T)this.Storage.For(this, initValue);
 

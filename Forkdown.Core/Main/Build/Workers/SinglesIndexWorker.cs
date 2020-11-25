@@ -27,7 +27,7 @@ namespace Forkdown.Core.Build.Workers {
         );
 
         if (el.IsSingle) {
-          if (el.ImplicitId.IsBlank())
+          if (el.GlobalId.IsBlank())
             throw new Exception("Can't build singleton index if elements don't have their IDs set. " +
                                 "Run explicit and implicit ID workers before singleton index builder.");
 

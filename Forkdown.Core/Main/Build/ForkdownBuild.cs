@@ -51,7 +51,7 @@ namespace Forkdown.Core.Build {
     /// <summary>
     /// Set the configuration for this build.
     /// </summary>
-    public ForkdownBuild WithConfig(BuildConfig config) {
+    public ForkdownBuild WithConfig(MainConfig config) {
       this.Context.Config = config;
       return this;
     }

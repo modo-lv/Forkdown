@@ -19,12 +19,10 @@ namespace Forkdown.Core {
   /// Main Forkdown project class.
   /// </summary>
   public class Project {
-    /// <inheritdoc cref="BuildConfig"/>
-    public BuildConfig Config = new BuildConfig();
-    
-    public LabelsConfig LabelsConfig = new LabelsConfig();
+    /// <inheritdoc cref="MainConfig"/>
+    public MainConfig Config = new MainConfig();
 
-    /// <inheritdoc cref="BuildConfig.Name"/>
+    /// <inheritdoc cref="MainConfig.Name"/>
     public String Name => this.Config.Name;
 
     /// <summary>
@@ -36,7 +34,7 @@ namespace Forkdown.Core {
     /// Index mapping anchors to the pages they are in. 
     /// </summary>
     public IDictionary<String, Document> InternalLinks = Nil.DStr<Document>();
-    
+
     public SinglesIndex SinglesIndex = new SinglesIndex();
 
     private Boolean _initialized;
@@ -68,8 +66,7 @@ namespace Forkdown.Core {
       _logger.LogInformation("Loading project from {dir}...", root.ToString());
 
       // Settings
-      this.Config = BuildConfig.From(_args.MainConfigFile);
-      this.LabelsConfig = LabelsConfig.From(_args.LabelsConfigFile);
+      this.Config = MainConfig.FromFilesIn(root);
       this.Config.Name = this.Config.Name.NonBlank() ?? root.FileName;
 
       _initialized = true;
@@ -93,16 +90,13 @@ namespace Forkdown.Core {
 
       _logger.LogInformation("Finding and loading pages...");
 
-      this.Pages = _build.SetContext(new BuildContext {
-        Config = this.Config,
-        LabelsConfig = this.LabelsConfig
-      }).Run(
+      this.Pages = _build.SetContext(new BuildContext { Config = this.Config }).Run(
         this.PathTo("pages")
           .Files("*.md", true)
           .Select(FromMarkdown.ToForkdown)
       ).ToList();
-      this.InternalLinks = (LinkIndex)_build.Storage.For<LinkIndexWorker>();
-      this.SinglesIndex = (SinglesIndex)_build.Storage.For<SinglesIndexWorker>();
+      this.InternalLinks = (LinkIndex) _build.Storage.For<LinkIndexWorker>();
+      this.SinglesIndex = (SinglesIndex) _build.Storage.For<SinglesIndexWorker>();
 
       var elapsed = (DateTime.Now - start).TotalSeconds;
       _logger.LogInformation(
