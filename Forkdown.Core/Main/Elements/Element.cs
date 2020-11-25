@@ -7,8 +7,6 @@ using Markdig.Syntax;
 using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
-// ReSharper disable NotAccessedField.Global
-
 namespace Forkdown.Core.Elements {
   public abstract partial class Element {
     public enum Metadata {
@@ -17,6 +15,7 @@ namespace Forkdown.Core.Elements {
   
     public IList<Element> Subs = Nil.L<Element>();
 
+    // ReSharper disable once UnusedMember.Global
     public String Type => this.GetType().Name;
 
     public ElementSettings Settings => this.Attributes.Settings;
