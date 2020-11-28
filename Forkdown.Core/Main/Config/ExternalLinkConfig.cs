@@ -7,6 +7,9 @@ using Simpler.NetCore.Collections;
 using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Config {
+  /// <summary>
+  /// Build configuration for creating external links. 
+  /// </summary>
   public class ExternalLinkConfig : ExternalLinkConfigInput {
     public new IList<KeyValuePair<Regex, String>> Rewrites { get; set; } = Nil.L<KeyValuePair<Regex, String>>();
 
