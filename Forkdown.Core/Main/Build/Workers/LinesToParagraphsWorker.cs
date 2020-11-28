@@ -6,7 +6,7 @@ using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 namespace Forkdown.Core.Build.Workers {
   public class LinesToParagraphsWorker : Worker {
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       if (!(element is BlockContainer))
         return element;
       

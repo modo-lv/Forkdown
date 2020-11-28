@@ -7,7 +7,6 @@ namespace Forkdown.Core.Elements {
   /// (or in some other space-saving way).
   /// </summary>
   public class Tip : Element {
-
     /// <summary>
     /// Element to use as the button/icon for the tip.
     /// One to few characters of text (e.g., letters, emoji) or small image recommended.

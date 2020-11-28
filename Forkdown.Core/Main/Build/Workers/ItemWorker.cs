@@ -10,7 +10,7 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<LinesToParagraphsWorker>();
     }
 
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       if (element is BlockContainer &&
           element.Subs.Any(_ => _ is Listing l && l.Kind.IsOneOf(ListingKind.Items, ListingKind.CheckItems))) 
       {

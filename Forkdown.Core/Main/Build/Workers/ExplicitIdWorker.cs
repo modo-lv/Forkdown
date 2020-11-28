@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
   public class ExplicitIdWorker : Worker {
@@ -8,7 +9,7 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<ListItemWorker>();
     }
 
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       if (element.ExplicitIds.Any()) {
         var ids = element.ExplicitIds.FirstOrDefault().Split(',', StringSplitOptions.RemoveEmptyEntries);
 

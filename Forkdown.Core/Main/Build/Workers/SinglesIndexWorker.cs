@@ -15,9 +15,9 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<ImplicitIdWorker>();
     }
 
-    public override TElement BuildTree<TElement>(TElement root) {
+    public override Element BuildTree(Element root) {
       _index = this.Stored(new SinglesIndex());
-      return (TElement) _build(root);
+      return _build(root);
     }
 
     private Element _build(Element el, Boolean singles = false) {

@@ -7,7 +7,7 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<ExplicitIdWorker>();
     }
 
-    public override TElement BuildTree<TElement>(TElement root) {
+    public override Element BuildTree(Element root) {
       if (!(root is Document))
         return root;
       if (root.Subs.FirstOrDefault() is Paragraph par &&

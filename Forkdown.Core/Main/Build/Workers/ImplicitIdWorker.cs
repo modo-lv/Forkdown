@@ -21,9 +21,9 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<ListItemWorker>();
     }
 
-    public override TElement BuildTree<TElement>(TElement root) {
+    public override Element BuildTree(Element root) {
       this._times = Nil.DStr<Int32>();
-      return (TElement) this.BuildElement(root, root.GlobalId);
+      return this.BuildElement(root, root.GlobalId);
     }
 
     protected Element BuildElement(Element element, String parentId = "") {

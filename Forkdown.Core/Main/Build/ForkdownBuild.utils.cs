@@ -10,7 +10,7 @@ namespace Forkdown.Core.Build {
       .AddWorker<HeadingItemWorker>()
       .AddWorker<ImplicitIdWorker>()
       .AddWorker<ItemWorker>()
-      .AddWorker<LabelWorker>()
+      .AddWorker<TipWorker>()
       .AddWorker<ListItemWorker>()
       .AddWorker<MetaTextWorker>()
       .AddWorker<SinglesIndexWorker>();

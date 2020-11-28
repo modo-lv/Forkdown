@@ -7,7 +7,7 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<LinesToParagraphsWorker>();
     }
 
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       { // Headings can't contain other headings & list item headings don't become items.
         if (element is Heading || element is ListItem)
           return element;

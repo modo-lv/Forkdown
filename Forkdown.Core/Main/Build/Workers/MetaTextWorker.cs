@@ -1,14 +1,20 @@
-﻿using Forkdown.Core.Elements;
+﻿using System.Linq;
+using Forkdown.Core.Elements;
 
 namespace Forkdown.Core.Build.Workers {
   public class MetaTextWorker : Worker {
-    public override TElement BuildElement<TElement>(TElement element) {
-      element.Kind = element.Settings switch {
-        {} s when s.IsTrue("!") || s.IsTrue("warn") => Element.Metadata.Warning,
-        {} s when s.IsTrue("i") => Element.Metadata.Info,
-        {} s when s.IsTrue("?") || s.IsTrue("help") => Element.Metadata.Help,
-        _ => element.Kind
-      };
+    public override Element BuildElement(Element element) {
+      if (element is Paragraph p && p.Subs.FirstOrDefault() is Code c && c.Content.StartsWith(":")) {
+        p.Kind = c.Content.Substring(1) switch {
+          {} s when s == "!" || s == "warn" => Element.Metadata.Warning,
+          {} s when s == "i" => Element.Metadata.Info,
+          {} s when s == "?" || s == "help" => Element.Metadata.Help,
+          _ => p.Kind
+        };
+        p.Subs.RemoveAt(0);
+        if (p.Subs.FirstOrDefault() is Text t)
+          t.Content = t.Content.TrimStart();
+      }
       return element;
     }
   }

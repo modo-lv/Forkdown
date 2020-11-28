@@ -9,7 +9,7 @@ namespace Forkdown.Html.Forkdown.Workers {
   /// </summary>
   public class SettingsToClassesWorker : Worker {
     /// <inheritdoc />
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       if (element.Settings.IsTrue("-"))
         element.Attributes.Classes.Add($"{Globals.Prefix}inline");
 

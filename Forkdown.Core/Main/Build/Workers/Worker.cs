@@ -27,13 +27,13 @@ namespace Forkdown.Core.Build.Workers {
 
 
 
-    public virtual TElement BuildElement<TElement>(TElement element) where TElement : Element =>
+    public virtual Element BuildElement(Element element) =>
       throw new NotImplementedException();
 
 
-    public virtual TElement BuildTree<TElement>(TElement root) where TElement : Element {
+    public virtual Element BuildTree(Element root) {
       var result = this.BuildElement(root);
-      result.Subs = root.Subs.Select(this.BuildTree).ToList();
+      result.Subs = result.Subs.Select(this.BuildTree).ToList();
       return result;
     }
 

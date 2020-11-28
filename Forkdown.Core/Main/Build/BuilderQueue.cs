@@ -12,24 +12,23 @@ namespace Forkdown.Core.Build {
     public BuilderQueue(IEnumerable<Type> workers, BuildContext context) {
       var builders = workers.Select(w => new Builder(w, context));
 
-      this.QueueBuilders(builders, context, Nil.D<Type, ICollection<Type>>());
+      this.QueueBuilders(builders, context, Nil.S<Type>());
     }
 
     protected void QueueBuilders(
       IEnumerable<Builder> builders,
       BuildContext context,
-      IDictionary<Type, ICollection<Type>> dependencies
+      ISet<Type> ancestors
     ) {
       var bs = builders.ToList();
       bs.Except(_queue).ForEach(builder => {
         var runBefore = builder.MustRunAfter.Select(d => {
-          if (dependencies.GetOr(d, Nil.S<Type>()).Contains(builder.Type))
-            throw new Exception($"Circular dependency: {d} and {builder.Type} depend on each other.");
+          if (ancestors.Contains(d))
+            throw new Exception($"Circular dependency between {d.Name} and {builder.Type.Name}.");
           return bs.SingleOrDefault(_ => _.Type == d) ?? new Builder(d, context);
-        });
-        this.QueueBuilders(runBefore, context, dependencies);
+        }).ToHashSet();
+        this.QueueBuilders(runBefore, context, ancestors.Append(builder.Type).ToHashSet());
 
-        dependencies.GetOrAdd(builder.Type, Nil.S<Type>());
         if (!_queue.Contains(builder))
           _queue.Add(builder);
       });

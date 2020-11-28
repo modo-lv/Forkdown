@@ -39,6 +39,8 @@
       include 'elements/table_row' $0
     when 'TableCell'
       include 'elements/table_cell' $0
+    when 'Tip'
+      include 'elements/tip' $0
     when 'Html'
       $0.Content
     else

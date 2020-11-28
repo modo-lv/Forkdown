@@ -17,7 +17,7 @@ namespace Forkdown.Core.Build {
       _worker.Context = context;
     }
 
-    public T Build<T>(T input) where T : Element =>
+    public Element Build(Element input) =>
       _worker.BuildTree(input);
 
 

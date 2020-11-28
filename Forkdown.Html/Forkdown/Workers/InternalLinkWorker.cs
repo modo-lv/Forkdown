@@ -9,7 +9,7 @@ namespace Forkdown.Html.Forkdown.Workers {
   /// </summary>
   public class InternalLinkWorker : Worker {
     /// <inheritdoc />
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       var index = (LinkIndex)this.Storage.For<LinkIndexWorker>();
       if (element is Link link && link.IsInternal)
       {

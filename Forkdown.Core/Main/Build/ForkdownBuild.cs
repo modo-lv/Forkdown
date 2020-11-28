@@ -16,24 +16,24 @@ namespace Forkdown.Core.Build {
 
 
     public Document Run(String markdown, ProjectPath? file = null) =>
-      this.Run(FromMarkdown.ToForkdown(markdown, file));
+      (Document) this.Run(FromMarkdown.ToForkdown(markdown, file));
 
-    public IEnumerable<T> Run<T>(IEnumerable<T> documents) where T : Element {
+    public IEnumerable<Document> Run(IEnumerable<Document> documents) {
       if (this.Context == null)
         throw new NullReferenceException("Can't build without a build context.");
       var builders = new BuilderQueue(this.Workers, this.Context);
       var ran = Nil.S<Type>();
       
       return builders.Aggregate(documents, (docs, builder) => 
-        docs.Select(doc => BuildElement(doc, builder, ran)).ToList()
+        docs.Select(doc => (Document)BuildElement(doc, builder, ran)).ToList()
       );
     }
 
-    public T Run<T>(T element) where T : Element => this.Run(new[] { element }).First();
+    public Document Run(Document doc) => this.Run(new[] { doc }).First();
 
 
-    protected static TElement BuildElement<TElement>(TElement element, Builder builder, ISet<Type> ran)
-      where TElement : Element {
+    protected static Element BuildElement(Element element, Builder builder, ISet<Type> ran)
+      {
 
       if (builder.MustRunAfter.Any() && !builder.MustRunAfter.Overlaps(ran)) {
         var missing = builder.MustRunAfter.Except(ran).Select(_ => _.Name);

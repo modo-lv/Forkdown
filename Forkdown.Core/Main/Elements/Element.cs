@@ -22,8 +22,6 @@ namespace Forkdown.Core.Elements {
 
     public ElementAttributes Attributes = new ElementAttributes();
 
-    public IList<Label> Labels = Nil.L<Label>();
-
     public Boolean IsSingle;
 
     /// <summary>

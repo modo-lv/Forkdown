@@ -3,11 +3,7 @@ func labels
   if ($0.Labels | array.size > 0)
     }}<div class="fd--labels">{{
     for $label in $0.Labels
-      $display = $label.Key
-      if ($label.Icon != "")
-        $display = $label.Icon
-      end
-      }}<abbr class="fd--label" title="{{$label.Name | html.escape}}">{{$display | html.escape}}</abbr>{{
+      include 'elements/tip' $label
     end
     }}</div>{{
   end

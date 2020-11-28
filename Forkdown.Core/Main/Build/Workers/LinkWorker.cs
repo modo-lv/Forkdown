@@ -10,7 +10,7 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<LinkIndexWorker>();
     }
 
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       if (element is Link link) {
         if (link.Target == "@") {
           link.Target = $"@{link.TitleText}";

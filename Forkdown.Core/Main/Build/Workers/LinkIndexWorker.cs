@@ -11,7 +11,7 @@ namespace Forkdown.Core.Build.Workers {
       this.RunsAfter<ExplicitIdWorker>();
     }
 
-    public override TElement BuildElement<TElement>(TElement element) {
+    public override Element BuildElement(Element element) {
       var index = this.Stored(new LinkIndex());
       if (element is Document doc)
         this._document = doc;

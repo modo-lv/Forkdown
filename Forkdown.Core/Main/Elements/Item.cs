@@ -17,6 +17,7 @@ namespace Forkdown.Core.Elements {
 
     public Boolean HasHeading => this.Title is Heading;
     public Boolean IsHeading;
+    public IList<Tip> Labels = Nil.L<Tip>();
 
     public readonly Boolean IsCheckitem;
 
@@ -26,21 +27,11 @@ namespace Forkdown.Core.Elements {
       this.ExplicitIds = replaceElement.ExplicitIds;
       this.Attributes = replaceElement.Attributes;
       this.Subs = replaceElement.Subs;
-      this.Labels = this.Title?.Labels ?? this.Labels;
-      this.Title.IfNotNull(t => t!.Labels = Nil.L<Label>());
+      this.Labels = this.Title.Subs.OfType<Tip>().ToList();
+      this.Title.Subs = this.Title.Subs.Except(this.Labels).ToList();
       this.ImplicitId = replaceElement.ImplicitId;
       this.IsSingle = replaceElement.IsSingle;
-
-      if (this.Settings.IsTrue("-"))
-        this.IsCheckitem = false;
-      else if (this.Settings.IsTrue("+"))
-        this.IsCheckitem = true;
-      else if (this.Settings.IsTrue("#") || this.Settings.IsTrue(" ")) {
-        this.IsCheckitem = false;
-      }
-      else {
-        this.IsCheckitem = listKind == ListingKind.CheckItems;
-      }
+      this.IsCheckitem = listKind == ListingKind.CheckItems;
     }
 
     public static Item FromTitleElement(Element element) {
@@ -48,8 +39,8 @@ namespace Forkdown.Core.Elements {
       element.MoveAttributesTo(item);
       item.Subs.Add(element);
       item.IsHeading = element is Heading;
-      item.Labels = item.Title?.Labels ?? item.Labels;
-      item.Title.IfNotNull(t => t!.Labels = Nil.L<Label>());
+      item.Labels = item.Title.Subs.OfType<Tip>().ToList();
+      item.Title.Subs = item.Title.Subs.Except(item.Labels).ToList();
       return item;
     }
   }
