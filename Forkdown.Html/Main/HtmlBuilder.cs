@@ -72,11 +72,11 @@ namespace Forkdown.Html.Main {
         outPath.Parent().CreateDirectories();
         this._logger.LogDebug("Rendering {page}...", outFile);
 
-        model.Add("ComponentName", doc.ProjectFilePath.StartsWith("components/")
+        model["ComponentName"] = doc.ProjectFilePath.StartsWith("components/")
           ? outFile.TrimPrefix("components/").TrimSuffix(".html")
-          : "");
-        model.Add("Document", doc);
-        model.Add("PathToRoot", "../".Repeat(doc.Depth).TrimSuffix("/"));
+          : "";
+        model["Document"] = doc;
+        model["PathToRoot"] = "../".Repeat(doc.Depth).TrimSuffix("/");
         var html = template.Render(templateContext);
         File.WriteAllText(outPath.ToString(), html);
       }
