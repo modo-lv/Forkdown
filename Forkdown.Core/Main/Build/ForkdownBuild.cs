@@ -12,11 +12,11 @@ namespace Forkdown.Core.Build {
 
     public readonly ISet<Type> Workers = Nil.S<Type>();
     public BuildContext Context = new BuildContext();
-    public WorkerStorage Storage => this.Context!.Storage;
+    public WorkerStorage Storage => this.Context.Storage;
 
 
     public Document Run(String markdown, ProjectPath? file = null) =>
-      (Document) this.Run(FromMarkdown.ToForkdown(markdown, file));
+      this.Run(FromMarkdown.ToForkdown(markdown, file));
 
     public IEnumerable<Document> Run(IEnumerable<Document> documents) {
       if (this.Context == null)

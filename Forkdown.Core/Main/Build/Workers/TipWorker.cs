@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Forkdown.Core.Config;
 using Forkdown.Core.Elements;
-using Forkdown.Core.Elements.Types;
 using Simpler.NetCore.Collections;
-using Simpler.NetCore.Text;
 
 namespace Forkdown.Core.Build.Workers {
   public class TipWorker : Worker {

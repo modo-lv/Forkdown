@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forkdown.Core.Elements.Types;
-using Simpler.NetCore;
 using Simpler.NetCore.Collections;
 
 namespace Forkdown.Core.Elements {

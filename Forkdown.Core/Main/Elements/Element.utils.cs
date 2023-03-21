@@ -22,7 +22,7 @@ namespace Forkdown.Core.Elements {
           .StringJoin();
       }
 
-      return (el.Subs.FirstOrDefault() is Inline inline && inline != null
+      return (el.Subs.FirstOrDefault() is Inline
                ? TitleTextOf(el, true)
                : el.Subs.Take(1)
                  .Select(_ => TitleTextOf(_, contentFound: false))
