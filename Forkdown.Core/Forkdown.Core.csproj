@@ -11,13 +11,13 @@
 
     <ItemGroup>
       <PackageReference Include="FluentPath" Version="2.0.0" />
-      <PackageReference Include="Markdig" Version="0.22.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
-      <PackageReference Include="morelinq" Version="3.3.2" />
-      <PackageReference Include="Simpler.NetCore" Version="0.1.2" />
+      <PackageReference Include="Markdig" Version="0.31.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+      <PackageReference Include="morelinq" Version="3.4.1" />
+      <PackageReference Include="Simpler.NetCore" Version="0.1.4" />
       <PackageReference Include="Simpler.NetCore.Collections" Version="0.0.8.2" />
       <PackageReference Include="Simpler.NetCore.Text" Version="0.0.3.1" />
       <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
