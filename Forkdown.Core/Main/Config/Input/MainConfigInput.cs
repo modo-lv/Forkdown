@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace Forkdown.Core.Config.Input {
-  public class MainConfigInput : ConfigInput<MainConfig> {
-    public virtual String Name { get; set; } = "";
+namespace Forkdown.Core.Config.Input; 
 
-    public virtual ExternalLinkConfigInput ExternalLinks { get; set; } = new ExternalLinkConfigInput();
+public class MainConfigInput : ConfigInput<MainConfig> {
+  public virtual String Name { get; set; } = "";
 
-    public virtual LabelsConfig Labels { get; set; } = new LabelsConfig();
+  public virtual ExternalLinkConfigInput ExternalLinks { get; set; } = new ExternalLinkConfigInput();
 
-    public virtual TipsConfig Tips { get; set; } = new TipsConfig();
+  public virtual LabelsConfig Labels { get; set; } = new LabelsConfig();
+
+  public virtual TipsConfig Tips { get; set; } = new TipsConfig();
     
-  }
 }

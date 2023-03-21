@@ -6,25 +6,25 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build {
-  public class TitleTests {
-    [Fact]
-    void ListItemTitle() {
-      const String input = @"
+namespace Forkdown.Core.Tests.Build; 
+
+public class TitleTests {
+  [Fact]
+  void ListItemTitle() {
+    const String input = @"
 * **[Wicked](link)**
   Continuation
 
   Another paragraph
 ";
-      var result = ForkdownBuild.Default.Run(input);
-      result.Subs[0].TitleText.Should().Be("Wicked");
-    }
+    var result = ForkdownBuild.Default.Run(input);
+    result.Subs[0].TitleText.Should().Be("Wicked");
+  }
     
-    [Fact]
-    void HeadingWithLinkTitle() {
-      const String input = @"# Heading with [link](link)";
-      var result = ForkdownBuild.Default.Run(input);
-      result.FirstSub<Item>().TitleText.Should().Be("Heading with link");
-    }
+  [Fact]
+  void HeadingWithLinkTitle() {
+    const String input = @"# Heading with [link](link)";
+    var result = ForkdownBuild.Default.Run(input);
+    result.FirstSub<Item>().TitleText.Should().Be("Heading with link");
   }
 }

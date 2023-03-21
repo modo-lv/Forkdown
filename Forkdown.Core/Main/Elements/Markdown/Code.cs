@@ -4,11 +4,11 @@ using Inline = Forkdown.Core.Elements.Types.Inline;
 
 // ReSharper disable NotAccessedField.Global
 
-namespace Forkdown.Core.Elements {
-  public class Code : Element, Inline {
-    public readonly String Content;
+namespace Forkdown.Core.Elements.Markdown; 
 
-    public Code(CodeInline code) : base(code) =>
-      this.Content = code.Content;
-  }
+public class Code : Element, Inline {
+  public readonly String Content;
+
+  public Code(CodeInline code) : base(code) =>
+    this.Content = code.Content;
 }

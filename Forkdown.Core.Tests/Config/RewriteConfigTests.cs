@@ -5,11 +5,12 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Config {
-  public class RewriteConfigTests {
-    [Fact]
-    void Load() {
-      const String input = @"
+namespace Forkdown.Core.Tests.Config; 
+
+public class RewriteConfigTests {
+  [Fact]
+  void Load() {
+    const String input = @"
 external_links:
   rewrites:
     - pattern: X
@@ -17,12 +18,11 @@ external_links:
     - [ 'A', 'B' ]
 ";
 
-      var result = MainConfig.FromYaml(input).ExternalLinks;
+    var result = MainConfig.FromYaml(input).ExternalLinks;
 
-      result.Rewrites[0].Key.IsMatch("^X$").Should().BeTrue();
-      result.Rewrites[0].Value.Should().Be("Y");
-      result.Rewrites[1].Key.IsMatch("^A$").Should().BeTrue();
-      result.Rewrites[1].Value.Should().Be("B");
-    }
+    result.Rewrites[0].Key.IsMatch("^X$").Should().BeTrue();
+    result.Rewrites[0].Value.Should().Be("Y");
+    result.Rewrites[1].Key.IsMatch("^A$").Should().BeTrue();
+    result.Rewrites[1].Value.Should().Be("B");
   }
 }

@@ -8,36 +8,36 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build {
-  public class LinkTests {
-    [Fact]
-    void NoFalseExternalLinks() {
-      const String input = @"[Link] {#link}";
-      var config = new MainConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
-      var result = new ForkdownBuild().WithConfig(config)
-        .AddWorker<LinkWorker>()
-        .Run(input);
-      result.FirstSub<Link>().Target.Should().Be("Link");
-    }
+namespace Forkdown.Core.Tests.Build; 
 
-    [Fact]
-    void ExternalLinksWithIndex() {
-      const String input = @"[Link]";
-      var config = new MainConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
-      var result = new ForkdownBuild().WithConfig(config)
-        .AddWorker<LinkWorker>()
-        .Run(input);
-      result.FirstSub<Link>().Target.Should().Be("test://Link");
-    }
+public class LinkTests {
+  [Fact]
+  void NoFalseExternalLinks() {
+    const String input = @"[Link] {#link}";
+    var config = new MainConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
+    var result = new ForkdownBuild().WithConfig(config)
+      .AddWorker<LinkWorker>()
+      .Run(input);
+    result.FirstSub<Link>().Target.Should().Be("Link");
+  }
 
-    [Fact]
-    void ExplicitExternalTitle() {
-      const String input = @"# [External](@)";
-      var result = ForkdownBuild.Default.Run(input)
-        .FirstSub<Link>();
+  [Fact]
+  void ExternalLinksWithIndex() {
+    const String input = @"[Link]";
+    var config = new MainConfig { ExternalLinks = new ExternalLinkConfig { DefaultUrl = "test://" } };
+    var result = new ForkdownBuild().WithConfig(config)
+      .AddWorker<LinkWorker>()
+      .Run(input);
+    result.FirstSub<Link>().Target.Should().Be("test://Link");
+  }
 
-      result.Target.Should().Be("@External");
-      result.IsExternal.Should().Be(true);
-    }
+  [Fact]
+  void ExplicitExternalTitle() {
+    const String input = @"# [External](@)";
+    var result = ForkdownBuild.Default.Run(input)
+      .FirstSub<Link>();
+
+    result.Target.Should().Be("@External");
+    result.IsExternal.Should().Be(true);
   }
 }

@@ -6,30 +6,29 @@ using Forkdown.Core.Elements;
 using Xunit;
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build {
-  
-  public class ExplicitIdTests {
-    private readonly ForkdownBuild _build = new ForkdownBuild().AddWorker<ExplicitIdWorker>();
+namespace Forkdown.Core.Tests.Build; 
 
-    [Fact]
-    void Basic() {
-      const String input = @"a {#:id}";
-      var result = _build.Run(input);
-      result.FirstSub<Paragraph>().ExplicitId.Should().Be("a");
-    }
+public class ExplicitIdTests {
+  private readonly ForkdownBuild _build = new ForkdownBuild().AddWorker<ExplicitIdWorker>();
 
-    [Fact]
-    void ItemTree() {
-      const String input = @"
+  [Fact]
+  void Basic() {
+    const String input = @"a {#:id}";
+    var result = _build.Run(input);
+    result.FirstSub<Paragraph>().ExplicitId.Should().Be("a");
+  }
+
+  [Fact]
+  void ItemTree() {
+    const String input = @"
 # Heading One
 * Item
   * X {#xx}
 ";
 
-      var result = _build.Run(input);
-      result
-        .FirstSub<ListItem>()
-        .FirstSub<ListItem>().ExplicitId.Should().Be($"xx");
-    }
+    var result = _build.Run(input);
+    result
+      .FirstSub<ListItem>()
+      .FirstSub<ListItem>().ExplicitId.Should().Be($"xx");
   }
 }

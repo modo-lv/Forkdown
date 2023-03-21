@@ -1,4 +1,4 @@
-﻿namespace Forkdown.Html.Main {
-  public partial class HtmlConfig {
-  }
+﻿namespace Forkdown.Html.Main; 
+
+public partial class HtmlConfig {
 }

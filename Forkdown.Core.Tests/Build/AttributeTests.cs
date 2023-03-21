@@ -7,13 +7,13 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build {
-  public class AttributesTests {
-    [Fact]
-    void Settings() {
-      const String input = @"[xxx]{:setting}";
-      var result = new ForkdownBuild().AddWorker<LinesToParagraphsWorker>().Run(input);
-      result.FirstSub<Link>().Settings.IsTrue("setting").Should().BeTrue();
-    }
+namespace Forkdown.Core.Tests.Build; 
+
+public class AttributesTests {
+  [Fact]
+  void Settings() {
+    const String input = @"[xxx]{:setting}";
+    var result = new ForkdownBuild().AddWorker<LinesToParagraphsWorker>().Run(input);
+    result.FirstSub<Link>().Settings.IsTrue("setting").Should().BeTrue();
   }
 }

@@ -8,16 +8,16 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Markdown {
-  public class LinkTests {
-    [Fact]
-    void ExplicitExternalShorthand() {
-      const String input = @"[x](@)";
+namespace Forkdown.Core.Tests.Markdown; 
 
-      MarkdownDocument result = MarkdownBuilder.DefaultBuild(input);
-      var link = result.Single().As<ParagraphBlock>().Inline.Single().As<LinkInline>();
+public class LinkTests {
+  [Fact]
+  void ExplicitExternalShorthand() {
+    const String input = @"[x](@)";
 
-      link.Url.Should().Be("@");
-    }
+    MarkdownDocument result = MarkdownBuilder.DefaultBuild(input);
+    var link = result.Single().As<ParagraphBlock>().Inline.Single().As<LinkInline>();
+
+    link.Url.Should().Be("@");
   }
 }

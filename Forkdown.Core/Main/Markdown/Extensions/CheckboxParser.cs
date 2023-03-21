@@ -1,22 +1,22 @@
 ﻿using System;
 using Markdig.Parsers;
 
-namespace Forkdown.Core.Markdown.Extensions {
-  public class CheckboxParser : OrderedListItemParser {
+namespace Forkdown.Core.Markdown.Extensions; 
 
-    public CheckboxParser() {
-      this.OpeningCharacters = new[] { 'x' };
-    }
+public class CheckboxParser : OrderedListItemParser {
 
-    public override Boolean TryParse(BlockProcessor state, Char pendingBulletType, out ListInfo result) {
-      result = new ListInfo();
+  public CheckboxParser() {
+    this.OpeningCharacters = new[] { 'x' };
+  }
 
-      if (state.PeekChar(1) != ' ')
-        return false;
+  public override Boolean TryParse(BlockProcessor state, Char pendingBulletType, out ListInfo result) {
+    result = new ListInfo();
 
-      state.NextChar();
+    if (state.PeekChar(1) != ' ')
+      return false;
 
-      return true;
-    }
+    state.NextChar();
+
+    return true;
   }
 }

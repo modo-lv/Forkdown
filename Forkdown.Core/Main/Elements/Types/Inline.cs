@@ -1,3 +1,3 @@
-﻿namespace Forkdown.Core.Elements.Types {
-  public interface Inline { }
-}
+﻿namespace Forkdown.Core.Elements.Types; 
+
+public interface Inline { }

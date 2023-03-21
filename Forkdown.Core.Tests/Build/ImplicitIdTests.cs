@@ -7,68 +7,69 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build {
-  public class ImplicitIdTests {
-    private static ForkdownBuild _build => new ForkdownBuild().AddWorker<ImplicitIdWorker>();
+namespace Forkdown.Core.Tests.Build; 
 
-    [Fact]
-    void NestedWithHeading() {
-      const String input = @"+ # Heading
+public class ImplicitIdTests {
+  private static ForkdownBuild _build => new ForkdownBuild().AddWorker<ImplicitIdWorker>();
+
+  [Fact]
+  void NestedWithHeading() {
+    const String input = @"+ # Heading
   + One
   + Other";
-      var result = _build.Run(input);
-      result.FirstSub<ListItem>()
-        .FirstSub<ListItem>()
-        .GlobalId.Should().Be($"Heading{ImplicitIdWorker.G}One");
-    }
+    var result = _build.Run(input);
+    result.FirstSub<ListItem>()
+      .FirstSub<ListItem>()
+      .GlobalId.Should().Be($"Heading{ImplicitIdWorker.G}One");
+  }
 
-    [Fact]
-    void TrimSpaces() {
-      const String input = @"* Heading {something}";
-      var result = _build.Run(input);
-      result.FirstSub<ListItem>().ImplicitId.Should().Be("Heading");
-    }
+  [Fact]
+  void TrimSpaces() {
+    const String input = @"* Heading {something}";
+    var result = _build.Run(input);
+    result.FirstSub<ListItem>().ImplicitId.Should().Be("Heading");
+  }
 
-    [Fact]
-    void ExplicitId() {
-      const String input = @"
+  [Fact]
+  void ExplicitId() {
+    const String input = @"
 # Heading One
 * Item
   * X {#xx}
     * Sub
 ";
 
-      var result = _build.Run(input);
-      result
-        .FirstSub<ListItem>()
-        .FirstSub<ListItem>()
-        .FirstSub<ListItem>().ImplicitId.Should().Be($"xx{ImplicitIdWorker.G}Sub");
-    }
+    var result = _build.Run(input);
+    result
+      .FirstSub<ListItem>()
+      .FirstSub<ListItem>()
+      .FirstSub<ListItem>().ImplicitId.Should().Be($"xx{ImplicitIdWorker.G}Sub");
+  }
 
 
-    [Fact]
-    void ComplicatedExplicitId() {
-      const String input = @"# Altar Cave {#altar_cave}
+  [Fact]
+  void ComplicatedExplicitId() {
+    const String input = @"# Altar Cave {#altar_cave}
 Paragraph.
 ## Enemies {#enemies}
 ### Level 1
 * [Carbuncle]()";
 
-      var result = _build.Run(input);
-      result
-        .FirstSub<Item>()
-        .FirstSub<Item>()
-        .FirstSub<Item>()
-        .FirstSub<ListItem>().ImplicitId.Should().Be(
-          $"enemies" +
-          $"{ImplicitIdWorker.G}Level{ImplicitIdWorker.W}1" +
-          $"{ImplicitIdWorker.G}Carbuncle"
-        );
-    }
+    var result = _build.Run(input);
+    result
+      .FirstSub<Item>()
+      .FirstSub<Item>()
+      .FirstSub<Item>()
+      .FirstSub<ListItem>().ImplicitId.Should().Be(
+        $"enemies" +
+        $"{ImplicitIdWorker.G}Level{ImplicitIdWorker.W}1" +
+        $"{ImplicitIdWorker.G}Carbuncle"
+      );
+  }
 
-    [Fact]
-    void ComplicatedImplicitId() {
-      const String input = @"
+  [Fact]
+  void ComplicatedImplicitId() {
+    const String input = @"
 # The [Floating Continent]()
 Paragraph.
 ## Mainland
@@ -77,37 +78,36 @@ Paragraph
 * [Killer Bee]
 ";
 
-      var result = _build.Run(input);
-      result
-        .FirstSub<ListItem>().ImplicitId.Should().Be(
-          $"The{ImplicitIdWorker.W}Floating{ImplicitIdWorker.W}Continent" +
-          $"{ImplicitIdWorker.G}Mainland" +
-          $"{ImplicitIdWorker.G}Northeast" +
-          $"{ImplicitIdWorker.G}Killer{ImplicitIdWorker.W}Bee"
-        );
-    }
+    var result = _build.Run(input);
+    result
+      .FirstSub<ListItem>().ImplicitId.Should().Be(
+        $"The{ImplicitIdWorker.W}Floating{ImplicitIdWorker.W}Continent" +
+        $"{ImplicitIdWorker.G}Mainland" +
+        $"{ImplicitIdWorker.G}Northeast" +
+        $"{ImplicitIdWorker.G}Killer{ImplicitIdWorker.W}Bee"
+      );
+  }
 
-    [Fact]
-    void Duplicates() {
-      const String input = @"# Heading One
+  [Fact]
+  void Duplicates() {
+    const String input = @"# Heading One
 * Item
 * Item
 * Item";
-      _build.Run(input)
-        .FirstSub<Listing>()
-        .Subs[2] // 3rd item
-        .GlobalId.Should().Be($"Heading{ImplicitIdWorker.W}One{ImplicitIdWorker.G}Item{ImplicitIdWorker.R}3");
-    }
+    _build.Run(input)
+      .FirstSub<Listing>()
+      .Subs[2] // 3rd item
+      .GlobalId.Should().Be($"Heading{ImplicitIdWorker.W}One{ImplicitIdWorker.G}Item{ImplicitIdWorker.R}3");
+  }
 
-    [Fact]
-    void BasicId() {
-      const String input = @"# Heading One
+  [Fact]
+  void BasicId() {
+    const String input = @"# Heading One
 * Item one
   * Item two";
-      var doc = _build.Run(input);
-      doc
-        .FirstSub<ListItem>()
-        .FirstSub<ListItem>().GlobalId.Should().Be("Heading⸱One␝Item⸱one␝Item⸱two");
-    }
+    var doc = _build.Run(input);
+    doc
+      .FirstSub<ListItem>()
+      .FirstSub<ListItem>().GlobalId.Should().Be("Heading⸱One␝Item⸱one␝Item⸱two");
   }
 }

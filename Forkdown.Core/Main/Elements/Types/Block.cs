@@ -1,5 +1,5 @@
-﻿namespace Forkdown.Core.Elements.Types {
-  public interface Block {
+﻿namespace Forkdown.Core.Elements.Types; 
+
+public interface Block {
     
-  }
 }

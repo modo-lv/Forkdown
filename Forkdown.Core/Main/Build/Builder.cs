@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using Forkdown.Core.Build.Workers;
 using Forkdown.Core.Elements;
 
-namespace Forkdown.Core.Build {
-  public class Builder {
+namespace Forkdown.Core.Build; 
 
-    private readonly Worker _worker;
+public class Builder {
 
-    public ISet<Type> MustRunAfter => this._worker.MustRunAfter;
-    public readonly Type Type;
+  private readonly Worker _worker;
 
-    public Builder(Type workerType, BuildContext context) {
-      this.Type = workerType;
-      _worker = (Worker) Activator.CreateInstance(this.Type)!;
-      _worker.Context = context;
-    }
+  public ISet<Type> MustRunAfter => this._worker.MustRunAfter;
+  public readonly Type Type;
 
-    public Element Build(Element input) =>
-      _worker.BuildTree(input);
-
-
-    public override Boolean Equals(Object? obj) => obj is Builder b && this.Type == b.Type;
-    public override Int32 GetHashCode() => this.Type.GetHashCode();
+  public Builder(Type workerType, BuildContext context) {
+    this.Type = workerType;
+    _worker = (Worker) Activator.CreateInstance(this.Type)!;
+    _worker.Context = context;
   }
+
+  public Element Build(Element input) =>
+    _worker.BuildTree(input);
+
+
+  public override Boolean Equals(Object? obj) => obj is Builder b && this.Type == b.Type;
+  public override Int32 GetHashCode() => this.Type.GetHashCode();
 }

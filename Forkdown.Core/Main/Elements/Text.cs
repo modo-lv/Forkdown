@@ -2,13 +2,13 @@
 using Markdig.Syntax.Inlines;
 using Inline = Forkdown.Core.Elements.Types.Inline;
 
-namespace Forkdown.Core.Elements {
-  public class Text : Element, Inline {
-    public String Content;
+namespace Forkdown.Core.Elements; 
 
-    public Text(String content = "") { Content = content; }
+public class Text : Element, Inline {
+  public String Content;
 
-    public Text(LiteralInline text) : base(text) =>
-      this.Content = text.Content.ToString();
-  }
+  public Text(String content = "") { Content = content; }
+
+  public Text(LiteralInline text) : base(text) =>
+    this.Content = text.Content.ToString();
 }

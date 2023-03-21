@@ -9,27 +9,27 @@ using Xunit;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Forkdown.Core.Tests.Build {
-  public class TipTests {
-    private readonly ForkdownBuild _build = new ForkdownBuild().AddWorker<TipWorker>();
+namespace Forkdown.Core.Tests.Build; 
 
-    [Fact]
-    void NestedItemLabels() {
-      const String input = @"* List
+public class TipTests {
+  private readonly ForkdownBuild _build = new ForkdownBuild().AddWorker<TipWorker>();
+
+  [Fact]
+  void NestedItemLabels() {
+    const String input = @"* List
   + `p` Paragraph";
-      var result = _build.Run(input);
-      result.FirstSub<Item>().Labels.First().Title.Should().Be("p");
-    }
+    var result = _build.Run(input);
+    result.FirstSub<Item>().Labels.First().Title.Should().Be("p");
+  }
     
-    [Fact]
-    void Multiple() {
-      const String input = @"+ `a, b c` Text";
-      var result = _build.Run(input);
+  [Fact]
+  void Multiple() {
+    const String input = @"+ `a, b c` Text";
+    var result = _build.Run(input);
 
-      var item = result.FirstSub<Item>();
-      item.Labels.Select(_ => _.Title).Should().Contain(new List<String> { "a", "b", "c" });
-      item.FirstSub<Text>().Content.Should().Be("Text");
-      item.FirstSub<Text>().TitleText.Should().Be("Text");
-    }
+    var item = result.FirstSub<Item>();
+    item.Labels.Select(_ => _.Title).Should().Contain(new List<String> { "a", "b", "c" });
+    item.FirstSub<Text>().Content.Should().Be("Text");
+    item.FirstSub<Text>().TitleText.Should().Be("Text");
   }
 }

@@ -8,27 +8,27 @@ using Simpler.NetCore.Text;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace Forkdown.Core.Elements {
-  public class ElementAttributes {
-    // ReSharper disable once FieldCanBeMadeReadOnly.Global
-    public readonly ISet<String> Classes = Nil.SStr;
+namespace Forkdown.Core.Elements; 
 
-    public readonly IDictionary<String, String> Properties = Nil.DStr<String>();
+public class ElementAttributes {
+  // ReSharper disable once FieldCanBeMadeReadOnly.Global
+  public readonly ISet<String> Classes = Nil.SStr;
 
-    public readonly ElementSettings Settings = new ElementSettings();
+  public readonly IDictionary<String, String> Properties = Nil.DStr<String>();
 
-    public ElementAttributes() { }
+  public readonly ElementSettings Settings = new ElementSettings();
 
-    public ElementAttributes(HtmlAttributes attrs, Element element) {
-      if (attrs.Id.NotBlank())
-        element.ExplicitIds = new[] { attrs.Id };
-      this.Classes = attrs.Classes?.ToHashSet() ?? Nil.SStr;
-      attrs.Properties?.ForEach(_ => {
-        if (_.Key.StartsWith(":"))
-          this.Settings[_.Key.Substring(1)] = _.Value;
-        else
-          this.Properties.Add(_);
-      });
-    }
+  public ElementAttributes() { }
+
+  public ElementAttributes(HtmlAttributes attrs, Element element) {
+    if (attrs.Id is { } id && id.NotBlank())
+      element.ExplicitIds = new[] { id };
+    this.Classes = attrs.Classes?.ToHashSet() ?? Nil.SStr;
+    attrs.Properties?.ForEach(prop => {
+      if (prop.Key.StartsWith(":"))
+        this.Settings[prop.Key[1..]] = prop.Value!;
+      else
+        this.Properties.Add(prop!);
+    });
   }
 }

@@ -7,27 +7,27 @@ using Scriban.Runtime;
 using Path = Fluent.IO.Path;
 #pragma warning disable 1591
 
-namespace Forkdown.Html.Main {
-  public class ScribanTemplateLoader : ITemplateLoader {
-    private readonly Path _dir;
+namespace Forkdown.Html.Main; 
 
-    public ScribanTemplateLoader(Path dir) {
-      this._dir = dir;
-    }
+public class ScribanTemplateLoader : ITemplateLoader {
+  private readonly Path _dir;
 
-    /// <inheritdoc />
-    public String GetPath(TemplateContext context, SourceSpan callerSpan, String templateName) {
-      return this._dir.Combine(templateName + ".scriban-html").FullPath;
-    }
+  public ScribanTemplateLoader(Path dir) {
+    this._dir = dir;
+  }
 
-    /// <inheritdoc />
-    public String Load(TemplateContext context, SourceSpan callerSpan, String templatePath) {
-      return this.LoadAsync(context, callerSpan, templatePath).Result;
-    }
+  /// <inheritdoc />
+  public String GetPath(TemplateContext context, SourceSpan callerSpan, String templateName) {
+    return this._dir.Combine(templateName + ".scriban-html").FullPath;
+  }
 
-    /// <inheritdoc />
-    public async ValueTask<String> LoadAsync(TemplateContext context, SourceSpan callerSpan, String templatePath) {
-      return await File.ReadAllTextAsync(templatePath);
-    }
+  /// <inheritdoc />
+  public String Load(TemplateContext context, SourceSpan callerSpan, String templatePath) {
+    return this.LoadAsync(context, callerSpan, templatePath).Result;
+  }
+
+  /// <inheritdoc />
+  public async ValueTask<String> LoadAsync(TemplateContext context, SourceSpan callerSpan, String templatePath) {
+    return await File.ReadAllTextAsync(templatePath);
   }
 }

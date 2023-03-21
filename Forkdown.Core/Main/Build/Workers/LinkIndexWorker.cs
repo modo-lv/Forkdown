@@ -1,27 +1,27 @@
 ﻿using Forkdown.Core.Elements;
 using Simpler.NetCore.Collections;
 
-namespace Forkdown.Core.Build.Workers {
-  public class LinkIndexWorker : Worker {
-    private Document? _document;
+namespace Forkdown.Core.Build.Workers; 
 
-    public LinkIndexWorker() {
-      this.RunsAfter<LinesToParagraphsWorker>();
-      this.RunsAfter<DocumentAttributesWorker>();
-      this.RunsAfter<ExplicitIdWorker>();
-    }
+public class LinkIndexWorker : Worker {
+  private Document? _document;
 
-    public override Element BuildElement(Element element) {
-      var index = this.Stored(new LinkIndex());
-      if (element is Document doc)
-        this._document = doc;
+  public LinkIndexWorker() {
+    this.RunsAfter<LinesToParagraphsWorker>();
+    this.RunsAfter<DocumentAttributesWorker>();
+    this.RunsAfter<ExplicitIdWorker>();
+  }
 
-      element.ExplicitIds.ForEach(id =>
-        index.Add(id, this._document!)
-      );
+  public override Element BuildElement(Element element) {
+    var index = this.Stored(new LinkIndex());
+    if (element is Document doc)
+      this._document = doc;
 
-      return element;
+    element.ExplicitIds.ForEach(id =>
+      index.Add(id, this._document!)
+    );
 
-    }
+    return element;
+
   }
 }
