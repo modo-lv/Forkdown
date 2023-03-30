@@ -1,5 +1,0 @@
-﻿<footer>{{
-if Footer 
-  element Footer
-end
-}}</footer>

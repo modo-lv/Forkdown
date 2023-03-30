@@ -62,13 +62,6 @@
     <EmbeddedResource Remove="Publish\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Forkdown" />
-    <Folder Include="Resources\assets" />
-    <Folder Include="Resources\sass" />
-    <Folder Include="Resources\scriban" />
-  </ItemGroup>
-
   <PropertyGroup>
     <RuntimeIdentifiers>win-x86;win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
   </PropertyGroup>

@@ -1,8 +1,0 @@
-<span class="fd--tip">
-  <span class="fd--icon" title="{{ $1.Title | html.escape }}">{{ element $1.Icon }}</span>
-  {{- if ($1.Subs | array.size) > 0 -}}
-  <div class="fd--content">
-    {{- subs $1 -}}
-  </div>
-  {{- end -}}
-</span>
