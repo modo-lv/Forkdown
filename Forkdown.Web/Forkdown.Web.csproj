@@ -21,7 +21,6 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="SharpScss" Version="2.0.0" />
-    <PackageReference Include="Simpler.Net.Main" Version="0.0.2" />
     <PackageReference Include="System.CommandLine.DragonFruit" Version="0.3.0-alpha.20253.1" />
     <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="19.2.4" />
   </ItemGroup>
@@ -61,6 +60,15 @@
 
   <ItemGroup>
     <EmbeddedResource Remove="Publish\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Simpler.Net.IO">
+      <HintPath>..\..\Simpler.Net\Simpler.Net.IO\bin\Release\netstandard2.0\Simpler.Net.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Simpler.Net.Main">
+      <HintPath>..\..\Simpler.Net\Simpler.Net.Main\bin\Release\netstandard1.0\Simpler.Net.Main.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <PropertyGroup>
