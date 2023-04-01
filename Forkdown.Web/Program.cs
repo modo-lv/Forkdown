@@ -1,4 +1,3 @@
-using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
@@ -23,7 +22,7 @@ internal class Program {
       .Also(it => {
         it.Handler = CommandHandler.Create<DirectoryInfo>(source =>
           run(new Project(
-            Root: new FileSystem().DirectoryInfo.Wrap(source))
+            root: new FileSystem().DirectoryInfo.Wrap(source))
           )
         );
       });
