@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Forkdown.Main\Forkdown.Main.csproj" />
+    <ProjectReference Include="..\Forkdown.Core\Forkdown.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

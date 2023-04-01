@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Main", "Forkdown.Main\Forkdown.Main.csproj", "{01627B89-26A5-436D-9C2A-A793BBA5BC42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Core", "Forkdown.Core\Forkdown.Core.csproj", "{01627B89-26A5-436D-9C2A-A793BBA5BC42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Main.Tests", "Forkdown.Main.Tests\Forkdown.Main.Tests.csproj", "{CA25B994-8CA1-4346-920E-B8F6F2713F04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Core.Tests", "Forkdown.Core.Tests\Forkdown.Core.Tests.csproj", "{CA25B994-8CA1-4346-920E-B8F6F2713F04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forkdown.Web", "Forkdown.Web\Forkdown.Web.csproj", "{344FBAD9-F987-48A3-9F18-6AB02B8703B5}"
 EndProject

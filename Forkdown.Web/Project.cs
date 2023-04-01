@@ -3,6 +3,6 @@
 namespace Forkdown.Web; 
 
 /// <summary>
-/// Extends a Forkdown <see cref="Main.Project"/> with metadata needed for compiling it to a website. 
+/// Extends a Forkdown <see cref="Core.Project"/> with metadata needed for compiling it to a website. 
 /// </summary>
-public record Project(IDirectoryInfo Root) : Main.Project(Root);
+public record Project(IDirectoryInfo Root) : Core.Project(Root);

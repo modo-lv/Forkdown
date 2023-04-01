@@ -1,6 +1,6 @@
 ﻿using System.IO.Abstractions;
 
-namespace Forkdown.Main;
+namespace Forkdown.Core;
 
 /// <summary>
 /// Represents a single Forkdown project.
