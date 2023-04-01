@@ -3,6 +3,7 @@ using System.CommandLine.NamingConventionBinder;
 using System.IO;
 using System.IO.Abstractions;
 using System.Reflection;
+using System.Threading;
 using Forkdown.Web.Wiring.Dependencies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,11 @@ internal class Program {
       );
       logger.LogInformation("Running project in: {Root}", project.Root.FullName);
       logger.LogInformation("Output will go to: {Output}", project.Output.FullName);
-    }).Invoke(args);
+    })
+      .Invoke(args)
+      .Also(e => {
+        if (e != 0) Thread.Sleep(1000);
+      });
   }
 
   private static RootCommand Startup(Action<Project> run) =>
