@@ -2,6 +2,7 @@ using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
 using System.IO;
 using System.IO.Abstractions;
+using System.Reflection;
 using Forkdown.Web.Wiring.Dependencies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -21,6 +22,12 @@ internal class Program {
           .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true })
           .Also(provider => project.Services = provider)
           .GetRequiredService<ILogger<Program>>();
+
+      Assembly.GetExecutingAssembly().GetName().Also(it =>
+        logger.LogInformation("Starting {Project}, version {Version}", it.Name, it.Version)
+      );
+      logger.LogInformation("Running project in: {Root}", project.Root.FullName);
+      logger.LogInformation("Output will go to: {Output}", project.Output.FullName);
     }).Invoke(args);
   }
 
@@ -38,11 +45,11 @@ internal class Program {
           })
       }
       .Also(command =>
-        command.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo>((source, output) =>
+        command.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo?>((source, output) =>
           new FileSystem().Also(fs => {
             run(new Project(
               root: fs.DirectoryInfo.Wrap(source),
-              output: fs.DirectoryInfo.Wrap(output)
+              output: output?.Let(fs.DirectoryInfo.Wrap) ?? fs.DirectoryInfo.New(Project.DefaultOutput)
             ));
           })
         )
