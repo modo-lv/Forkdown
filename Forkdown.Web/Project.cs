@@ -8,6 +8,11 @@ namespace Forkdown.Web;
 public class Project : Core.Project {
 
   /// <summary>
+  /// Default path to use as output directory if none has been provided. 
+  /// </summary>
+  public const String DefaultOutput = "out-web";
+
+  /// <summary>
   /// Root directory of the generated output files.
   /// </summary>
   public readonly IDirectoryInfo Output;
@@ -17,6 +22,6 @@ public class Project : Core.Project {
     IDirectoryInfo root,
     IDirectoryInfo? output = null
   ) : base(root) {
-    this.Output = output ?? root.FileSystem.DirectoryInfo.New("out-web");
+    this.Output = output ?? root.FileSystem.DirectoryInfo.New(DefaultOutput);
   }
 };
