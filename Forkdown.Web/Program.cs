@@ -2,6 +2,10 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
 using System.IO.Abstractions;
+using Forkdown.Core.Internal;
+using Forkdown.Web.Wiring.Dependencies;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Simpler.Net.Main;
 
 namespace Forkdown.Web;
@@ -9,7 +13,13 @@ namespace Forkdown.Web;
 internal class Program {
   private static void Main(String[] args) {
     Startup(project => {
-      
+      // Dependencies
+      var logger =
+        new ServiceCollection()
+          .AddLogging(Logging.Config)
+          .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true })
+          .Also(provider => project.Services = provider)
+          .GetRequiredService<ILogger<Program>>();
     }).Invoke(args);
   }
 
