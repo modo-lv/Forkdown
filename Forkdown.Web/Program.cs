@@ -25,7 +25,7 @@ internal class Program {
           .GetRequiredService<ILogger<Program>>();
 
       Assembly.GetExecutingAssembly().GetName().Also(it =>
-        logger.LogInformation("Starting {Project}, version {Version}", it.Name, it.Version)
+        logger.LogInformation("Starting {Project} {Version}...", it.Name, it.Version)
       );
       logger.LogInformation("Running project in: {Root}", project.Root.FullName);
       logger.LogInformation("Output will go to: {Output}", project.Output.FullName);
