@@ -1,5 +1,10 @@
 ﻿using System.IO.Abstractions;
+using Forkdown.Core.Config;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Simpler.Net.IO;
+using Simpler.Net.Main;
+using YamlDotNet.Serialization;
 
 namespace Forkdown.Core;
 
@@ -17,13 +22,41 @@ public class Project {
   public readonly IDirectoryInfo Root;
 
   /// <summary>
-  /// Service provider for this project.
+  /// Default filename of the main build configuration.
   /// </summary>
-  public IServiceProvider Services = new ServiceCollection().BuildServiceProvider();
+  public const String DefaultCoreConfigFileName = "forkdown.core.yaml";
+
+  /// <inheritdoc cref="CoreConfig"/>
+  public readonly CoreConfig CoreConfig;
+
+  /// <summary>
+  /// Project-scoped services.
+  /// </summary>
+  public readonly IServiceScope ServiceScope;
+
+  private readonly ILogger<Project> Logger;
+
+  public T Service<T>() where T : notnull => this.ServiceScope.ServiceProvider.GetRequiredService<T>();
 
   /// <inheritdoc cref="Project"/>
   /// <param name="root"><see cref="Root"/></param>
-  public Project(IDirectoryInfo root) {
+  /// <param name="coreConfigFile">Path to the file containing core configuration.</param>
+  public Project(IDirectoryInfo root, IFileInfo coreConfigFile) {
+    this.ServiceScope = Global.ServiceProvider.CreateScope();
+    this.Logger = this.Service<ILogger<Project>>();
     this.Root = root;
+    this.CoreConfig = coreConfigFile.Let(file => {
+      if (file.Exists)
+        return new DeserializerBuilder().Build()
+          .Deserialize<CoreConfig>(coreConfigFile.ReadAllText());
+
+      this.Logger.LogInformation("Core configuration file {File} not found, using defaults.", coreConfigFile.FullName);
+      return new CoreConfig { Name = root.Name };
+    });
+  }
+
+  ~Project() {
+    this.Logger.LogDebug("Project finalized, disposing of service scope.");
+    this.ServiceScope.Dispose();
   }
 }

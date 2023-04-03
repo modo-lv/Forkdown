@@ -21,9 +21,18 @@
       <PackageReference Include="Simpler.NetCore.Collections" Version="0.0.8.2" />
       <PackageReference Include="Simpler.NetCore.Text" Version="0.0.3.1" />
       <PackageReference Include="TestableIO.System.IO.Abstractions" Version="19.2.4" />
-      <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
+      <PackageReference Include="YamlDotNet" Version="13.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Reference Include="Simpler.Net.IO">
+            <HintPath>..\..\Simpler.Net\Simpler.Net.IO\bin\Release\netstandard2.0\Simpler.Net.IO.dll</HintPath>
+        </Reference>
+        <Reference Include="Simpler.Net.Main">
+            <HintPath>..\..\Simpler.Net\Simpler.Net.Main\bin\Release\netstandard1.0\Simpler.Net.Main.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    
     <ItemGroup>
       <None Remove="Forkdown.Core.csproj.DotSettings" />
     </ItemGroup>

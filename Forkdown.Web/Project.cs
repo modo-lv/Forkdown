@@ -20,8 +20,9 @@ public class Project : Core.Project {
   /// <inheritdoc />
   public Project(
     IDirectoryInfo root,
-    IDirectoryInfo? output = null
-  ) : base(root) {
-    this.Output = output ?? root.FileSystem.DirectoryInfo.New(DefaultOutput);
+    IFileInfo coreConfigFile,
+    IDirectoryInfo output
+  ) : base(root, coreConfigFile) {
+    this.Output = output;
   }
-};
+}
