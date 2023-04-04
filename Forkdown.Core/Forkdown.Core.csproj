@@ -17,9 +17,6 @@
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
       <PackageReference Include="morelinq" Version="3.4.1" />
-      <PackageReference Include="Simpler.NetCore" Version="0.1.4" />
-      <PackageReference Include="Simpler.NetCore.Collections" Version="0.0.8.2" />
-      <PackageReference Include="Simpler.NetCore.Text" Version="0.0.3.1" />
       <PackageReference Include="TestableIO.System.IO.Abstractions" Version="19.2.4" />
       <PackageReference Include="YamlDotNet" Version="13.0.2" />
     </ItemGroup>
