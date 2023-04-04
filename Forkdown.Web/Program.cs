@@ -5,7 +5,6 @@ using System.IO.Abstractions;
 using System.Reflection;
 using System.Threading;
 using Forkdown.Core;
-using Forkdown.Core.Config;
 using Forkdown.Web.Wiring.Dependencies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

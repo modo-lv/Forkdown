@@ -3,7 +3,6 @@ using Forkdown.Core.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Simpler.Net.IO;
-using Simpler.Net.Main;
 using YamlDotNet.Serialization;
 
 namespace Forkdown.Core;
